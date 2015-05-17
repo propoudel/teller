@@ -43,6 +43,18 @@
 
                           <div class="col-sm-6">
                               <div class="form-group">
+                                  <label for="currency_code">Currency Code</label>
+                                  <select name="currency_code"class="form-control">
+                                    <option value="volvo">Volvo</option>
+                                    <option value="saab">Saab</option>
+                                    <option value="mercedes">Mercedes</option>
+                                    <option value="audi">Audi</option>
+                                  </select>
+                              </div>
+                            </div>
+
+                          <div class="col-sm-6">
+                              <div class="form-group">
                                   <label for="party_details">Party Details</label>
                                   <input required="required" name="party_details" type="text" class="form-control" id="party_details"
                                          placeholder="Party Details">
