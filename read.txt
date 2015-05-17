@@ -1,0 +1,2 @@
+https://medium.com/laravel-4/laravel-4-authentication-e8d93c9ce0e2
+https://medium.com/laravel-4/laravel-4-acl-a7f2fa1f9791
