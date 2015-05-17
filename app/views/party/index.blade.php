@@ -9,24 +9,6 @@
                   <a href="/party/create" class="btn btn-primary">Add New</a>
                  </div>
 
-                 @if($errors->has())
-                     @foreach($errors->all() as $message)
-                      <div class="alert alert-info">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        {{ $message }}
-                      </div>
-                     @endforeach
-                  @endif
-
-                 @if(Session::has('message'))
-                     <div class="alert alert-info">
-                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                     {{ Session::get('message') }}
-                   </div>
-                 @endif
-
-
-
                 <table id="party" class="display table" cellspacing="0" width="100%">
                 				<thead>
                 					<tr>

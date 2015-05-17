@@ -22,7 +22,9 @@ class PartyController extends Controller {
 	 */
 	public function create()
 	{
-        return View::make("party/create");
+        $curr = new Currency();
+        $data = $curr->all();
+        return View::make("party/create", compact('data'));
 	}
 
 
@@ -80,9 +82,12 @@ class PartyController extends Controller {
 	 */
     public function edit($id)
     {
-        $item = Party::find($id);
-        return View::make('party/edit')
-            ->with('item', $item);
+        $curr = new Currency();
+        $data['currency'] = $curr->all();
+
+        $data['item'] = Party::find($id);
+
+        return View::make('party/edit', compact('data'));
     }
 
 
