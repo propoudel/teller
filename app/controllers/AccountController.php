@@ -20,7 +20,7 @@ class AccountController extends Controller {
 	 */
 	public function create()
 	{
-		print_r($_POST);
+
 	}
 
 
@@ -31,7 +31,42 @@ class AccountController extends Controller {
 	 */
 	public function store()
 	{
-		//
+        $rules = array(
+            'party_from' => 'required',
+            'currency_from' => 'required',
+            'amount' => 'required',
+            'party_to' => 'required',
+            'send_currency' => 'required',
+            'rate' => 'required',
+        );
+        $validator = Validator::make(Input::all(), $rules);
+
+        // process the login
+        if ($validator->fails()) {
+            return Redirect::to('/dashboard')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+
+
+
+
+            // store
+            $account = new Account_model();
+            $account->received_from = Input::get('party_from');
+            $account->received_amount = Input::get('amount');
+            $account->received_currency = Input::get('currency_from');
+            $account->sent_to = Input::get('party_to');
+            $account->sent_currency = Input::get('send_currency');
+            $account->sent_rate = Input::get('rate');
+            $account->total_transferred_money = Input::get('totalamount');
+            $account->comment = Input::get('details');
+            $account->save();
+
+            // redirect
+            Session::flash('message', 'Successfully stored amount!');
+            return Redirect::to('dashboard');
+        }
 	}
 
 

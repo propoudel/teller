@@ -29,6 +29,11 @@ Route::group(["before" => "auth"], function () {
         "uses" => "AccountController@create"
     ]);
 
+    Route::any("/account/store", [
+        "as" => "account/store",
+        "uses" => "AccountController@store"
+    ]);
+
     //Routes for Currency
     Route::any("/currency", [
         "as" => "currency",

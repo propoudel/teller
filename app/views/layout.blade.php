@@ -34,16 +34,31 @@
                         <div class="panel-heading"><i class="glyphicon glyphicon-th-list"></i> Teller Menu</div>
                         <div class="panel-body">
                             <ul class="nav nav-stacked">
-                                <li><a href="/dashboard"><i class="fa fa-plus-square"></i> Teller</a></li>
-                                <li><a href="/party"><i class="fa fa-plus-square"></i> Party</a></li>
+                                <li><a href="/dashboard"><i class="fa fa-university"></i> Teller</a></li>
+                                <li><a href="/party"><i class="fa fa-users"></i> Party</a></li>
                                 <li><a href="/report"><i class="glyphicon glyphicon-list-alt"></i> Reports</a></li>
-                                <li><a href="/currency"><i class="fa fa-cog"></i> Currency Setting</a></li>
+                                <li><a href="/currency"><i class="fa fa-money"></i> Currency Setting</a></li>
                             </ul>
                         </div>
                     </div>
 
                 </div>
                 <div class="col-sm-9">
+                            @if($errors->has())
+                                  @foreach($errors->all() as $message)
+                              		<div class="alert alert-info">
+                              		  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                              		  {{ $message }}
+                              		</div>
+                                  @endforeach
+                              	@endif
+
+                              	@if(Session::has('message'))
+                                    <div class="alert alert-info">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        {{ Session::get('message') }}
+                                    </div>
+                                @endif
                    @yield("content")
                 </div>
             </div>
