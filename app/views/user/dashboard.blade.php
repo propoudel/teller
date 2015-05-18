@@ -11,7 +11,7 @@
                           <div class="col-sm-12">
 
                               <div class="form-group">
-                                  <label>Received</label>
+                                  <label></label>
                               </div>
                           </div>
 
@@ -57,7 +57,7 @@
                       <div class="row">
                           <div class="col-sm-12">
                               <div class="form-group">
-                                  <label>Send</label>
+                                  <label></label>
                               </div>
                           </div>
                       </div>

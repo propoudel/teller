@@ -35,7 +35,7 @@
                         <div class="panel-body">
                             <ul class="nav nav-stacked">
                                 <li><a href="/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a></li>
-                                <li><a href="/dashboard"><i class="fa fa-university"></i> Teller</a></li>
+                                <li><a href="/account"><i class="fa fa-university"></i> Teller</a></li>
                                 <li><a href="/party"><i class="fa fa-users"></i> Party</a></li>
                                 <li><a href="/report"><i class="glyphicon glyphicon-list-alt"></i> Reports</a></li>
                                 <li><a href="/currency"><i class="fa fa-money"></i> Currency Setting</a></li>
