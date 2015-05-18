@@ -9,8 +9,8 @@ class ReportController extends Controller {
 	 */
 	public function index()
 	{
-        $account = new Account();
-        $data = $account->all();
+        $report = new Account();
+        $data = $report->all();
         return View::make("report/index", compact('data'));
 		//
 	}
