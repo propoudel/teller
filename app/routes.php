@@ -24,6 +24,10 @@ Route::group(["before" => "auth"], function () {
     ]);
 
     //Routes for Accounting
+    Route::any("/account", [
+        "as" => "account/index",
+        "uses" => "AccountController@index"
+    ]);
     Route::any("/account/create", [
         "as" => "account/create",
         "uses" => "AccountController@create"
@@ -93,6 +97,8 @@ Route::group(["before" => "auth"], function () {
         "as" => "party/delete",
         "uses" => "PartyController@destroy"
     ]);
+
+    //Routes for Report
     Route::any("/report", [
         "as" => "/report",
         "uses" => "ReportController@index"
