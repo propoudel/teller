@@ -116,7 +116,18 @@ class UserController
 
     public function dashboard()
     {
-    return View::make("user/dashboard");
+        $data = array();
+
+        $party = new Party();
+        $party_data = $party->all();
+
+        $currency = new Currency();
+        $currency_data = $currency->all();
+
+        $data['party_data'] = $party_data;
+        $data['currency_data'] = $currency_data;
+
+        return View::make("user/dashboard", compact('data'));
     }
 
     public function logout()

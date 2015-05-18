@@ -63,6 +63,11 @@ Route::group(["before" => "auth"], function () {
         "uses" => "CurrencyController@destroy"
     ]);
 
+    Route::any("/currency/find", [
+        "as" => "currency/find",
+        "uses" => "CurrencyController@find"
+    ]);
+
     //Routes for Party
     Route::any("/party", [
         "as" => "party",

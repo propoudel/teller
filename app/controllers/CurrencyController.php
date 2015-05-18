@@ -27,6 +27,15 @@ class CurrencyController extends Controller
     }
 
 
+    public function find(){
+        $currency =  Currency::find($_POST['id']);
+        $data = array(
+            'id' => $currency->id,
+            'currency_code' => $currency->currency_code,
+            'currency_rate' => $currency->currency_rate
+        );
+        echo (json_encode($data));
+    }
     /**
      * Store a newly created resource in storage.
      *
