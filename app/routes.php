@@ -37,6 +37,10 @@ Route::group(["before" => "auth"], function () {
         "as" => "account/store",
         "uses" => "AccountController@store"
     ]);
+    Route::any("/account/report", [
+        "as" => "account/report",
+        "uses" => "AccountController@report"
+    ]);
 
     //Routes for Currency
     Route::any("/currency", [
@@ -97,6 +101,7 @@ Route::group(["before" => "auth"], function () {
         "as" => "party/delete",
         "uses" => "PartyController@destroy"
     ]);
+<<<<<<< HEAD
 
     //Routes for Report
     Route::any("/report", [
@@ -104,6 +109,8 @@ Route::group(["before" => "auth"], function () {
         "uses" => "ReportController@index"
     ]);
 
+=======
+>>>>>>> b1d6551d06813dd9bf9951c08ae7d435eb9997e1
 
 });
 

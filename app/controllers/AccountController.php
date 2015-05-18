@@ -114,5 +114,17 @@ class AccountController extends Controller {
 		//
 	}
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return Response
+     */
+    public function report()
+    {
+        die("this is it!");
+        $data = array();
+        return View::make('account/index', compact('data'));
+        //
+    }
 
 }
