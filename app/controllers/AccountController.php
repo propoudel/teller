@@ -9,7 +9,8 @@ class AccountController extends Controller {
 	 */
 	public function index()
 	{
-		//
+        $data = array();
+		return View::make('account/index', compact('data'));
 	}
 
 
@@ -47,10 +48,6 @@ class AccountController extends Controller {
                 ->withErrors($validator)
                 ->withInput();
         } else {
-
-
-
-
             // store
             $account = new Account_model();
             $account->received_from = Input::get('party_from');

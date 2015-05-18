@@ -23,6 +23,7 @@
                               <label for="party_from">Party From</label>
 
                              <select name="party_from" id="party_from" class="form-control" onChange="getFromCurrency()">
+                             <option value="">-Select-</option>
                              @foreach($data['party_data'] as $list)
                              <option data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
                               @endforeach
@@ -67,6 +68,7 @@
                           <div class="form-group">
                               <label for="party_to">Party TO</label>
                               <select name="party_to" id="party_to" class="form-control" onChange="getToCurrency()">
+                              <option value="">-Select-</option>
                                @foreach($data['party_data'] as $list)
                                <option data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
                                 @endforeach
