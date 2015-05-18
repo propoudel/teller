@@ -2,7 +2,6 @@
 @section("content")
 
   <div class="panel panel-default">
-<<<<<<< HEAD
           <div class="panel-heading">Report</div>
           <div class="panel-body">
               <div class="col-sm-12">
@@ -164,8 +163,6 @@
 
                 				</tbody>
                 			</table>
-
->>>>>>> b1d6551d06813dd9bf9951c08ae7d435eb9997e1
 
               </div>
 

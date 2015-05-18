@@ -101,16 +101,6 @@ Route::group(["before" => "auth"], function () {
         "as" => "party/delete",
         "uses" => "PartyController@destroy"
     ]);
-<<<<<<< HEAD
-
-    //Routes for Report
-    Route::any("/report", [
-        "as" => "/report",
-        "uses" => "ReportController@index"
-    ]);
-
-=======
->>>>>>> b1d6551d06813dd9bf9951c08ae7d435eb9997e1
 
 });
 

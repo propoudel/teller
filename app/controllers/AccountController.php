@@ -121,9 +121,8 @@ class AccountController extends Controller {
      */
     public function report()
     {
-        die("this is it!");
         $data = array();
-        return View::make('account/index', compact('data'));
+        return View::make('account/report', compact('data'));
         //
     }
 
