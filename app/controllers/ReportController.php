@@ -9,9 +9,9 @@ class ReportController extends Controller {
 	 */
 	public function index()
 	{
-        $currency = new Currency();
-        $data = $currency->all();
-        return View::make("currency/index", compact('data'));
+        $account = new Account();
+        $data = $account->all();
+        return View::make("report/index", compact('data'));
 		//
 	}
 
