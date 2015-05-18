@@ -53,6 +53,18 @@ class PartyController extends Controller {
             $party->party_name = Input::get('party_name');
             $party->currency_id = Input::get('currency_code');
             $party->party_details = Input::get('party_details');
+
+            $q = Party::where('party_name','=',Input::get('party_name'))->where('currency_id','=',Input::get('currency_code'))->get();
+
+            $parties = $q->first();
+
+            //echo '<pre>' . dd(DB::getQueryLog()); die;
+
+            if (isset($parties)) {
+                Session::flash('message', 'Party Can Not Be Created. Party Already Exist for selected Currency!');
+                return Redirect::to('party');
+            }
+
             $party->save();
 
             // redirect
@@ -119,6 +131,18 @@ class PartyController extends Controller {
             $party->party_name = Input::get('party_name');
             $party->currency_id = Input::get('currency_code');
             $party->party_details = Input::get('party_details');
+
+            $q = Party::where('id','!=',$id)->where('party_name','=',Input::get('party_name'))->where('currency_id','=',Input::get('currency_code'))->get();
+
+            $parties = $q->first();
+
+            //echo '<pre>' . dd(DB::getQueryLog()); die;
+
+            if (isset($parties)) {
+                Session::flash('message', 'Party Can Not Be Edited to that Currency. Party Already Exist for selected Currency!');
+                return Redirect::to('party');
+            }
+
             $party->save();
 
             // redirect
