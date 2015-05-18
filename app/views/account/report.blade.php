@@ -2,7 +2,7 @@
 @section("content")
 
   <div class="panel panel-default">
-          <div class="panel-heading">Report</div>
+          <div class="panel-heading">Report{Under progres}</div>
           <div class="panel-body">
 
  <div class="col-sm-12">
