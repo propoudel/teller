@@ -1,211 +1,157 @@
 @extends("layout")
 @section("content")
 
-  <div class="panel panel-default">
-          <div class="panel-heading">Report{Under progres}</div>
-          <div class="panel-body">
+    <div class="panel panel-default">
+        <div class="panel-heading">Report{Under progres}</div>
+        <div class="panel-body">
 
- <div class="col-sm-12">
-                 <form>
+            <div class="col-sm-12">
+                <form>
 
-                     <div class="row">
-                         <div class="col-sm-3">
-                             <div class="form-group">
-                                 <label for="from">From</label>
-                                 <input class="form-control datepicker" name="from" type="text" placeholder="From Date">
-                             </div>
-                         </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="party_from">Party From</label>
 
-                         <div class="col-sm-3">
-                             <div class="form-group">
-                                 <label for="to">To</label>
-                                 <input type="text" class="form-control datepicker" id="to" placeholder="To Date">
-                             </div>
-                         </div>
+                                <select name="party_from" id="party_from" class="form-control" onChange="getFromCurrency()">
+                                    <option value="">-Select-</option>
+                                    @foreach($data['party_data'] as $list)
+                                        <option data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
+                                    @endforeach
+                                </select>
 
-                         <div class="col-sm-2">
-                             <div class="form-group">
-                                 <label for="sendcurrency">Currency</label>
-                                 <input type="text" class="form-control" id="sendcurrency" placeholder="Currency">
-                             </div>
-                         </div>
+                            </div>
+                        </div>
 
-                         <div class="col-sm-2">
-                             <div class="form-group">
-                                 <label for="rate">Rate</label>
-                                 <input type="email" class="form-control" id="rate" placeholder="Rate">
-                             </div>
-                         </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="currency_from">Currency</label>
+                                <select name="currency_from" id="currency_from" class="form-control">
 
+                                    <option value="">Select</option>
 
-                         <div class="col-sm-2">
-                             <div class="form-group">
-                                 <label> &nbsp; </label>
+                                </select>
 
-                                 <button class=" form-control btn btn-primary">Search</button>
-                             </div>
-                         </div>
-                     </div>
+                            </div>
+                        </div>
 
+                    </div>
 
-                     <div class="row">
-                         <div class="col-sm-12">
-                             <div class="bs-example" data-example-id="bordered-table">
-                                 <table class="table table-bordered">
-                                     <thead>
-                                     <tr>
-                                         <th><a translationcount="" class="sortable" href="/teller/tellerapp/web/app_dev.php/dashboard/report?sort=a.id&amp;direction=asc&amp;page=1" title="SN">SN</a>
- </th>
-                                         <th>Name</th>
-                                         <th><a translationcount="" class="sortable" href="/teller/tellerapp/web/app_dev.php/dashboard/report?sort=a.receivedMoney&amp;direction=asc&amp;page=1" title="DR">DR</a>
- </th>
-                                         <th><a translationcount="" class="sortable" href="/teller/tellerapp/web/app_dev.php/dashboard/report?sort=a.totalTransferredMoney&amp;direction=asc&amp;page=1" title="CR">CR</a>
- </th>
-                                         <th>Details</th>
-                                     </tr>
-                                     </thead>
-                                     <tbody>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="from">Date From</label>
+                                <input class="form-control datepicker" name="from" type="text" placeholder="From Date">
+                            </div>
+                        </div>
 
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="to">To Date</label>
+                                <input type="text" class="form-control datepicker" id="to" placeholder="To Date">
+                            </div>
+                        </div>
 
-                                                                             <tr>
-                                             <th scope="row">1</th>
-                                             <td>Admin</td>
-                                             <td>3</td>
-                                             <td>9</td>
-                                             <td>Coming soon. orm</td>
-                                         </tr>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label> &nbsp; </label>
 
+                                <button class=" form-control btn btn-primary">Search</button>
+                            </div>
+                        </div>
+                    </div>
 
-                                                                             <tr>
-                                             <th scope="row">2</th>
-                                             <td>Admin</td>
-                                             <td>434</td>
-                                             <td>1736</td>
-                                             <td>Coming soon. orm</td>
-                                         </tr>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="bs-example" data-example-id="bordered-table">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>Date</th>
+                                            <th>Details</th>
+                                            <th>Rate</th>
+                                            <th>Dr</th>
+                                            <th>Cr</th>
+                                            <th>Party</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Admin</td>
+                                            <td>3</td>
+                                            <td>9</td>
+                                            <td>Coming soon. orm</td>
+                                            <td>Coming soon. orm</td>
+                                            <td>Coming soon. orm</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <nav class="pull-right">
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button class="btn btn-primary pull-right">Export</button>
+                        </div>
+                    </div>
+                </form>
 
-                                                                             <tr>
-                                             <th scope="row">3</th>
-                                             <td>Admin</td>
-                                             <td>3</td>
-                                             <td>9</td>
-                                             <td>Coming soon. orm</td>
-                                         </tr>
+            </div>
+        </div>
+    </div>
 
+    <script type="text/javascript">
 
-                                                                             <tr>
-                                             <th scope="row">4</th>
-                                             <td>Admin</td>
-                                             <td>35</td>
-                                             <td>175</td>
-                                             <td>Coming soon. orm</td>
-                                         </tr>
+        $(document).ready(function() {
+            $('.datepicker').datepicker()
+        });
 
+        function getFromCurrency(){
+            var id = $("#party_from").find(':selected').data('currency');
 
-                                                                             <tr>
-                                             <th scope="row">5</th>
-                                             <td>Admin</td>
-                                             <td>3</td>
-                                             <td>9</td>
-                                             <td>Coming soon. orm</td>
-                                         </tr>
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "<?php echo URL::to('/currency/find'); ?>",
+                data: {id:id},
+                cache: false,
+                success: function(server_response){
+                    //currency_from
+                    $('#currency_from').find('option').remove();
+                    // $('#currency_from').prop("disabled", false);
+                    $('#currency_from').append($('<option>').text(server_response.currency_code).attr('value', server_response.id));
 
+                },
+                error: function(error){
+                    console.log(error);
+                },
+            });
+        }
 
-                                                                             <tr>
-                                             <th scope="row">6</th>
-                                             <td>Admin</td>
-                                             <td>3</td>
-                                             <td>9</td>
-                                             <td>Coming soon. orm</td>
-                                         </tr>
+        function getToCurrency(){
+            var id = $("#party_to").find(':selected').data('currency');
 
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "<?php echo URL::to('/currency/find'); ?>",
+                data: {id:id},
+                cache: false,
+                success: function(server_response){
+                    //currency_from
+                    $('#send_currency').find('option').remove();
+                    //$('#send_currency').prop("disabled", false);
+                    $('#send_currency').append($('<option>').text(server_response.currency_code).attr('value', server_response.id));
 
-                                                                             <tr>
-                                             <th scope="row">7</th>
-                                             <td>Admin</td>
-                                             <td>4</td>
-                                             <td>16</td>
-                                             <td>Coming soon. orm</td>
-                                         </tr>
-
-
-                                                                             <tr>
-                                             <th scope="row">8</th>
-                                             <td>Admin</td>
-                                             <td>3</td>
-                                             <td>9</td>
-                                             <td>Coming soon. orm</td>
-                                         </tr>
-
-
-                                                                             <tr>
-                                             <th scope="row">9</th>
-                                             <td>Admin</td>
-                                             <td>3</td>
-                                             <td>9</td>
-                                             <td>Coming soon. orm</td>
-                                         </tr>
-
-
-                                                                             <tr>
-                                             <th scope="row">10</th>
-                                             <td>Admin</td>
-                                             <td>2</td>
-                                             <td>12</td>
-                                             <td>Coming soon. orm</td>
-                                         </tr>
-
-
-
-                                     </tbody>
-                                 </table>
-                             </div>
-                             <nav class="pull-right">
-
-
- <div class="pagination">
-
-
-                         <span class="current">1</span>
-
-                         <span class="page">
-                 <a href="/teller/tellerapp/web/app_dev.php/dashboard/report?page=2">2</a>
-             </span>
-
-                         <span class="page">
-                 <a href="/teller/tellerapp/web/app_dev.php/dashboard/report?page=3">3</a>
-             </span>
-
-                         <span class="page">
-                 <a href="/teller/tellerapp/web/app_dev.php/dashboard/report?page=4">4</a>
-             </span>
-
-
-             <span class="next">
-             <a href="/teller/tellerapp/web/app_dev.php/dashboard/report?page=2">&gt;</a>
-         </span>
-
-             <span class="last">
-             <a href="/teller/tellerapp/web/app_dev.php/dashboard/report?page=4">&gt;&gt;</a>
-         </span>
-     </div>
-
-
-
-                             </nav>
-                         </div>
-                     </div>
-
-                     <div class="row">
-                         <div class="col-sm-12">
-                             <button class="btn btn-primary pull-right">Export</button>
-                         </div>
-                     </div>
-                 </form>
-
-             </div>
-          </div>
-      </div>
-
+                },
+                error: function(error){
+                    console.log(error);
+                },
+            });
+        }
+    </script>
 @stop
