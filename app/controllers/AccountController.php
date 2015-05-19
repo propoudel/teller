@@ -129,10 +129,10 @@ class AccountController extends Controller {
         $currency = new Currency();
         $currency_data = $currency->all();
 
-        $data['party_data'] = $party_data;
-        $data['currency_data'] = $currency_data;
+        $account = new Account_model();
+        $account_data = $account->all();
 
-        return View::make('account/report', compact('data'));
+        return View::make('account/report', compact('party_data', 'currency_data', 'account_data'));
         //
     }
 
