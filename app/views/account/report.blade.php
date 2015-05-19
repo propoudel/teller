@@ -70,12 +70,12 @@
                                     <thead>
                                         <tr>
                                             <th>SN</th>
+                                            <th>Party</th>
                                             <th>Date</th>
                                             <th>Details</th>
                                             <th>Rate</th>
                                             <th>Dr</th>
                                             <th>Cr</th>
-                                            <th>Party</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -84,10 +84,11 @@
                                         <tr>
                                             <th scope="row">{{ $sn; }}</th>
                                             <td>{{ $list->created_at; }}</td>
+                                            <td>{{ $list->created_at; }}</td>
                                             <td>{{ $list->comment; }}</td>
                                             <td>{{ $list->sent_rate; }}</td>
-                                            <td>{{ $list->created_at; }}</td>
-                                            <td>{{ $list->created_at; }}</td>
+                                            <td>{{ $list->received_amount; }}</td>
+                                            <td>{{ $list->total_transferred_money; }}</td>
                                             <td>{{ $list->created_at; }}</td>
                                         </tr>
                                     {{--*/ $sn++ /*--}}
