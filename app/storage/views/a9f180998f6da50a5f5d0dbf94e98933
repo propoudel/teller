@@ -21,12 +21,12 @@
                                     <?php foreach($data as $list): ?>
                 					<tr>
                 						<td><?php echo $i; ?></td>
-                						<td><?php echo $list->party_name; ?></td>
-                						<td><?php echo $list->currency_id; ?></td>
+                						<td><?php echo $list->received_name; ?></td>
+                						<td><?php echo $list->sent_name; ?></td>
 
                 						<td>
-                                            <a class="btn btn-small btn-info" href="<?php echo URL::to('party/' . $list->id . '/edit'); ?>">Edit</a>
-                                             <a class="btn btn-small btn-success" href="<?php echo URL::to('party/' . $list->id. '/delete'); ?>" onclick="if(!confirm('Are you sure?')){ return false;}">Delete</a>
+                                            <a class="btn btn-small btn-info" href="<?php echo URL::to('account/' . $list->id . '/edit'); ?>">Edit</a>
+                                             <a class="btn btn-small btn-success" href="<?php echo URL::to('account/' . $list->id. '/delete'); ?>" onclick="if(!confirm('Are you sure?')){ return false;}">Delete</a>
                 						</td>
 
                 					</tr>

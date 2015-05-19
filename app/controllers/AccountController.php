@@ -9,7 +9,15 @@ class AccountController extends Controller {
 	 */
 	public function index()
 	{
-        $data = array();
+
+        $sql = 'SELECT *,
+                (SELECT party_name FROM party WHERE account.`received_from` = party.`id`) AS received_name,
+                (SELECT party_name FROM party WHERE account.`sent_to` = party.`id`) AS sent_name FROM account;
+
+                ';
+
+        $data =  DB::select($sql);
+
 		return View::make('account/index', compact('data'));
 	}
 
