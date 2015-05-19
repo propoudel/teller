@@ -252,3 +252,5 @@ background-size: cover;
   margin-bottom: 0;
 }
 body.app{ padding-bottom: 0; padding-top: 0;}
+
+.form-group label{ display: block;}
