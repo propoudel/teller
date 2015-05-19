@@ -42,7 +42,7 @@
                                 </select>
 
                             </div>
-                        </div>
+                      </div>
 
                           <div class="col-sm-6">
                               <div class="form-group">
@@ -126,7 +126,8 @@
 
           </div>
       </div>
-<script type="text/javascript">
+
+  <script type="text/javascript">
        function getFromCurrency(){
         var id = $("#party_from").find(':selected').data('currency');
 

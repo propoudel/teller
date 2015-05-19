@@ -122,6 +122,16 @@ class AccountController extends Controller {
     public function report()
     {
         $data = array();
+
+        $party = new Party();
+        $party_data = $party->all();
+
+        $currency = new Currency();
+        $currency_data = $currency->all();
+
+        $data['party_data'] = $party_data;
+        $data['currency_data'] = $currency_data;
+
         return View::make('account/report', compact('data'));
         //
     }
