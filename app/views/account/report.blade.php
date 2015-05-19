@@ -14,8 +14,8 @@
                                 <label for="party_from">Party From</label>
 
                                 <select name="party_from" id="party_from" class="form-control" onChange="getFromCurrency()">
-                                    <option value="">-Select-</option>
-                                    @foreach($data['party_data'] as $list)
+                                    <option value="">Select</option>
+                                    @foreach($party_data as $list)
                                         <option data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
                                     @endforeach
                                 </select>
@@ -29,7 +29,9 @@
                                 <select name="currency_from" id="currency_from" class="form-control">
 
                                     <option value="">Select</option>
-
+                                    @foreach($currency_data as $list)
+                                        <option data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->currency_code; }}</option>
+                                    @endforeach
                                 </select>
 
                             </div>
@@ -77,15 +79,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    {{--*/ $sn = 1 /*--}}
+                                    @foreach($account_data as $list)
                                         <tr>
-                                            <th scope="row">1</th>
-                                            <td>Admin</td>
+                                            <th scope="row">{{ $sn; }}</th>
+                                            <td>{{ $list->created_at; }}</td>
                                             <td>3</td>
                                             <td>9</td>
                                             <td>Coming soon. orm</td>
                                             <td>Coming soon. orm</td>
                                             <td>Coming soon. orm</td>
                                         </tr>
+                                    {{--*/ $sn++ /*--}}
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
