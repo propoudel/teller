@@ -84,11 +84,11 @@
                                         <tr>
                                             <th scope="row">{{ $sn; }}</th>
                                             <td>{{ $list->created_at; }}</td>
-                                            <td>3</td>
-                                            <td>9</td>
-                                            <td>Coming soon. orm</td>
-                                            <td>Coming soon. orm</td>
-                                            <td>Coming soon. orm</td>
+                                            <td>{{ $list->comment; }}</td>
+                                            <td>{{ $list->sent_rate; }}</td>
+                                            <td>{{ $list->created_at; }}</td>
+                                            <td>{{ $list->created_at; }}</td>
+                                            <td>{{ $list->created_at; }}</td>
                                         </tr>
                                     {{--*/ $sn++ /*--}}
                                     @endforeach
