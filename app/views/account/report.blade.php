@@ -13,7 +13,21 @@
                             <div class="form-group">
                                 <label for="party_from">Party From</label>
 
-                                <select name="party_from" id="party_from" class="form-control" onChange="getFromCurrency()">
+                                <select name="party_from" id="party_from" class="form-control">
+                                    <option value="">Select</option>
+                                    @foreach($party_data as $list)
+                                        <option data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="party_from">Party To</label>
+
+                                <select name="party_to" id="party_to" class="form-control" >
                                     <option value="">Select</option>
                                     @foreach($party_data as $list)
                                         <option data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
@@ -70,25 +84,30 @@
                                     <thead>
                                         <tr>
                                             <th>SN</th>
+                                            <th>Party</th>
                                             <th>Date</th>
                                             <th>Details</th>
                                             <th>Rate</th>
                                             <th>Dr</th>
                                             <th>Cr</th>
-                                            <th>Party</th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
                                     {{--*/ $sn = 1 /*--}}
                                     @foreach($account_data as $list)
                                         <tr>
+                                            <td colspan="7"><b>Prakash</b></td>
+                                        </tr>
+
+                                        <tr>
                                             <th scope="row">{{ $sn; }}</th>
+                                            <td>{{ $list->created_at; }}</td>
                                             <td>{{ $list->created_at; }}</td>
                                             <td>{{ $list->comment; }}</td>
                                             <td>{{ $list->sent_rate; }}</td>
-                                            <td>{{ $list->created_at; }}</td>
-                                            <td>{{ $list->created_at; }}</td>
-                                            <td>{{ $list->created_at; }}</td>
+                                            <td>{{ $list->received_amount; }}</td>
+                                            <td>{{ $list->total_transferred_money; }}</td>
                                         </tr>
                                     {{--*/ $sn++ /*--}}
                                     @endforeach
@@ -110,54 +129,4 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-
-        $(document).ready(function() {
-            $('.datepicker').datepicker()
-        });
-
-        function getFromCurrency(){
-            var id = $("#party_from").find(':selected').data('currency');
-
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: "<?php echo URL::to('/currency/find'); ?>",
-                data: {id:id},
-                cache: false,
-                success: function(server_response){
-                    //currency_from
-                    $('#currency_from').find('option').remove();
-                    // $('#currency_from').prop("disabled", false);
-                    $('#currency_from').append($('<option>').text(server_response.currency_code).attr('value', server_response.id));
-
-                },
-                error: function(error){
-                    console.log(error);
-                },
-            });
-        }
-
-        function getToCurrency(){
-            var id = $("#party_to").find(':selected').data('currency');
-
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: "<?php echo URL::to('/currency/find'); ?>",
-                data: {id:id},
-                cache: false,
-                success: function(server_response){
-                    //currency_from
-                    $('#send_currency').find('option').remove();
-                    //$('#send_currency').prop("disabled", false);
-                    $('#send_currency').append($('<option>').text(server_response.currency_code).attr('value', server_response.id));
-
-                },
-                error: function(error){
-                    console.log(error);
-                },
-            });
-        }
-    </script>
 @stop
