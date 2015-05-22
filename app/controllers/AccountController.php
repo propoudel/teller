@@ -137,113 +137,30 @@ class AccountController extends Controller {
         $currency = new Currency();
         $currency_data = $currency->all();
 
-        //$account = new Account_model();
-        //$account_data = $account->all();
-
-
         $account = 'SELECT *,
-(SELECT
-    id
-  FROM
-    party
-  WHERE account.`received_from` = party.`id`) AS party_id,
+                      (SELECT id FROM party WHERE account.`received_from` = party.`id`) AS party_id,
                       (SELECT party_name FROM party WHERE account.`received_from` = party.`id`) AS received_name,
                       (SELECT party_name FROM party WHERE account.`sent_to` = party.`id`) AS sent_name FROM account';
 
-//        if (isset($_GET)) {
-//            $where = 'WHERE ';
-//        }
-//        $getdata = array_filter($_GET);
-//
-//        foreach ($getdata as $key => $val) {
-//            //echo end($_GET); die;
-//            if (end($getdata) == $val && !empty($val)) {
-//                $where .= $key . "=" . $val;
-//             } else if (!empty($val)) {
-//                $where .= $key . "=" . $val . " AND ";
-//            }
-//        }
-//
-//        echo $where; die;
-//
-//        if (Input::get('party_from')) {
-//            $account .= ' WHERE received_from=' . Input::get('party_from');
-//        }
-//        if (Input::get('party_to')) {
-//            $account .= ' WHERE sent_to=' . Input::get('party_to');
-//        }
-//        if (Input::get('currency')) {
-//            $account .= ' WHERE sent_currency=' . Input::get('currency') . ' OR received_currency=' . Input::get('currency');
-//        }
-//        if (Input::get('date_from')) {
-//            $account .= ' WHERE received_id=' . Input::get('date_from');
-//        }
-//        if (Input::get('date_to')) {
-//            $account .= ' WHERE received_id=' . Input::get('date_to');
-//        }
-//
-//        $account .= ' ORDER BY received_name';
-
-        //echo $account; die;\
-
-//        $options = array(
-//            array("brand" => "Puma","code" => "p01","name" => "Puma One"),
-//            array("brand" => "Puma","code" => "p02","name" => "Puma Two"),
-//            array("brand" => "Puma","code" => "p03","name" => "Puma Three"),
-//            array("brand" => "Nike","code" => "n01","name" => "Nike One"),
-//            array("brand" => "Nike","code" => "n02","name" => "Nike Two"),
-//            array("brand" => "Nike","code" => "n03","name" => "Nike Three"),
-//            array("brand" => "Nike","code" => "n04","name" => "Nike Four"),
-//            array("brand" => "Adidas","code" => "a01","name" => "Adidas One"),
-//            array("brand" => "Adidas","code" => "a02","name" => "Adidas Two"),
-//            array("brand" => "Adidas","code" => "a03","name" => "Adidas Three"),
-//            array("brand" => "Adidas","code" => "a04","name" => "Adidas Four"),
-//            array("brand" => "Adidas","code" => "a05","name" => "Adidas Five"),
-//            array("brand" => "Adidas","code" => "a06","name" => "Adidas Six")
-//        );
-//
-//
-//        $newOptions = array();
-//        foreach ($options as $option) {
-//            $brand = $option['brand'];
-//            $code = $option['code'];
-//            $name = $option['name'];
-//
-//            $newOptions[$brand][$code] = $name;
-//        }
-//
-//        echo '<pre>';
-//        print_r($options);
-//        print_r($newOptions);
-
-        //die;
-
-
-
-
-        $account_data =  DB::select($account->get());
-
-
-
-        echo '<pre>';
-        print_r($account_data->toArray());
+        $account_data =  DB::select($account);
 
         $new = array();
-
         foreach($account_data as $ad) {
-            $neww = $ad->party_id;
-            $neww = array();
-            //$partycoll = $ad->party_id;
-            $new[$ad->party_id] = $ad->party_id;
-            $new[$ad->party_id] = $ad->id;
+            $new[] = (array) $ad;
+
         }
 
-        print_r($new);
+        $return_account = array();
 
-        die;
+        foreach ($new as $key=>$val) {
+            $return_account[$val['party_id']][] = $val;
+        }
 
-        return View::make('account/report', compact('party_data', 'currency_data', 'account_data'));
-        //
+//        echo '<pre>';
+//        print_r($return_account);
+//        die;
+
+        return View::make('account/report', compact('party_data', 'currency_data', 'return_account'));
     }
 
 }

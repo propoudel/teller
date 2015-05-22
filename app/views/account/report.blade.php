@@ -96,23 +96,26 @@
                                     </thead>
 
                                     <tbody>
-                                    {{--*/ $sn = 1 /*--}}
-                                    @foreach($account_data as $list)
-                                        {{--<tr>--}}
-                                            {{--<td colspan="7"><b>{{ $list->received_name; }}</b></td>--}}
-                                        {{--</tr>--}}
 
+                                    @foreach($return_account as $list_first)
                                         <tr>
-                                            <th scope="row">{{ $sn }}</th>
-                                            <td>{{ date("d-m-Y",strtotime($list->created_at)) }}</td>
-                                            <td>{{ $list->received_name }}</td>
-                                            <td>{{ $list->received_amount }}</td>
-                                            <td>{{ $list->sent_rate }}</td>
-                                            <td>{{ $list->sent_name }}</td>
-                                            <td>{{ $list->total_transferred_money }}</td>
-                                            <td>{{ $list->comment }}</td>
+                                            <td colspan="7"><b>{{ $list_first[0]['received_name']; }}</b></td>
                                         </tr>
-                                    {{--*/ $sn++ /*--}}
+
+                                        <?php $sn = 1; ?>
+                                        @foreach($list_first as $list)
+                                            <tr>
+                                                <th scope="row"><?php echo $sn; ?></th>
+                                                <td>{{ date("d-m-Y",strtotime($list['created_at'])) }}</td>
+                                                <td>{{ $list['received_name'] }}</td>
+                                                <td>{{ $list['received_amount'] }}</td>
+                                                <td>{{ $list['sent_rate'] }}</td>
+                                                <td>{{ $list['sent_name'] }}</td>
+                                                <td>{{ $list['total_transferred_money'] }}</td>
+                                                <td>{{ $list['comment'] }}</td>
+                                            </tr>
+                                            <?php $sn++; ?>
+                                        @endforeach
                                     @endforeach
                                     </tbody>
                                 </table>
