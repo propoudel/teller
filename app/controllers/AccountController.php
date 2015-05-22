@@ -2,13 +2,13 @@
 
 class AccountController extends Controller {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
 
         $sql = 'SELECT *,
                 (SELECT party_name FROM party WHERE account.`received_from` = party.`id`) AS received_name,
@@ -18,28 +18,28 @@ class AccountController extends Controller {
 
         $data =  DB::select($sql);
 
-		return View::make('account/index', compact('data'));
-	}
+        return View::make('account/index', compact('data'));
+    }
 
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
 
-	}
+    }
 
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store()
+    {
         $rules = array(
             'party_from' => 'required',
             'currency_from' => 'required',
@@ -72,55 +72,55 @@ class AccountController extends Controller {
             Session::flash('message', 'Successfully stored amount!');
             return Redirect::to('dashboard');
         }
-	}
+    }
 
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update($id)
+    {
+        //
+    }
 
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -142,6 +142,43 @@ class AccountController extends Controller {
                       (SELECT party_name FROM party WHERE account.`received_from` = party.`id`) AS received_name,
                       (SELECT party_name FROM party WHERE account.`sent_to` = party.`id`) AS sent_name FROM account';
 
+        //        if (isset($_GET)) {
+//            $where = 'WHERE ';
+//        }
+//        $getdata = array_filter($_GET);
+//
+//        foreach ($getdata as $key => $val) {
+//            //echo end($_GET); die;
+//            if (end($getdata) == $val && !empty($val)) {
+//                $where .= $key . "=" . $val;
+//             } else if (!empty($val)) {
+//                $where .= $key . "=" . $val . " AND ";
+//            }
+//        }
+//
+//        echo $where; die;
+//
+//        if (Input::get('party_from')) {
+//            $account .= ' WHERE received_from=' . Input::get('party_from');
+//        }
+//        if (Input::get('party_to')) {
+//            $account .= ' WHERE sent_to=' . Input::get('party_to');
+//        }
+//        if (Input::get('currency')) {
+//            $account .= ' WHERE sent_currency=' . Input::get('currency') . ' OR received_currency=' . Input::get('currency');
+//        }
+//        if (Input::get('date_from')) {
+//            $account .= ' WHERE received_id=' . Input::get('date_from');
+//        }
+//        if (Input::get('date_to')) {
+//            $account .= ' WHERE received_id=' . Input::get('date_to');
+//        }
+//
+//        $account .= ' ORDER BY received_name';
+
+        //echo $account; die;\
+
+
         $account_data =  DB::select($account);
 
         $new = array();
@@ -155,10 +192,6 @@ class AccountController extends Controller {
         foreach ($new as $key=>$val) {
             $return_account[$val['party_id']][] = $val;
         }
-
-//        echo '<pre>';
-//        print_r($return_account);
-//        die;
 
         return View::make('account/report', compact('party_data', 'currency_data', 'return_account'));
     }
