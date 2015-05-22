@@ -11,12 +11,13 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="party_from">Party From</label>
+                                <label for="received_from">Party From</label>
 
-                                <select name="party_from" id="party_from" class="form-control">
+                                <select name="received_from" id="received_from" class="form-control">
                                     <option value="">Select</option>
                                     @foreach($party_data as $list)
-                                        <option data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
+
+                                        <option <?php if(isset($_GET['received_from']) && $_GET['received_from']==$list->id) {echo 'selected';} ?> data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
                                     @endforeach
                                 </select>
 
@@ -25,12 +26,12 @@
 
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="party_from">Party To</label>
+                                <label for="sent_to">Party To</label>
 
-                                <select name="party_to" id="party_to" class="form-control" >
+                                <select name="sent_to" id="sent_to" class="form-control" >
                                     <option value="">Select</option>
                                     @foreach($party_data as $list)
-                                        <option data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
+                                        <option <?php if(isset($_GET['sent_to']) && $_GET['sent_to']==$list->id) {echo 'selected';} ?>  data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
                                     @endforeach
                                 </select>
 
@@ -39,12 +40,12 @@
 
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="currency_from">Currency</label>
-                                <select name="currency_from" id="currency_from" class="form-control">
+                                <label for="currency">Currency</label>
+                                <select name="currency" id="currency" class="form-control">
 
                                     <option value="">Select</option>
                                     @foreach($currency_data as $list)
-                                        <option data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->currency_code; }}</option>
+                                        <option <?php if(isset($_GET['currency']) && $_GET['currency']==$list->id) {echo 'selected';} ?>  data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->currency_code; }}</option>
                                     @endforeach
                                 </select>
 
@@ -56,15 +57,15 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="from">Date From</label>
+                                <label for="from_date">Date From</label>
                                 <input class="form-control datepicker" name="from" type="text" placeholder="From Date">
                             </div>
                         </div>
 
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="to">To Date</label>
-                                <input type="text" class="form-control datepicker" id="to" placeholder="To Date">
+                                <label for="to_date">To Date</label>
+                                <input type="text" class="form-control datepicker" name="to" id="to" placeholder="To Date">
                             </div>
                         </div>
 
@@ -84,30 +85,32 @@
                                     <thead>
                                         <tr>
                                             <th>SN</th>
-                                            <th>Party</th>
                                             <th>Date</th>
-                                            <th>Details</th>
+                                            <th>Party From</th>
+                                            <th>Received Amount</th>
                                             <th>Rate</th>
-                                            <th>Dr</th>
-                                            <th>Cr</th>
+                                            <th>Party To</th>
+                                            <th>Total</th>
+                                            <th>Comment</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                     {{--*/ $sn = 1 /*--}}
                                     @foreach($account_data as $list)
-                                        <tr>
-                                            <td colspan="7"><b>Prakash</b></td>
-                                        </tr>
+                                        {{--<tr>--}}
+                                            {{--<td colspan="7"><b>{{ $list->received_name; }}</b></td>--}}
+                                        {{--</tr>--}}
 
                                         <tr>
-                                            <th scope="row">{{ $sn; }}</th>
-                                            <td>{{ $list->created_at; }}</td>
-                                            <td>{{ $list->created_at; }}</td>
-                                            <td>{{ $list->comment; }}</td>
-                                            <td>{{ $list->sent_rate; }}</td>
-                                            <td>{{ $list->received_amount; }}</td>
-                                            <td>{{ $list->total_transferred_money; }}</td>
+                                            <th scope="row">{{ $sn }}</th>
+                                            <td>{{ date("d-m-Y",strtotime($list->created_at)) }}</td>
+                                            <td>{{ $list->received_name }}</td>
+                                            <td>{{ $list->received_amount }}</td>
+                                            <td>{{ $list->sent_rate }}</td>
+                                            <td>{{ $list->sent_name }}</td>
+                                            <td>{{ $list->total_transferred_money }}</td>
+                                            <td>{{ $list->comment }}</td>
                                         </tr>
                                     {{--*/ $sn++ /*--}}
                                     @endforeach
