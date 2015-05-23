@@ -168,10 +168,19 @@ class AccountController extends Controller {
             $account .= ' received_from=' . Input::get('received_from');
         }
         if (Input::get('sent_to')) {
-            $account .= ' AND sent_to=' . Input::get('sent_to');
+            if (Input::get('received_from')) {
+                $account .= ' AND sent_to=' . Input::get('sent_to');
+            } else {
+                $account .= ' sent_to=' . Input::get('sent_to');
+            }
+
         }
         if (Input::get('currency')) {
-            $account .= ' AND (sent_currency=' . Input::get('currency') . ' OR received_currency=' . Input::get('currency') . ')';
+            if (Input::get('received_from') || Input::get('sent_to')) {
+                $account .= ' AND (sent_currency=' . Input::get('currency') . ' OR received_currency=' . Input::get('currency') . ')';
+            } else {
+                $account .= ' (sent_currency=' . Input::get('currency') . ' OR received_currency=' . Input::get('currency') . ')';
+            }
         }
 //        if (Input::get('from')) {
 //            $account .= ' AND created_at>date(' . Input::get('from') . ')';
