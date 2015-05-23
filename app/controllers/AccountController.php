@@ -193,7 +193,7 @@ class AccountController extends Controller {
             $return_account[$val['party_id']][] = $val;
         }
 
-        return View::make('account/report', compact('party_data', 'currency_data', 'return_account'));
+        return View::make('account/report', compact('party_data', 'currency_data', 'return_account', 'account_data'));
     }
 
 }
