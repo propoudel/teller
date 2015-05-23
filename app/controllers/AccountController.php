@@ -208,18 +208,61 @@ class AccountController extends Controller {
             $return_account[$val['party_id']][] = $val;
         }
 
-        $users = User::orderBy('created_at','desc')->get();
-
         return View::make('account/report', compact('party_data', 'currency_data', 'return_account', 'account_data'));
     }
 
 
-    public function export(){
-        Excel::create('Users', function($excel) {
+    public function export() {
+        Excel::create('Excel Report', function($excel) {
 
-          $excel->sheet('Users', function($sheet) {
+          $excel->sheet('Excel Report', function($sheet) {
             $users = User::orderBy('created_at','desc')->get();
-            $sheet->loadView('account/users', ['users' => $users->toArray()]);
+
+            $party = new Party();
+            $party_data = $party->all();
+
+            $currency = new Currency();
+            $currency_data = $currency->all();
+
+            $account = 'SELECT *,
+                                  (SELECT id FROM party WHERE account.`received_from` = party.`id`) AS party_id,
+                                  (SELECT party_name FROM party WHERE account.`received_from` = party.`id`) AS received_name,
+                                  (SELECT party_name FROM party WHERE account.`sent_to` = party.`id`) AS sent_name FROM account';
+
+            $get_data = array_filter($_GET);
+
+            if (!empty($get_data)) {
+                $account .= ' WHERE ';
+            }
+
+            if (Input::get('received_from')) {
+                $account .= ' received_from=' . Input::get('received_from');
+            }
+            if (Input::get('sent_to')) {
+                if (Input::get('received_from')) {
+                    $account .= ' AND sent_to=' . Input::get('sent_to');
+                } else {
+                    $account .= ' sent_to=' . Input::get('sent_to');
+                }
+
+            }
+            if (Input::get('currency')) {
+                if (Input::get('received_from') || Input::get('sent_to')) {
+                    $account .= ' AND (sent_currency=' . Input::get('currency') . ' OR received_currency=' . Input::get('currency') . ')';
+                } else {
+                    $account .= ' (sent_currency=' . Input::get('currency') . ' OR received_currency=' . Input::get('currency') . ')';
+                }
+            }
+
+            $account .= ' ORDER BY received_name';
+
+            $acc_data =  DB::select($account);
+
+            foreach ($acc_data as $ad) {
+                $account_data[] = (array) $ad;
+            }
+
+            $sheet->loadView('account/accountexcel', ['users' => $users->toArray(), 'account_data' => $account_data, 'party_data' => $party_data->toArray(), 'currency_data' => $currency_data->toArray()]);
           });
         })->download('xls');
       }
