@@ -158,7 +158,11 @@ class AccountController extends Controller {
 //
 //        echo $where; die;
 
-        $account .= ' WHERE ';
+        $get_data = array_filter($_GET);
+
+        if (!empty($get_data)) {
+            $account .= ' WHERE ';
+        }
 
         if (Input::get('received_from')) {
             $account .= ' received_from=' . Input::get('received_from');
