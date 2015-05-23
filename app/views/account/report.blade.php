@@ -114,15 +114,15 @@
                                         ?>
 
                                         @foreach($account_data as $a)
-                                            <?php
-                                                if ($a->calculatetype == 1) {
-                                                    $ttm = $a->total_transferred_money;
-                                                } else if ($a->calculatetype == 2) {
-                                                    $ttm = $a->total_transferred_money * $a->sent_rate;
-                                                } else if ($a->calculatetype == 3) {
-                                                    $ttm = $a->total_transferred_money /  $a->sent_rate;
-                                                }
-                                            ?>
+                                            {{--//<?php--}}
+{{--                                                if ($a->calculatetype == 1) {--}}
+{{--                                                    $ttm = $a->total_transferred_money;--}}
+{{--                                                } else if ($a->calculatetype == 2) {--}}
+{{--                                                    $ttm = $a->total_transferred_money * $a->sent_rate;--}}
+{{--                                                } else if ($a->calculatetype == 3) {--}}
+{{--                                                    $ttm = $a->total_transferred_money /  $a->sent_rate;--}}
+{{--                                                }--}}
+                                            {{--?>--}}
 
                                             <?php $credit += $a->total_transferred_money; ?>
                                             <?php $debit += $a->received_amount; ?>
