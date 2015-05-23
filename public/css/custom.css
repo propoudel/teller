@@ -79,6 +79,7 @@ background-size: cover;
 .navbar-inverse {
   background-color: #3d4a57;
   border-color: #333;
+    margin-bottom: 20px;
 }
 .navbar-inverse .navbar-nav > li > a,
 .navbar .navbar-brand {
@@ -254,3 +255,11 @@ background-size: cover;
 body.app{ padding-bottom: 0; padding-top: 0;}
 
 .form-group label{ display: block;}
+.navbar-brand {
+    float: left;
+    height: 50px;
+    padding: 20px 0px;
+    font-size: 45px;
+    line-height: 20px;
+}
+.navbar-inverse .navbar-brand{ color: #FFF;}
