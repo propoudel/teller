@@ -157,26 +157,28 @@ class AccountController extends Controller {
 //        }
 //
 //        echo $where; die;
-//
-//        if (Input::get('party_from')) {
-//            $account .= ' WHERE received_from=' . Input::get('party_from');
-//        }
-//        if (Input::get('party_to')) {
-//            $account .= ' WHERE sent_to=' . Input::get('party_to');
-//        }
-//        if (Input::get('currency')) {
-//            $account .= ' WHERE sent_currency=' . Input::get('currency') . ' OR received_currency=' . Input::get('currency');
-//        }
-//        if (Input::get('date_from')) {
-//            $account .= ' WHERE received_id=' . Input::get('date_from');
-//        }
-//        if (Input::get('date_to')) {
-//            $account .= ' WHERE received_id=' . Input::get('date_to');
-//        }
-//
-//        $account .= ' ORDER BY received_name';
 
-        //echo $account; die;\
+        $account .= ' WHERE ';
+
+        if (Input::get('received_from')) {
+            $account .= ' received_from=' . Input::get('received_from');
+        }
+        if (Input::get('sent_to')) {
+            $account .= ' AND sent_to=' . Input::get('sent_to');
+        }
+        if (Input::get('currency')) {
+            $account .= ' AND (sent_currency=' . Input::get('currency') . ' OR received_currency=' . Input::get('currency') . ')';
+        }
+//        if (Input::get('from')) {
+//            $account .= ' AND created_at>date(' . Input::get('from') . ')';
+//        }
+//        if (Input::get('to')) {
+//            $account .= ' AND created_at<date(' . Input::get('to') . ')';
+//        }
+
+        $account .= ' ORDER BY received_name';
+
+        //echo $account; die;
 
 
         $account_data =  DB::select($account);
