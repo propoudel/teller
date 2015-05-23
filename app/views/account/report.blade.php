@@ -196,7 +196,7 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <button class="btn btn-primary pull-right"><a href="<?php echo URL::to('/account/export'); ?>">Export</a></button>
+                            <button class="btn btn-primary pull-right"><a href="<?php echo URL::to('/account/export?type=export'); ?>">Export</a></button>
                         </div>
                     </div>
                 </form>
