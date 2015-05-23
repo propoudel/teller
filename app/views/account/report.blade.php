@@ -194,12 +194,13 @@
                         </div>
                     </div>
 
+
+                </form>
                     <div class="row">
                         <div class="col-sm-12">
-                            <button class="btn btn-primary pull-right"><a href="<?php echo URL::to('/account/export?type=export'); ?>">Export</a></button>
+                            <button url="<?php echo URL::to('/account/export') . '?received_from=' . $received_from . '&sent_to='  . $sent_to .  '&currency=' . $currency . '&from=' . $from . '&to=' . $to; ?>" id="export" class="btn btn-primary pull-right">Export</button>
                         </div>
                     </div>
-                </form>
 
             </div>
         </div>
@@ -207,6 +208,12 @@
 
     <script>
         $( '.datepicker').datepicker();
+
+        $("#export").click(function () {
+            var url = $(this).attr('url');
+            window.location.href = url;
+            return false;
+        });
     </script>
 
 @stop

@@ -213,9 +213,9 @@ class AccountController extends Controller {
 
 
     public function export() {
-        Excel::create('Excel Report', function($excel) {
+        Excel::create('ExcelReport' . date('Ymdhms'), function($excel) {
 
-          $excel->sheet('Excel Report', function($sheet) {
+          $excel->sheet('ExcelReport' . date('Ymdhms'), function($sheet) {
             $users = User::orderBy('created_at','desc')->get();
 
             $party = new Party();
@@ -258,8 +258,16 @@ class AccountController extends Controller {
 
             $acc_data =  DB::select($account);
 
+            $account_data = array();
+
+
             foreach ($acc_data as $ad) {
                 $account_data[] = (array) $ad;
+            }
+
+            if (empty($account_data)) {
+                echo 'No data to Be Export';
+                die;
             }
 
             $sheet->loadView('account/accountexcel', ['users' => $users->toArray(), 'account_data' => $account_data, 'party_data' => $party_data->toArray(), 'currency_data' => $currency_data->toArray()]);
