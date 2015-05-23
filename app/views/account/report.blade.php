@@ -6,6 +6,13 @@
         <div class="panel-body">
 
             <div class="col-sm-12">
+                <?php
+                    $received_from = isset($_GET['received_from']) ? $_GET['received_from'] : '';
+                    $sent_to = isset($_GET['sent_to']) ? $_GET['sent_to'] : '';
+                    $currency = isset($_GET['currency']) ? $_GET['currency'] : '';
+                    $from = isset($_GET['from']) ? $_GET['from'] : '';
+                    $to = isset($_GET['to']) ? $_GET['to'] : '';
+                ?>
                 <form>
 
                     <div class="row">
@@ -17,7 +24,7 @@
                                     <option value="">Select</option>
                                     @foreach($party_data as $list)
 
-                                        <option <?php if($_GET['received_from']==$list->id) {echo 'selected';} ?> data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
+                                        <option <?php if($received_from==$list->id) {echo 'selected';} ?> data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
                                     @endforeach
                                 </select>
 
@@ -31,7 +38,7 @@
                                 <select name="sent_to" id="sent_to" class="form-control" >
                                     <option value="">Select</option>
                                     @foreach($party_data as $list)
-                                        <option <?php if($_GET['sent_to']==$list->id) {echo 'selected';} ?>  data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
+                                        <option <?php if($sent_to==$list->id) {echo 'selected';} ?>  data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
                                     @endforeach
                                 </select>
 
@@ -45,7 +52,7 @@
 
                                     <option value="">Select</option>
                                     @foreach($currency_data as $list)
-                                        <option <?php if($_GET['currency']==$list->id) {echo 'selected';} ?>  data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->currency_code; }}</option>
+                                        <option <?php if($currency==$list->id) {echo 'selected';} ?>  data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->currency_code; }}</option>
                                     @endforeach
                                 </select>
 
@@ -58,14 +65,14 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="from_date">Date From</label>
-                                <input class="form-control datepicker" value="<?php echo $_GET['from'] ?>" name="from" type="text" placeholder="From Date">
+                                <input class="form-control datepicker" value="<?php echo $from; ?>" name="from" type="text" placeholder="From Date">
                             </div>
                         </div>
 
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="to_date">To Date</label>
-                                <input type="text" class="form-control datepicker" value="<?php echo $_GET['to'] ?>" name="to" id="to" placeholder="To Date">
+                                <input type="text" class="form-control datepicker" value="<?php echo $to; ?>" name="to" id="to" placeholder="To Date">
                             </div>
                         </div>
 
@@ -189,7 +196,7 @@
 
                     <div class="row">
                         <div class="col-sm-12">
-                            <button class="btn btn-primary pull-right">Export</button>
+                            <button class="btn btn-primary pull-right"><a href="<?php echo URL::to('/account/export'); ?>">Export</a></button>
                         </div>
                     </div>
                 </form>

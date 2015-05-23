@@ -208,7 +208,19 @@ class AccountController extends Controller {
             $return_account[$val['party_id']][] = $val;
         }
 
+        $users = User::orderBy('created_at','desc')->get();
+
         return View::make('account/report', compact('party_data', 'currency_data', 'return_account', 'account_data'));
+    }
+
+    public function export(){
+        Excel::create('Users', function($excel) {
+
+            $excel->sheet('Users', function($sheet) {
+                $users = User::orderBy('created_at','desc')->get();
+                $sheet->loadView('account/users', ['users' => $users->toArray()]);
+            });
+        })->download('xls');
     }
 
 }
