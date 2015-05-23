@@ -182,12 +182,23 @@ class AccountController extends Controller {
                 $account .= ' (sent_currency=' . Input::get('currency') . ' OR received_currency=' . Input::get('currency') . ')';
             }
         }
-//        if (Input::get('from')) {
-//            $account .= ' AND created_at>date(' . Input::get('from') . ')';
-//        }
-//        if (Input::get('to')) {
-//            $account .= ' AND created_at<date(' . Input::get('to') . ')';
-//        }
+        /*
+        if (Input::get('from')) {
+            if (Input::get('received_from') || Input::get('sent_to') || Input::get('currency')) {
+                $account .= ' AND created_at>date(' . Input::get('from') . ')';
+            } else {
+                $account .= ' created_at>date(' . Input::get('from') . ')';
+            }
+
+        }
+        if (Input::get('to')) {
+            if (Input::get('received_from') || Input::get('sent_to') || Input::get('currency') || Input::get('from')) {
+                $account .= ' AND created_at<date(' . Input::get('to') . ')';
+            } else {
+                $account .= ' created_at<date(' . Input::get('to') . ')';
+            }
+
+        }*/
 
         $account .= ' ORDER BY received_name';
 

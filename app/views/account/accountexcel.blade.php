@@ -17,7 +17,14 @@
             <td colspan="7"><b>{{ $p['party_name'] }}</b></td>
         </tr>
 
+        <?php
+            $debit = 0;
+            $credit = 0;
+        ?>
+
         @foreach($account_data as $a)
+            <?php $credit += $a['total_transferred_money']; ?>
+            <?php $debit += $a['received_amount']; ?>
 
             <?php
             if ($p['id'] == $a['sent_to']) { ?>
@@ -28,7 +35,7 @@
                 <td>{{ $a['received_name'] }}</td>
                 <td></td>
                 <td>{{ $a['total_transferred_money'] }}</td>
-                <td>Balance</td>
+                <td></td>
             </tr>
             <?php
             }
@@ -42,12 +49,18 @@
                 <td>{{ $a['sent_name'] }}</td>
                 <td>{{ $a['received_amount'] }}</td>
                 <td></td>
-                <td>Balance</td>
+                <td></td>
             </tr>
             <?php
             }
             ?>
         @endforeach
     @endforeach
+    <tr>
+        <td align="right" colspan="4"><b>Total</b></td>
+        <td><?php echo $debit ; ?></td>
+        <td><?php echo $credit ; ?></td>
+        <td><?php echo $credit - $debit ; ?></td>
+    </tr>
     </tbody>
 </table>
