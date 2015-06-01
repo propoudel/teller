@@ -28,6 +28,12 @@ Route::group(["before" => "auth"], function () {
         "as" => "account/index",
         "uses" => "AccountController@index"
     ]);
+
+    Route::any("/account/{id}/edit", [
+        "as" => "account/edit",
+        "uses" => "AccountController@edit"
+    ]);
+
     Route::any("/account/create", [
         "as" => "account/create",
         "uses" => "AccountController@create"

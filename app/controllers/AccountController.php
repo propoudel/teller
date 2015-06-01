@@ -109,6 +109,7 @@ class AccountController extends Controller {
         $data['account'] = $currency_data;
 
         return View::make("user/dashboard_edit", compact('data'));
+       //return View::make('account/edit');
     }
 
 

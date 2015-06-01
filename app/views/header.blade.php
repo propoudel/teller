@@ -1,11 +1,11 @@
 @section("header")   
- <div class="navbar navbar-inverse" role="navigation">
+ <div class="navbar-inverse" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-toggle"></span>
             </button>
-            <a class="navbar-brand" href="javascript:void(0)">Teller</a>
+            <a class="navbar-brand" href="javascript:void(0)">TellerApp</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
