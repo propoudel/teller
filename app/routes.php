@@ -45,6 +45,14 @@ Route::group(["before" => "auth"], function () {
         "as" => "account/export",
         "uses" => "AccountController@export"
     ]);
+    Route::any("/account/{id}/delete", [
+        "as" => "account/delete",
+        "uses" => "AccountController@destroy"
+    ]);
+    Route::any("/account/{id}/edit", [
+        "as" => "account/edit",
+        "uses" => "AccountController@edit"
+    ]);
 
     //Routes for Currency
     Route::any("/currency", [

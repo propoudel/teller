@@ -9,7 +9,6 @@ class AccountController extends Controller {
      */
     public function index()
     {
-
         $sql = 'SELECT *,
                 (SELECT party_name FROM party WHERE account.`received_from` = party.`id`) AS received_name,
                 (SELECT party_name FROM party WHERE account.`sent_to` = party.`id`) AS sent_name FROM account;
@@ -95,19 +94,64 @@ class AccountController extends Controller {
      */
     public function edit($id)
     {
-        //
+        $data = array();
+
+        $party = new Party();
+        $party_data = $party->all();
+
+        $currency = new Currency();
+        $currency_data = $currency->all();
+
+        $data['party_data'] = $party_data;
+        $data['currency_data'] = $currency_data;
+
+        $item = Account_model::find($id);
+        $data['account'] = $currency_data;
+
+        return View::make("user/dashboard_edit", compact('data'));
     }
 
 
     /**
-     * Update the specified resource in storage.
+     * update the specified resource in storage.
      *
      * @param  int  $id
      * @return Response
      */
     public function update($id)
     {
-        //
+        $rules = array(
+            'party_from' => 'required',
+            'currency_from' => 'required',
+            'amount' => 'required',
+            'party_to' => 'required',
+            'send_currency' => 'required',
+            'rate' => 'required',
+        );
+        $validator = Validator::make(Input::all(), $rules);
+
+        // process the login
+        if ($validator->fails()) {
+            return Redirect::to('/dashboard')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            // store
+            $account = Account_model::find($id);
+            $account->received_from = Input::get('party_from');
+            $account->received_amount = Input::get('amount');
+            $account->received_currency = Input::get('currency_from');
+            $account->sent_to = Input::get('party_to');
+            $account->sent_currency = Input::get('send_currency');
+            $account->sent_rate = Input::get('rate');
+            $account->total_transferred_money = Input::get('totalamount');
+            $account->comment = Input::get('details');
+            $account->save();
+
+            // redirect
+            Session::flash('message', 'Successfully Updated Transaction!');
+            return Redirect::to('dashboard');
+        }
     }
 
 
@@ -119,7 +163,13 @@ class AccountController extends Controller {
      */
     public function destroy($id)
     {
-        //
+        // delete
+        $item = Account_model::find($id);
+        $item->delete();
+
+        // redirect
+        Session::flash('message', 'Successfully deleted!');
+        return Redirect::to('account');
     }
 
     /**

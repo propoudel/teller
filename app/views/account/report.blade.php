@@ -60,7 +60,7 @@
                         </div>
 
                     </div>
-
+<!--
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
@@ -75,7 +75,7 @@
                                 <input type="text" class="form-control datepicker" value="<?php echo $to; ?>" name="to" id="to" placeholder="To Date">
                             </div>
                         </div>
-
+-->
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label> &nbsp; </label>
