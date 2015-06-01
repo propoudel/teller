@@ -95,7 +95,7 @@ class AccountController extends Controller {
      */
     public function edit($id)
     {
-        //
+       return View::make('account/edit');
     }
 
 

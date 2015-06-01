@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="col-sm-3">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><i class="glyphicon glyphicon-th-list"></i> Teller Menu</div>
+                        <div class="panel-heading"><i class="glyphicon glyphicon-th-list"></i> Menu</div>
                         <div class="panel-body">
                             <ul class="nav nav-stacked">
                                 <li><a href="/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a></li>
@@ -40,6 +40,35 @@
                                 <li><a href="/account/report"><i class="glyphicon glyphicon-list-alt"></i> Reports</a></li>
                                 <li><a href="/currency"><i class="fa fa-money"></i> Currency Setting</a></li>
                             </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><i class="glyphicon glyphicon-th-list"></i> View</div>
+                        <div class="panel-body">
+                            <div class="checkbox">
+                                <?php foreach($data['currency_data'] as $list): ?>
+                                <label>
+                                  <input type="radio" name="currency" data-toggle="modal" data-target=".view-modal-sm"> AED
+                                </label>
+                                <?php endforeach; ?>
+
+                              </div>
+
+                              <div class="modal fade view-modal-sm" tabindex="-1" role="dialog" aria-labelledby="viewSmallModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-sm">
+                                  <div class="modal-content">
+                                   <div class="modal-header">
+                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                         <h4 class="modal-title" id="viewModalLabel">title</h4>
+                                       </div>
+                                       <div class="modal-body">
+                                         ...
+                                       </div>
+                                  </div>
+
+                                </div>
+                              </div>
                         </div>
                     </div>
 
