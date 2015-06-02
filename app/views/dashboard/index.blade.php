@@ -5,7 +5,7 @@
           <div class="panel-heading">Transaction Entry</div>
           <div class="panel-body">
               <div class="col-sm-12">
-                  <form action="<?php //echo URL::to('/account/store'); ?>" method="POST" name="transaction" id="transaction">
+                  <form action="<?php echo URL::to('/transaction/store'); ?>" method="POST" name="transaction" id="transaction">
                       <div class="row">
                           <div class="col-sm-12">
                               <div class="col-sm-4">
@@ -13,14 +13,14 @@
                                       <div class="col-sm-4">
                                           <div class="form-group" style="text-align: center">
                                               <label>Base</label>
-                                              <input type="radio" name="base_type" class="base_type" value="1">
+                                              <input required type="radio" name="base_type" class="base_type" value="1">
                                           </div>
                                       </div>
 
                                       <div class="col-sm-4">
                                           <div class="form-group" style="text-align: center">
                                               <label>Multi</label>
-                                              <input type="radio" name="base_type" class="base_type" value="2">
+                                              <input required type="radio" name="base_type" class="base_type" value="2">
 
                                           </div>
                                       </div>
@@ -28,7 +28,7 @@
                                       <div class="col-sm-4">
                                           <div class="form-group" style="text-align: center">
                                               <label>Divide</label>
-                                              <input type="radio" name="base_type" class="base_type" value="3">
+                                              <input required type="radio" name="base_type" class="base_type" value="3">
 
                                           </div>
                                       </div>
@@ -53,14 +53,14 @@
                               <div class="form-group">
                                   <div class="input-group">
                                       <button name="debitBtn" type="button" class="btn btn-success pull-left"><i class="fa fa-user"></i></button>
-                                      <input type="text" name="debit" class="form-control" id="debit" style="width: 200px;" placeholder="Debit">
+                                      <input required type="text" name="debit" class="form-control" id="debit" style="width: 200px;" placeholder="Debit">
                                   </div>
                               </div>
                           </div>
 
                           <div class="col-sm-5">
                               <div class="form-group">
-                                  <select name="d_currency" id="d_currency" class="form-control">
+                                  <select required name="d_currency" id="d_currency" class="form-control">
                                       <option value="">Debit Currency</option>
                                   </select>
                               </div>
@@ -74,14 +74,14 @@
                               <div class="form-group">
                                   <div class="input-group">
                                       <button name="creditBtn" type="button" class="btn btn-success pull-left"><i class="fa fa-user"></i></button>
-                                      <input type="text" name="credit" class="form-control" id="credit" style="width: 200px;" placeholder="Credit">
+                                      <input required type="text" name="credit" class="form-control" id="credit" style="width: 200px;" placeholder="Credit">
                                   </div>
                               </div>
                           </div>
 
                           <div class="col-sm-5">
                               <div class="form-group">
-                                  <select name="c_currency" id="c_currency" class="form-control">
+                                  <select required name="c_currency" id="c_currency" class="form-control">
                                       <option value="">Credit Currency</option>
                                   </select>
                               </div>
@@ -93,7 +93,7 @@
                           <div class="col-sm-5">
                               <div class="form-group">
                                   <label for="totalamount">Currency to Convert</label>
-                                  <select name="conversion_currency" class="form-control" id="conversion_currency" style="width: 235px;">
+                                  <select required name="conversion_currency" class="form-control" id="conversion_currency" style="width: 235px;">
                                       <option value="">Currency</option>
                                   </select>
                               </div>
@@ -102,7 +102,7 @@
                               <div class="form-group">
                                   <div class="form-group">
                                       <label for="foreign_rate"><em>DC/CC To CC/DC</em></label>
-                                      <input name="foreign_rate" type="number" value="" class="form-control" id="foreign_rate" placeholder="Foreign Conversion Rate">
+                                      <input required name="foreign_rate" type="number" value="" class="form-control" id="foreign_rate" placeholder="Foreign Conversion Rate">
                                   </div>
                               </div>
                           </div>
@@ -112,14 +112,14 @@
                           <div class="col-sm-5">
                               <div class="form-group">
                                   <label for="total_amount">Total Amount To Send</label>
-                                  <input name="total_amount" type="number" value="" class="form-control" id="total_amount" placeholder="Total Amount" style="width: 235px;">
+                                  <input required name="total_amount" type="number" value="" class="form-control" id="total_amount" placeholder="Total Amount" style="width: 235px;">
                               </div>
                           </div>
 
                           <div class="col-sm-5">
                               <div class="form-group">
                                   <label for="local_rate"><em>Local Rate</label>
-                                  <input name="local_rate" type="number" value="" class="form-control" id="local_rate"
+                                  <input required name="local_rate" type="number" value="" class="form-control" id="local_rate"
                                          placeholder="Total Amount">
                               </div>
                           </div>
@@ -130,7 +130,7 @@
                           <div class="col-sm-12">
                               <div class="form-group">
                                   <label for="comment">Comment</label>
-                                  <textarea name="comment" id="comment" class="form-control"></textarea>
+                                  <textarea required name="comment" id="comment" class="form-control"></textarea>
                               </div>
                           </div>
                       </div>

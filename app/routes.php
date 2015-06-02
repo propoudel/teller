@@ -119,6 +119,14 @@ Route::group(["before" => "auth"], function () {
         "as" => "party/delete",
         "uses" => "PartyController@destroy"
     ]);
+    Route::any("/transaction", [
+        "as" => "transaction",
+        "uses" => "TransactionController@index"
+    ]);
+    Route::any("/transaction/store", [
+        "as" => "transaction/store",
+        "uses" => "TransactionController@store"
+    ]);
 
 });
 

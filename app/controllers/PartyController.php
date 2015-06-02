@@ -2,6 +2,17 @@
 
 class PartyController extends Controller {
 
+    public function __construct() {
+        $party = new Party();
+        $party_data = $party->all();
+
+        $currency = new Currency();
+        $currency_data = $currency->all();
+
+        $data['party_data'] = $party_data;
+        $data['currency_data'] = $currency_data;
+    }
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -9,8 +20,6 @@ class PartyController extends Controller {
 	 */
 	public function index()
 	{
-		$party = new Party();
-        $data = $party->all();
         return View::make('party/index', compact('data'));
 	}
 

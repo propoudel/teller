@@ -23,12 +23,13 @@
 
                 				<tbody>
                 				    <?php $i=1 ?>
-                                    @foreach($data as $list)
+                                    <?php print_r(app('party')->first()['party_name']); die; ?>
+                                    @foreach(app('party')->first() as $list)
                 					<tr>
                 						<td>{{ $i }}</td>
-                						<td>{{ $list->party_name }}</td>
-                						<td>{{ $list->currency_id }}</td>
-                						<td>{{ $list->party_details }}</td>
+                						<td>{{ $list['party_name'] }}</td>
+                						<td>{{ $list['currency_id'] }}</td>
+                						<td>{{ $list['party_details'] }}</td>
                 						<td>
                                             <a class="btn btn-small btn-info" href="{{ URL::to('party/' . $list->id . '/edit') }}">Edit</a>
                                              <a class="btn btn-small btn-success" href="{{ URL::to('party/' . $list->id. '/delete') }}" onclick="if(!confirm('Are you sure?')){ return false;}">Delete</a>

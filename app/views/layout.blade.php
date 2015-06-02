@@ -47,7 +47,7 @@
                         <div class="panel-heading"><i class="glyphicon glyphicon-th-list"></i> View</div>
                         <div class="panel-body">
                             <div class="checkbox">
-                                <?php foreach($data['currency_data'] as $list): ?>
+                                <?php foreach(app('currency') as $list): ?>
                                 <label>
                                   <input type="radio" name="currency" data-toggle="modal" data-target=".view-modal-sm"> AED
                                 </label>
