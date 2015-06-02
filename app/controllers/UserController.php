@@ -127,7 +127,7 @@ class UserController
         $data['party_data'] = $party_data;
         $data['currency_data'] = $currency_data;
 
-        return View::make("user/dashboard", compact('data'));
+        return View::make("dashboard/index", compact('data'));
     }
 
     public function logout()
