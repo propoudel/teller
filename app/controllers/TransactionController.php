@@ -46,9 +46,12 @@ class TransactionController extends Controller {
         $transaction->c_currency = Input::get('c_currency');
         $transaction->conversion_currency = Input::get('conversion_currency');
         $transaction->foreign_rate = Input::get('foreign_rate');
+
+        $transaction->debit_fc = Input::get('debit_fc');
+        $transaction->credit_fc = Input::get('credit_fc');
+
         //Need to calculate
         //$transaction->total_amount = Input::get('total_amount');
-        $transaction->c_currency = Input::get('c_currency');
         $transaction->local_rate = Input::get('local_rate');
         $transaction->comment = Input::get('comment');
         //$transaction->c_currency = Input::get('c_currency');
@@ -57,8 +60,6 @@ class TransactionController extends Controller {
         // redirect
         Session::flash('message', 'Transaction is Successful!');
         return Redirect::to('dashboard');
-
-
 	}
 
 
