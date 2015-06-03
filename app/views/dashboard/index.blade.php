@@ -52,7 +52,7 @@
                           <div class="col-sm-5">
                               <div class="form-group">
                                   <div class="input-group">
-                                      <button name="debitBtn" type="button" class="btn btn-success pull-left"><i class="fa fa-user"></i></button>
+                                      <button name="debitBtn" type="button" class="btn btn-success pull-left btnParty"><i class="fa fa-user"></i></button>
                                       <input required type="text" name="debit" class="form-control" id="debit" style="width: 200px;" placeholder="Debit">
                                   </div>
                               </div>
@@ -76,7 +76,7 @@
                           <div class="col-sm-5">
                               <div class="form-group">
                                   <div class="input-group">
-                                      <button name="creditBtn" type="button" class="btn btn-success pull-left"><i class="fa fa-user"></i></button>
+                                      <button name="creditBtn" type="button" class="btn btn-success pull-left btnParty"><i class="fa fa-user"></i></button>
                                       <input required type="text" name="credit" class="form-control" id="credit" style="width: 200px;" placeholder="Credit">
                                   </div>
                               </div>
@@ -156,6 +156,11 @@
       </div>
 
   <script type="text/javascript">
+
+      $( ".btnParty").click(function() {
+         alert('das');
+      });
+
        function getFromCurrency(){
         var id = $("#party_from").find(':selected').data('currency');
 
