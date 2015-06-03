@@ -62,6 +62,9 @@
                               <div class="form-group">
                                   <select required name="d_currency" id="d_currency" class="form-control">
                                       <option value="">Debit Currency</option>
+                                      <?php foreach($data['currency_data'] as $list) { ?>
+                                        <option value="{{  $list->id }}">{{ $list->currency_code }}</option>
+                                      <?php } ?>
                                   </select>
                               </div>
                           </div>
@@ -83,6 +86,9 @@
                               <div class="form-group">
                                   <select required name="c_currency" id="c_currency" class="form-control">
                                       <option value="">Credit Currency</option>
+                                      <?php foreach($data['currency_data'] as $list) { ?>
+                                        <option value="{{  $list->id }}">{{ $list->currency_code }}</option>
+                                      <?php } ?>
                                   </select>
                               </div>
                           </div>
@@ -95,6 +101,9 @@
                                   <label for="totalamount">Currency to Convert</label>
                                   <select required name="conversion_currency" class="form-control" id="conversion_currency" style="width: 235px;">
                                       <option value="">Currency</option>
+                                      <?php foreach($data['currency_data'] as $list) { ?>
+                                        <option value="{{  $list->id }}">{{ $list->currency_code }}</option>
+                                      <?php } ?>
                                   </select>
                               </div>
                           </div>

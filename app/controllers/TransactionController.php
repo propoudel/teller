@@ -33,9 +33,32 @@ class TransactionController extends Controller {
 	 */
 	public function store()
 	{
-        echo '<pre>';
-        print_r($_POST);
-		die('This comes here!');
+//        echo '<pre>';
+//        print_r($_POST);
+//		die('This comes here!');
+
+        $transaction = new Transaction();
+        $transaction->base_type = Input::get('base_type');
+        $transaction->reference_id = Input::get('reference_id');
+        $transaction->debit = Input::get('debit');
+        $transaction->d_currency = Input::get('d_currency');
+        $transaction->credit = Input::get('credit');
+        $transaction->c_currency = Input::get('c_currency');
+        $transaction->conversion_currency = Input::get('conversion_currency');
+        $transaction->foreign_rate = Input::get('foreign_rate');
+        //Need to calculate
+        //$transaction->total_amount = Input::get('total_amount');
+        $transaction->c_currency = Input::get('c_currency');
+        $transaction->local_rate = Input::get('local_rate');
+        $transaction->comment = Input::get('comment');
+        //$transaction->c_currency = Input::get('c_currency');
+        $transaction->save();
+
+        // redirect
+        Session::flash('message', 'Transaction is Successful!');
+        return Redirect::to('dashboard');
+
+
 	}
 
 
