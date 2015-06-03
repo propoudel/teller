@@ -1,8 +1,13 @@
 <?php
 
 class PartyController extends Controller {
-
-    public function __construct() {
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function index()
+	{
         $party = new Party();
         $party_data = $party->all();
 
@@ -11,15 +16,7 @@ class PartyController extends Controller {
 
         $data['party_data'] = $party_data;
         $data['currency_data'] = $currency_data;
-    }
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
         return View::make('party/index', compact('data'));
 	}
 
@@ -31,8 +28,15 @@ class PartyController extends Controller {
 	 */
 	public function create()
 	{
-        $curr = new Currency();
-        $data = $curr->all();
+        $party = new Party();
+        $party_data = $party->all();
+
+        $currency = new Currency();
+        $currency_data = $currency->all();
+
+        $data['party_data'] = $party_data;
+        $data['currency_data'] = $currency_data;
+
         return View::make("party/create", compact('data'));
 	}
 
@@ -106,7 +110,7 @@ class PartyController extends Controller {
         $curr = new Currency();
         $data['currency'] = $curr->all();
 
-        $data['item'] = Party::find($id);
+        $data['party_data'] = Party::find($id);
 
         return View::make('party/edit', compact('data'));
     }

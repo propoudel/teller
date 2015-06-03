@@ -40,7 +40,7 @@
 
                 				<tbody>
                 				    <?php $i=1 ?>
-                                    @foreach($data as $list)
+                                    @foreach($data['currency_data'] as $list)
                 					<tr>
                 						<td>{{ $i }}</td>
                 						<td>{{ $list->currency_code }}</td>

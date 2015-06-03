@@ -28,7 +28,7 @@
                               <div class="form-group">
                                   <label for="currency_code">Currency Code</label>
                                   <input required="required" name="currency_code" type="text" class="form-control" id="currency_code"
-                                         placeholder="Currency Code" value="{{ $item->currency_code }}">
+                                         placeholder="Currency Code" value="{{ $data['currency_data']->currency_code }}">
                               </div>
                           </div>
 
@@ -36,7 +36,7 @@
                               <div class="form-group">
                                   <label for="currency_rate">Currency Rate</label>
                                   <input required="required" type="text" name="currency_rate" class="form-control" id="currency_rate"
-                                         placeholder="Rate" value="{{ $item->currency_rate }}">
+                                         placeholder="Rate" value="{{ $data['currency_data']->currency_rate }}">
                               </div>
                           </div>
                       </div>
@@ -45,7 +45,7 @@
 
                       <div class="row">
                           <div class="col-sm-12">
-                               <input type="hidden" name="id" value="{{ $item->id }}">
+                               <input type="hidden" name="id" value="{{ $data['currency_data']->id }}">
                               <button type="submit" id="store_currency"  class="btn btn-primary pull-right">Update</button>
                           </div>
                       </div>

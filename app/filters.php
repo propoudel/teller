@@ -9,11 +9,19 @@ Route::filter("auth", function() {
 App::before(function($request)
 {
     // Set up global user object for views
-    View::share('currency', Currency::all());
+    $currency = new Currency();
+    $currency_data = $currency->all();
+    View::share('currency', compact($currency_data));
+
+    $party = new Party();
+    $party_data = $party->all();
+    View::share('party', compact($party_data));
 });
 
 App::before(function($request)
 {
     // Set up global user object for views
-    View::share('party', Party::all());
+    $party = new Party();
+    $party_data = $party->all();
+    View::share('party', compact($party_data));
 });

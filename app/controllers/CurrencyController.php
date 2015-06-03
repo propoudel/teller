@@ -10,8 +10,15 @@ class CurrencyController extends Controller
      */
     public function index()
     {
+        $party = new Party();
+        $party_data = $party->all();
+
         $currency = new Currency();
-        $data = $currency->all();
+        $currency_data = $currency->all();
+
+        $data['party_data'] = $party_data;
+        $data['currency_data'] = $currency_data;
+
         return View::make("currency/index", compact('data'));
     }
 
@@ -23,7 +30,16 @@ class CurrencyController extends Controller
      */
     public function create()
     {
-        return View::make("currency/create");
+        $party = new Party();
+        $party_data = $party->all();
+
+        $currency = new Currency();
+        $currency_data = $currency->all();
+
+        $data['party_data'] = $party_data;
+        $data['currency_data'] = $currency_data;
+
+        return View::make("currency/create", compact('data'));
     }
 
 
@@ -43,7 +59,6 @@ class CurrencyController extends Controller
      */
     public function store()
     {
-
         $rules = array(
             'currency_code' => 'required',
             'currency_rate' => 'required',
@@ -89,9 +104,12 @@ class CurrencyController extends Controller
      */
     public function edit($id)
     {
-        $item = Currency::find($id);
-        return View::make('currency/edit')
-            ->with('item', $item);
+        $party = new Party();
+        $data['party_data'] = $party->all();
+
+        $data['currency_data'] = Currency::find($id);
+
+        return View::make("currency/edit", compact('data'));
     }
 
 

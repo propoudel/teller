@@ -29,7 +29,7 @@
                               <div class="form-group">
                                   <label for="currency_code">Currency Code</label>
                                   <select name="currency_code"class="form-control">
-                                      <?php foreach($data as $list) { ?>
+                                      <?php foreach($data['currency_data'] as $list) { ?>
                                             <option value="{{  $list->id }}}}">{{ $list->currency_code }}</option>
                                       <?php } ?>
                                   </select>

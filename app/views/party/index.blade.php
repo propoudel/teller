@@ -23,8 +23,8 @@
 
                 				<tbody>
                 				    <?php $i=1 ?>
-                                    <?php print_r(app('party')->first()['party_name']); die; ?>
-                                    @foreach(app('party')->first() as $list)
+                                    <?php //print_r(app('party')->first()['party_name']); die; ?>
+                                    @foreach($data['party_data'] as $list)
                 					<tr>
                 						<td>{{ $i }}</td>
                 						<td>{{ $list['party_name'] }}</td>
