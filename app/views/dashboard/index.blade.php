@@ -5,6 +5,14 @@
           <div class="panel-heading">Transaction Entry</div>
           <div class="panel-body">
               <div class="col-sm-12">
+                  <div class="col-sm-4 pull-right">
+                      <div class="form-group">
+                          <div class="input-group pull-right">
+                              <input name="transaction_no" type="number" class="form-control" style="width: 138px;" placeholder="Transaction No">
+                              <button type="button" class="btn btn-success btnTransactionNo"><i class="fa fa-pie-chart"></i></button>
+                          </div>
+                      </div>
+                  </div>
                   <form action="<?php echo URL::to('/transaction/store'); ?>" method="POST" name="transaction" id="transaction">
                       <div class="row">
                           <div class="col-sm-12">
@@ -36,14 +44,7 @@
                               </div>
 
 
-                              <div class="col-sm-4 pull-right">
-                                  <div class="form-group">
-                                      <div class="input-group pull-right">
-                                          <input name="transaction_no" type="number" class="form-control" style="width: 138px;" placeholder="Transaction No">
-                                          <button type="button" class="btn btn-success"><i class="fa fa-pie-chart"></i></button>
-                                      </div>
-                                  </div>
-                              </div>
+
                           </div>
                       </div>
 
@@ -52,11 +53,13 @@
                           <div class="col-sm-5">
                               <div class="form-group">
                                   <div class="input-group">
-                                      <button name="debitBtn" type="button" class="btn btn-success pull-left btnParty"><i class="fa fa-user"></i></button>
+                                      <button name="debitBtn" type="button" data-toggle="modal" data-target=".view-modal-party" class="btn btn-success pull-left"><i class="fa fa-user"></i></button>
                                       <input required type="text" name="debit" class="form-control" id="debit" style="width: 200px;" placeholder="Debit">
                                   </div>
                               </div>
                           </div>
+
+
 
                           <div class="col-sm-5">
                               <div class="form-group">
@@ -76,7 +79,7 @@
                           <div class="col-sm-5">
                               <div class="form-group">
                                   <div class="input-group">
-                                      <button name="creditBtn" type="button" class="btn btn-success pull-left btnParty"><i class="fa fa-user"></i></button>
+                                      <button name="creditBtn" type="button" data-toggle="modal" data-target=".view-modal-party" class="btn btn-success pull-left"><i class="fa fa-user"></i></button>
                                       <input required type="text" name="credit" class="form-control" id="credit" style="width: 200px;" placeholder="Credit">
                                   </div>
                               </div>
@@ -155,10 +158,69 @@
           </div>
       </div>
 
-  <script type="text/javascript">
 
-      $( ".btnParty").click(function() {
-         alert('das');
+  <!-- Start Party Pop Up -->
+  <div class="modal fade view-modal-party" tabindex="-1" role="dialog" aria-labelledby="viewSmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="viewModalLabel">Choose Party</h4>
+              </div>
+              <div class="modal-body" name="partyModal">
+                  <table class="table table-condensed">
+                      <thead>
+                      <th>Name</th>
+                      <th>Currency</th>
+                      </thead>
+                      <tbody class="table">
+                      <?php foreach($data['party_data'] as $list): ?>
+                      <tr>
+                          <td><?php echo $list['party_name']; ?></td>
+                          <td><?php echo $list['id']; ?></td>
+                          <td><button currency_id="<?php echo $list['id']; ?>" currency_name="<?php echo $list['party_name']; ?>" party_id="<?php echo $list['id']; ?>" party_name="<?php echo $list['party_name']; ?>" type="button" class="btn-primary select_party">Choose</button></td>
+                      </tr>
+                      <?php endforeach; ?>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+
+      </div>
+  </div>
+  <!-- End Party Pop Up -->
+
+  <script type="text/javascript">
+      $( ".select_party").click(function() {
+          console.log(this);
+          currency_id = $(this).attr('currency_id');
+          currency_name = $(this).attr('currency_name');
+          party_name = $(this).attr('party_name');
+          party_id = $(this).attr('party_id');
+          alert(currency_id + currency_name + party_name + party_id);
+
+          console.log($("#d_currency option").find("value", "2").attr("selected"));
+      });
+
+      $( "button.btnTransactionNo").click(function() {
+          alert('bass');
+          $.ajax({
+              type: "POST",
+              dataType: "json",
+              url: "<?php echo URL::to('/party/find'); ?>",
+              data: {id:id},
+              cache: false,
+              success: function(server_response){
+                  //currency_from
+                  $('#currency_from').find('option').remove();
+                  // $('#currency_from').prop("disabled", false);
+                  $('#currency_from').append($('<option>').text(server_response.currency_code).attr('value', server_response.id));
+
+              },
+              error: function(error){
+                  console.log(error);
+              },
+          });
       });
 
        function getFromCurrency(){
