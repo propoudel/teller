@@ -55,11 +55,10 @@
                                   <div class="input-group">
                                       <button name="debitBtn" type="button" data-toggle="modal" data-target=".view-modal-party" class="btn btn-success pull-left"><i class="fa fa-user"></i></button>
                                       <input required type="text" name="debit" class="form-control" id="debit" style="width: 200px;" placeholder="Debit">
+                                      <input required type="hidden" name="debtor_id" id="debtor_id">
                                   </div>
                               </div>
                           </div>
-
-
 
                           <div class="col-sm-5">
                               <div class="form-group">
@@ -81,6 +80,7 @@
                                   <div class="input-group">
                                       <button name="creditBtn" type="button" data-toggle="modal" data-target=".view-modal-party" class="btn btn-success pull-left"><i class="fa fa-user"></i></button>
                                       <input required type="text" name="credit" class="form-control" id="credit" style="width: 200px;" placeholder="Credit">
+                                      <input required type="hidden" name="creditor_id" id="creditor_id">
                                   </div>
                               </div>
                           </div>
@@ -166,6 +166,7 @@
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   <h4 class="modal-title" id="viewModalLabel">Choose Party</h4>
+                  <input type="hidden" id="partyType" name="partyType" value="" />
               </div>
               <div class="modal-body" name="partyModal">
                   <table class="table table-condensed">
@@ -174,11 +175,11 @@
                       <th>Currency</th>
                       </thead>
                       <tbody class="table">
-                      <?php foreach($data['party_data'] as $list): ?>
+                      <?php foreach($data['party_join_curr'] as $list): ?>
                       <tr>
-                          <td><?php echo $list['party_name']; ?></td>
-                          <td><?php echo $list['id']; ?></td>
-                          <td><button currency_id="<?php echo $list['id']; ?>" currency_name="<?php echo $list['party_name']; ?>" party_id="<?php echo $list['id']; ?>" party_name="<?php echo $list['party_name']; ?>" type="button" class="btn-primary select_party">Choose</button></td>
+                          <td><?php echo $list->party_name; ?></td>
+                          <td><?php echo $list->currency_code; ?></td>
+                          <td><button currency_id="<?php echo $list->currency_id; ?>" currency_name="<?php echo $list->currency_code; ?>" party_id="<?php echo $list->id; ?>" party_name="<?php echo $list->party_name; ?>" type="button" class="btn-primary select_party">Choose</button></td>
                       </tr>
                       <?php endforeach; ?>
                       </tbody>
@@ -191,15 +192,37 @@
   <!-- End Party Pop Up -->
 
   <script type="text/javascript">
+      $("button[name='debitBtn']").click(function() {
+          $("#partyType").val('debitBtn');
+      });
+
+      $("button[name='creditBtn']").click(function() {
+          $("#partyType").val('creditBtn');
+      });
+
       $( ".select_party").click(function() {
-          console.log(this);
+          partyType = $("#partyType").val();
           currency_id = $(this).attr('currency_id');
           currency_name = $(this).attr('currency_name');
           party_name = $(this).attr('party_name');
           party_id = $(this).attr('party_id');
-          alert(currency_id + currency_name + party_name + party_id);
+          alert(party_id);
 
-          console.log($("#d_currency option").find("value", "2").attr("selected"));
+          if (partyType == "debitBtn") {
+              $("#debit").val(party_name);
+              $("#debtor_id").val(party_id);
+              $("#d_currency option").each(function(){$(this).removeAttr("selected")});
+              $("#d_currency option[value='"+ currency_id +"']").attr("selected", "selected");
+          } else if (partyType == "creditBtn") {
+              $("#credit").val(party_name);
+              $("#creditor_id").val(party_id);
+              $("#c_currency option").each(function(){$(this).removeAttr("selected")});
+              $("#c_currency option[value='"+ currency_id +"']").attr("selected", "selected");
+          }
+
+          $("#partyType").val("");
+          $(".modal").hide();
+          //console.log($("#d_currency option[value='2']").attr("selected", "selected"));
       });
 
       $( "button.btnTransactionNo").click(function() {

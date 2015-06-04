@@ -40,9 +40,9 @@ class TransactionController extends Controller {
         $transaction = new Transaction();
         $transaction->base_type = Input::get('base_type');
         $transaction->reference_id = Input::get('reference_id');
-        $transaction->debit = Input::get('debit');
+        $transaction->debtor_id = Input::get('debtor_id');
         $transaction->d_currency = Input::get('d_currency');
-        $transaction->credit = Input::get('credit');
+        $transaction->creditor_id = Input::get('creditor_id');
         $transaction->c_currency = Input::get('c_currency');
         $transaction->conversion_currency = Input::get('conversion_currency');
         $transaction->foreign_rate = Input::get('foreign_rate');

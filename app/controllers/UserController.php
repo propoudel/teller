@@ -124,8 +124,17 @@ class UserController
         $currency = new Currency();
         $currency_data = $currency->all();
 
+        $party_join_curr = DB::table('party')
+            ->leftJoin('currency', 'party.currency_id', '=', 'currency.id')
+            ->get();
+
         $data['party_data'] = $party_data;
         $data['currency_data'] = $currency_data;
+        $data['party_join_curr'] = $party_join_curr;
+
+        echo '<pre>';
+        print_r($data['party_join_curr']);
+        die;
 
         return View::make("dashboard/index", compact('data'));
     }
