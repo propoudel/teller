@@ -46,8 +46,8 @@
                 						<td>{{ $list->currency_code }}</td>
                 						<td>{{ $list->currency_rate }}</td>
                 						<td>
-                                            <a class="btn btn-small btn-info" href="{{ URL::to('currency/' . $list->id . '/edit') }}">Edit</a>
-                                             <a class="btn btn-small btn-success" href="{{ URL::to('currency/' . $list->id. '/delete') }}" onclick="if(!confirm('Are you sure?')){ return false;}">Delete</a>
+                                            <a class="btn btn-small btn-info" href="{{ URL::to('currency/' . $list->currency_id . '/edit') }}">Edit</a>
+                                             <a class="btn btn-small btn-success" href="{{ URL::to('currency/' . $list->currency_id. '/delete') }}" onclick="if(!confirm('Are you sure?')){ return false;}">Delete</a>
                 						</td>
 
                 					</tr>
