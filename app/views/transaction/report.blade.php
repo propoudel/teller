@@ -14,7 +14,6 @@
                     $to = isset($_GET['to']) ? $_GET['to'] : '';
                 ?>
                 <form>
-
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
@@ -82,7 +81,6 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr style="background-color: #229ab7;">
-                                            {{--<th>SN</th>--}}
                                             <th>Date</th>
                                             <th>Party</th>
                                             <th>Detail</th>
@@ -90,7 +88,6 @@
                                             <th>Credit_FC</th>
                                             <th>Debit</th>
                                             <th>Credit</th>
-                                            {{--<th>Balance FC</th>--}}
                                             <th>Balance</th>
                                         </tr>
                                     </thead>
@@ -111,16 +108,6 @@
                                         ?>
 
                                         @foreach($data['transaction_data'] as $a)
-                                            {{--//<?php--}}
-{{--                                                if ($a->calculatetype == 1) {--}}
-{{--                                                    $ttm = $a->total_transferred_money;--}}
-{{--                                                } else if ($a->calculatetype == 2) {--}}
-{{--                                                    $ttm = $a->total_transferred_money * $a->sent_rate;--}}
-{{--                                                } else if ($a->calculatetype == 3) {--}}
-{{--                                                    $ttm = $a->total_transferred_money /  $a->sent_rate;--}}
-{{--                                                }--}}
-                                            {{--?>--}}
-
                                             <?php $credit += $a->credit_local; ?>
                                             <?php $debit += $a->debit_local; ?>
 
@@ -130,7 +117,6 @@
                                                         <?php $credit_per_party += $a->credit_local; ?>
 
                                                         <tr>
-                                                            {{--<th scope="row"><?php //echo $sn; ?></th>--}}
                                                             <td>{{ date("d-m-Y",strtotime($a->created_at)) }}</td>
                                                             <td>{{ $a->debtor }}({{ $a->d_currency }})</td>
                                                             <td>{{ $a->comment }}</td>
@@ -148,7 +134,6 @@
                                                     <?php $debit_fc += $a->debit_fc; ?>
                                                     <?php $debit_per_party += $a->debit_local; ?>
                                             <tr>
-                                                {{--<th scope="row"><?php //echo $sn; ?></th>--}}
                                                 <td>{{ date("d-m-Y",strtotime($a->created_at)) }}</td>
                                                 <td>{{ $a->creditor }}({{ $a->c_currency }})</td>
                                                 <td>{{ $a->comment }}</td>
@@ -161,21 +146,6 @@
                                             <?php
                                             }
                                             ?>
-
-                                        {{--<?php $sn = 1; ?>--}}
-                                        {{--@foreach($list_first as $list)--}}
-                                            {{--<tr>--}}
-                                                {{--<th scope="row"><?php echo $sn; ?></th>--}}
-                                                {{--<td>{{ date("d-m-Y",strtotime($list['created_at'])) }}</td>--}}
-                                                {{--<td>{{ $list['comment'] }}</td>--}}
-                                                {{--<td>{{ $list['sent_name'] }}</td>--}}
-                                                {{--<td>{{ $list['received_amount'] }}</td>--}}
-                                                {{--<td>{{ $list['total_transferred_money'] }}</td>--}}
-                                                {{--<td></td>--}}
-                                                {{--<td>Balance</td>--}}
-
-                                            {{--</tr>--}}
-                                            {{--<?php $sn++; ?>--}}
                                         @endforeach
                                         <tr  align="right">
                                             <td colspan="3"><b>Balance FC</b></td>
