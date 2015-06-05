@@ -127,6 +127,14 @@ Route::group(["before" => "auth"], function () {
         "as" => "transaction/store",
         "uses" => "TransactionController@store"
     ]);
+    Route::any("/transaction", [
+        "as" => "transaction",
+        "uses" => "TransactionController@index"
+    ]);
+    Route::any("/transaction/report", [
+        "as" => "transaction/report",
+        "uses" => "TransactionController@report"
+    ]);
 
 });
 

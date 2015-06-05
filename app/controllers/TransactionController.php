@@ -9,11 +9,25 @@ class TransactionController extends Controller {
 	 */
 	public function index()
 	{
-        $transaction = new Transaction();
-        print_r($transaction->all());
-		//
-	}
+        $data = array();
 
+        $party = new Party();
+        $party_data = $party->all();
+
+        $currency = new Currency();
+        $currency_data = $currency->all();
+
+        $sql = 'SELECT *,
+                (SELECT party_name FROM party WHERE transaction.`debtor_id` = party.`id`) AS debtor,
+                (SELECT party_name FROM party WHERE transaction.`creditor_id` = party.`id`) AS creditor FROM transaction;
+                ';
+
+        $data['party_data'] = $party_data;
+        $data['currency_data'] = $currency_data;
+        $data['trans'] =  DB::select($sql);
+
+        return View::make('transaction/index', compact('data'));
+	}
 
 	/**
 	 * Show the form for creating a new resource.
@@ -133,6 +147,16 @@ class TransactionController extends Controller {
 	{
 		//
 	}
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return Response
+     */
+    public function report()
+    {
+        die('this');
+    }
 
 
 }
