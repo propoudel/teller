@@ -81,7 +81,7 @@
                             <div class="bs-example" data-example-id="bordered-table">
                                 <table class="table table-bordered">
                                     <thead>
-                                        <tr>
+                                        <tr style="background-color: #229ab7;">
                                             {{--<th>SN</th>--}}
                                             <th>Date</th>
                                             <th>Party</th>
@@ -97,7 +97,7 @@
 
                                     <tbody>
                                     @foreach($data['party_join_curr'] as $p)
-                                        <tr>
+                                        <tr style="background-color: #C0C0C0;">
                                             <td colspan="8"><b>{{ $p->party_name; }}({{ $p->currency_code; }})</b></td>
                                         </tr>
 
