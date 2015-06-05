@@ -155,7 +155,102 @@ class TransactionController extends Controller {
      */
     public function report()
     {
-        die('this');
+        $data = array();
+
+        $party = new Party();
+        $party_data = $party->all();
+
+        $currency = new Currency();
+        $currency_data = $currency->all();
+
+        $transaction = 'SELECT *,
+                      (SELECT id FROM party WHERE transaction.`debtor_id` = party.`id`) AS party_id,
+                      (SELECT party_name FROM party WHERE transaction.`debtor_id` = party.`id`) AS debtor,
+                      (SELECT party_name FROM party WHERE transaction.`creditor_id` = party.`id`) AS creditor FROM transaction';
+
+        //        if (isset($_GET)) {
+//            $where = 'WHERE ';
+//        }
+//        $getdata = array_filter($_GET);
+//
+//        foreach ($getdata as $key => $val) {
+//            //echo end($_GET); die;
+//            if (end($getdata) == $val && !empty($val)) {
+//                $where .= $key . "=" . $val;
+//             } else if (!empty($val)) {
+//                $where .= $key . "=" . $val . " AND ";
+//            }
+//        }
+//
+//        echo $where; die;
+
+        $get_data = array_filter($_GET);
+
+        if (!empty($get_data)) {
+            $transaction .= ' WHERE ';
+        }
+
+        if (Input::get('received_from')) {
+            $transaction .= ' received_from=' . Input::get('received_from');
+        }
+        if (Input::get('sent_to')) {
+            if (Input::get('received_from')) {
+                $transaction .= ' AND sent_to=' . Input::get('sent_to');
+            } else {
+                $transaction .= ' sent_to=' . Input::get('sent_to');
+            }
+
+        }
+        if (Input::get('currency')) {
+            if (Input::get('received_from') || Input::get('sent_to')) {
+                $transaction .= ' AND (sent_currency=' . Input::get('currency') . ' OR received_currency=' . Input::get('currency') . ')';
+            } else {
+                $transaction .= ' (sent_currency=' . Input::get('currency') . ' OR received_currency=' . Input::get('currency') . ')';
+            }
+        }
+        /*
+        if (Input::get('from')) {
+            if (Input::get('received_from') || Input::get('sent_to') || Input::get('currency')) {
+                $account .= ' AND created_at>date(' . Input::get('from') . ')';
+            } else {
+                $account .= ' created_at>date(' . Input::get('from') . ')';
+            }
+
+        }
+        if (Input::get('to')) {
+            if (Input::get('received_from') || Input::get('sent_to') || Input::get('currency') || Input::get('from')) {
+                $account .= ' AND created_at<date(' . Input::get('to') . ')';
+            } else {
+                $account .= ' created_at<date(' . Input::get('to') . ')';
+            }
+
+        }*/
+
+        $transaction .= ' ORDER BY debtor';
+
+        //echo $account; die;
+
+
+        $transaction_data =  DB::select($transaction);
+
+        $new = array();
+        foreach($transaction_data as $ad) {
+            $new[] = (array) $ad;
+
+        }
+
+        $return_transaction = array();
+
+        foreach ($new as $key=>$val) {
+            $return_transaction[$val['party_id']][] = $val;
+        }
+
+        $data['party_data'] = $party_data;
+        $data['currency_data'] = $currency_data;
+        $data['transaction'] =  $transaction_data;
+        $data['return_transaction'] =  $return_transaction;
+
+        return View::make('transaction/report', compact('data'));
     }
 
 
