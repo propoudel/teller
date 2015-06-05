@@ -196,9 +196,11 @@
           var foreign_val = $(this).val();
           if (foreign_val == 1) {
               $("#foreign_rate").val('');
+              $("#foreign_val").removeAttr('required');
               $("#foreign_val").hide();
           } else {
               $("#foreign_val").show();
+              $("#foreign_val").addAttr('required');
           }
       });
 

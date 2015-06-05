@@ -163,9 +163,16 @@ class TransactionController extends Controller {
         $currency = new Currency();
         $currency_data = $currency->all();
 
+        $party_join_curr = DB::table('party')
+            ->Join('currency', 'currency.id', '=', 'party.currency_id')
+            ->select('party.*', 'currency.id as currency_id', 'currency.currency_code')
+            ->get();
+
         $transaction = 'SELECT *,
                       (SELECT id FROM party WHERE transaction.`debtor_id` = party.`id`) AS party_id,
                       (SELECT party_name FROM party WHERE transaction.`debtor_id` = party.`id`) AS debtor,
+                      (SELECT currency_code FROM currency WHERE transaction.`d_currency` = currency.`id`) AS d_currency,
+                      (SELECT currency_code FROM currency WHERE transaction.`c_currency` = currency.`id`) AS c_currency,
                       (SELECT party_name FROM party WHERE transaction.`creditor_id` = party.`id`) AS creditor FROM transaction';
 
         //        if (isset($_GET)) {
@@ -247,8 +254,9 @@ class TransactionController extends Controller {
 
         $data['party_data'] = $party_data;
         $data['currency_data'] = $currency_data;
-        $data['transaction'] =  $transaction_data;
+        $data['transaction_data'] =  $transaction_data;
         $data['return_transaction'] =  $return_transaction;
+        $data['party_join_curr'] = $party_join_curr;
 
         return View::make('transaction/report', compact('data'));
     }
