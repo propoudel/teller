@@ -114,7 +114,7 @@
                               <div class="form-group">
                                   <div class="form-group">
                                       <label for="foreign_rate"><em>DC/CC To CC/DC</em></label>
-                                      <input required name="foreign_rate" type="number" value="" class="form-control" id="foreign_rate" placeholder="Foreign Conversion Rate">
+                                      <input required name="foreign_rate" type="number" step="0.01" min="0" value="" class="form-control" id="foreign_rate" placeholder="Foreign Conversion Rate">
                                   </div>
                               </div>
                           </div>
@@ -131,7 +131,7 @@
                           <div class="col-sm-5">
                               <div class="form-group">
                                   <label for="local_rate"><em>Local Rate</label>
-                                  <input required name="local_rate" type="number" value="" class="form-control" id="local_rate"
+                                  <input required name="local_rate" type="number" step="0.01" min="0" value="" class="form-control" id="local_rate"
                                          placeholder="Total Amount">
                               </div>
                           </div>
