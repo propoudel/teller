@@ -110,7 +110,7 @@
                                   </select>
                               </div>
                           </div>
-                          <div class="col-sm-5">
+                          <div id="foreign_val" class="col-sm-5">
                               <div class="form-group">
                                   <div class="form-group">
                                       <label for="foreign_rate"><em>DC/CC To CC/DC</em></label>
@@ -192,6 +192,16 @@
   <!-- End Party Pop Up -->
 
   <script type="text/javascript">
+      $("input.base_type").click(function(){
+          var foreign_val = $(this).val();
+          if (foreign_val == 1) {
+              $("#foreign_rate").val('');
+              $("#foreign_val").hide();
+          } else {
+              $("#foreign_val").show();
+          }
+      });
+
       $("button[name='debitBtn']").click(function() {
           $("#partyType").val('debitBtn');
       });
@@ -206,7 +216,6 @@
           currency_name = $(this).attr('currency_name');
           party_name = $(this).attr('party_name');
           party_id = $(this).attr('party_id');
-          alert(party_id);
 
           if (partyType == "debitBtn") {
               $("#debit").val(party_name);

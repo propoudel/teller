@@ -33,10 +33,6 @@ class TransactionController extends Controller {
 	 */
 	public function store()
 	{
-//        echo '<pre>';
-//        print_r($_POST);
-//		die('This comes here!');
-
         $transaction = new Transaction();
         $transaction->base_type = Input::get('base_type');
         $transaction->reference_id = Input::get('reference_id');
@@ -47,12 +43,40 @@ class TransactionController extends Controller {
         $transaction->conversion_currency = Input::get('conversion_currency');
         $transaction->foreign_rate = Input::get('foreign_rate');
 
-        $transaction->debit_fc = Input::get('debit_fc');
-        $transaction->credit_fc = Input::get('credit_fc');
+        //$transaction->total_amount = Input::get('total_amount');
+        if ($transaction->d_currency == $transaction->conversion_currency) {
+            $transaction->debit_fc = Input::get('total_amount');
+
+            if ($transaction->base_type == 1) {
+                $transaction->credit_fc = Input::get('total_amount');
+            } else if ($transaction->base_type == 2) {
+                $transaction->credit_fc = Input::get('total_amount')  * $transaction->foreign_rate;
+            } else if($transaction->base_type == 3) {
+                $transaction->credit_fc = Input::get('total_amount') / $transaction->foreign_rate;
+            } else {
+                die('There is some error!Please Select any conversion base type');
+            }
+        }
+
+        if ($transaction->c_currency == $transaction->conversion_currency) {
+            $transaction->credit_fc = Input::get('total_amount'); ;
+
+            if ($transaction->base_type == 1) {
+                $transaction->debit_fc = Input::get('total_amount') ;
+            } else if ($transaction->base_type == 2) {
+                $transaction->debit_fc = Input::get('total_amount')  * $transaction->foreign_rate;
+            } else if($transaction->base_type == 3) {
+                $transaction->debit_fc = Input::get('total_amount') / $transaction->foreign_rate;
+            } else {
+                die('There is some error!Please Select any conversion base type');
+            }
+        }
 
         //Need to calculate
         //$transaction->total_amount = Input::get('total_amount');
         $transaction->local_rate = Input::get('local_rate');
+        $transaction->debit_local = Input::get('total_amount') *  Input::get('local_rate');
+        $transaction->credit_local = Input::get('total_amount') * Input::get('local_rate');
         $transaction->comment = Input::get('comment');
         //$transaction->c_currency = Input::get('c_currency');
         $transaction->save();
