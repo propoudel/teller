@@ -86,7 +86,7 @@
                             <div class="bs-example" data-example-id="bordered-table">
                                 <table class="table table-bordered">
                                     <thead>
-                                        <tr style="background-color: #229ab7;">
+                                        <tr style="background-color: #229ab7;color:white;">
                                             <th>Date</th>
                                             <th>Party</th>
                                             <th>Detail</th>
