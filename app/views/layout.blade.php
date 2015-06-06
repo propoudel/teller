@@ -47,16 +47,23 @@
                         <div class="panel-heading"><i class="glyphicon glyphicon-th-list"></i> View</div>
                         <div class="panel-body">
                             <div class="checkbox">
-                                <?php //echo '<pre>'; print_r($data['party_data']); die; ?>
+                                <?php echo 'Party Name'; ?><br/>
                                 <?php foreach($data['party_data'] as $list): ?>
                                 <label>
                                   <input type="radio" class="party_name" name="party_name" value="<?php echo $list['id']; ?>" data-toggle="modal" data-target=".modal-limit-party-trans"> <?php echo $list['party_name']; ?>
                                 </label>
                                 <?php endforeach; ?>
+                            </div>
 
-                              </div>
-
-                              <div class="modal fade view-modal-lg modal-limit-party-trans" tabindex="-1" role="dialog" aria-labelledby="viewSmallModalLabel" aria-hidden="true">
+                            <div class="checkbox">
+                                <?php echo 'Currency Code'; ?><br/>
+                                <?php foreach($data['currency_data'] as $list): ?>
+                                <label>
+                                    <input type="radio" class="currency_code" name="currency_code" value="<?php echo $list['id']; ?>" data-toggle="modal" data-target=".modal-limit-currency-trans"> <?php echo $list['currency_code']; ?>
+                                </label>
+                                <?php endforeach; ?>
+                            </div>
+                            <div class="modal fade view-modal-lg modal-limit-party-trans" tabindex="-1" role="dialog" aria-labelledby="viewSmallModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                   <div class="modal-content">
                                    <div class="modal-header">
@@ -66,9 +73,21 @@
                                        <div class="modal-body partyTransaction">
                                        </div>
                                   </div>
-
                                 </div>
-                              </div>
+                            </div>
+
+                            <div class="modal fade view-modal-lg modal-limit-currency-trans" tabindex="-1" role="dialog" aria-labelledby="viewSmallModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="viewModalLabel">Transaction</h4>
+                                        </div>
+                                        <div class="modal-body currencyTransaction">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -108,11 +127,24 @@
               data: {party_name: party_name, type: 'party'},
               cache: false,
               success: function(html) {
-                  //alert(html);
-//                  var a = $.parseHTML(html);
-//                  alert(a);
-                  //$(".partyTransaction").append('<h2>ramram</h2>');
                   $(".partyTransaction").html(html);
+              },
+              error: function(error){
+                  console.log(error);
+              }
+          });
+      });
+
+      $( ".currency_code").click(function() {
+          var currency_code = $(this).val();
+          $.ajax({
+              type: "POST",
+              dataType: "html",
+              url: "<?php echo URL::to('/transaction/latestTransaction'); ?>",
+              data: {currency_code: currency_code, type: 'currency'},
+              cache: false,
+              success: function(html) {
+                  $(".currencyTransaction").html(html);
               },
               error: function(error){
                   console.log(error);
