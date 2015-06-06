@@ -16,7 +16,7 @@
                   <form action="<?php echo URL::to('/transaction/store'); ?>" method="POST" name="transaction" id="transaction">
                       <div class="row">
                           <div class="col-sm-12">
-                              <div class="col-sm-4">
+                              <div class="col-sm-4" style="margin-top: -40px;">
                                   <div class="row">
                                       <div class="col-sm-4">
                                           <div class="form-group" style="text-align: center">
@@ -103,7 +103,7 @@
                               <div class="form-group">
                                   <label for="totalamount">Currency to Convert</label>
                                   <select required name="conversion_currency" class="form-control" id="conversion_currency" style="width: 235px;">
-                                      <option value="">Currency</option>
+                                      <option>Currency</option>
                                       <?php foreach($data['currency_data'] as $list) { ?>
                                         <option style="display: none;" value="{{  $list->id }}">{{ $list->currency_code }}</option>
                                       <?php } ?>
@@ -225,12 +225,14 @@
               $("#d_currency option").each(function(){$(this).removeAttr("selected")});
               $("#d_currency option[value='"+ currency_id +"']").attr("selected", "selected");
               $("#conversion_currency").find('option[value="'+currency_id+'"]').show();
+              //$('.view-modal-party').modal('hide');
           } else if (partyType == "creditBtn") {
               $("#credit").val(party_name);
               $("#creditor_id").val(party_id);
               $("#c_currency option").each(function(){$(this).removeAttr("selected")});
               $("#c_currency option[value='"+ currency_id +"']").attr("selected", "selected");
               $("#conversion_currency").find('option[value="'+currency_id+'"]').show();
+               //$('.view-modal-party').modal('hide');
           }
 
           $("#partyType").val("");
@@ -372,12 +374,15 @@
 
                               $("#conversion_currency").find('option[value="'+DvalueSelected+'"]').show();
                               $("#conversion_currency").find('option[value="'+CvalueSelected+'"]').show();
+                              $("#conversion_currency option[value="+CvalueSelected+"]").prop("selected", "selected");
+
 
 
                   });
 
                    $('#conversion_currency').on('change', function() {
                       var v =  $(this).find("option:selected").text();
+
                                 $(".dc").html(v);
                                 $(".cc").html($("#c_currency option:selected").text());
                      })
