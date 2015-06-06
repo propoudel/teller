@@ -11,7 +11,8 @@
                         <th>SN.</th>
                         <th>Debtor</th>
                         <th>Creditor</th>
-                        <!--<th style="width: 120px;">Action</th>-->
+                        <th>Created At</th>
+                        <th style="width: 120px;">Action</th>
                     </tr>
                     </thead>
 
@@ -22,11 +23,11 @@
                             <td>{{ $i }}</td>
                             <td>{{ $list->debtor }}</td>
                             <td>{{ $list->creditor }}</td>
-
-                            <!--<td>
-                                <a class="btn btn-small btn-info" href="{{ URL::to('account/' . $list->id . '/edit') }}">Edit</a>
-                                <a class="btn btn-small btn-success" href="{{ URL::to('account/' . $list->id. '/delete') }}" onclick="if(!confirm('Are you sure?')){ return false;}">Delete</a>
-                            </td>-->
+                            <td>{{ $list->created_at }}</td>
+                            <td>
+                                <a class="btn btn-small btn-info" href="{{ URL::to('transaction/' . $list->id . '/edit') }}">Edit</a>
+                            <!--<a class="btn btn-small btn-success" href="{{ URL::to('account/' . $list->id. '/delete') }}" onclick="if(!confirm('Are you sure?')){ return false;}">Delete</a>-->
+                            </td>
 
                         </tr>
                         <?php $i++ ?>

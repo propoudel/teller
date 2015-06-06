@@ -10,6 +10,7 @@
                           <div class="input-group pull-right">
                               <input name="transaction_no" type="number" class="form-control" style="width: 138px;" placeholder="Transaction No">
                               <button type="button" class="btn btn-success btnTransactionNo"><i class="fa fa-pie-chart"></i></button>
+                              {{--<button data-toggle="modal" data-target=".view-modal-sm" type="button" class="btn btn-success btnTransactionNo"><i class="fa fa-pie-chart"></i></button>--}}
                           </div>
                       </div>
                   </div>
@@ -191,7 +192,46 @@
   </div>
   <!-- End Party Pop Up -->
 
+  <!-- Start Limit Transaction -->
+  <div class="modal fade modal-limit-transaction" tabindex="-1" role="dialog" aria-labelledby="viewSmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="viewModalLabel">Transaction</h4>
+              </div>
+              <div class="modal-body limitTransaction" name="limitTransaction">
+
+              </div>
+          </div>
+
+      </div>
+  </div>
+  <!-- End Limit Transaction -->
+
+
   <script type="text/javascript">
+      $( "button.btnTransactionNo").click(function() {
+          var total_trans_no = $("input[name='transaction_no']").val();
+          $.ajax({
+              type: "POST",
+              dataType: "html",
+              url: "<?php echo URL::to('/transaction/latestTransaction'); ?>",
+              data: {total_trans_no: total_trans_no},
+              cache: false,
+              success: function(html) {
+                  alert(html);
+//                  var a = $.parseHTML(html);
+//                  alert(a);
+                  $(".limitTransaction").append('<h2>ramram</h2>');
+                  $(".limitTransaction").html(html);
+              },
+              error: function(error){
+                  console.log(error);
+              }
+          });
+      });
+
       $("input.base_type").click(function(){
           var foreign_val = $(this).val();
           if (foreign_val == 1) {
@@ -240,23 +280,6 @@
           //console.log($("#d_currency option[value='2']").attr("selected", "selected"));
       });
 
-      $( "button.btnTransactionNo").click(function() {
-          var total_trans_no = $("input[name='transaction_no']").val();
-          $.ajax({
-              type: "POST",
-              dataType: "json",
-              url: "<?php echo URL::to('/transaction/latestTransaction'); ?>",
-              data: {total_trans_no: total_trans_no},
-              cache: false,
-              success: function(msg){
-                  alert('thiss');
-                  alert(msg);
-              },
-              error: function(error){
-                  console.log(error);
-              }
-          });
-      });
 
        function getFromCurrency(){
         var id = $("#party_from").find(':selected').data('currency');
