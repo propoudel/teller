@@ -339,4 +339,38 @@ class TransactionController extends Controller {
         })->download('xls');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $number
+     * @return Response
+     */
+    public function latestTransaction()
+    {
+        $total_trans_no = $_POST['total_trans_no'];
+
+        $transaction = 'SELECT *,
+                      (SELECT id FROM party WHERE transaction.`debtor_id` = party.`id`) AS party_id,
+                      (SELECT party_name FROM party WHERE transaction.`debtor_id` = party.`id`) AS debtor,
+                      (SELECT currency_code FROM currency WHERE transaction.`d_currency` = currency.`id`) AS d_currency,
+                      (SELECT currency_code FROM currency WHERE transaction.`c_currency` = currency.`id`) AS c_currency,
+                      (SELECT party_name FROM party WHERE transaction.`creditor_id` = party.`id`) AS creditor FROM transaction';
+
+        $transaction .= ' ORDER BY created_at DESC LIMIT ' . $total_trans_no;
+
+        $transaction_data =  DB::select($transaction);
+
+        $party_join_curr = DB::table('party')
+            ->Join('currency', 'currency.id', '=', 'party.currency_id')
+            ->select('party.*', 'currency.id as currency_id', 'currency.currency_code')
+            ->get();
+
+        $data = array();
+        $data['transaction_data'] =  $transaction_data;
+        $data['party_join_curr'] = $party_join_curr;
+
+        $data = View::make('transaction/latestTransaction', compact('data'));
+
+        return $data;
+    }
 }

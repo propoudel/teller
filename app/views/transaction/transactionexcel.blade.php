@@ -14,7 +14,7 @@ if (!empty($_GET['debtor_id']) || !empty($_GET['creditor_id']) || !empty($_GET['
         <th>Credit_FC</th>
         <th>Debit</th>
         <th>Credit</th>
-        <th>Balance</th>
+        <?php if ($set_condition == 0) { ?><th>Balance</th><?php } ?>
     </tr>
     </thead>
 

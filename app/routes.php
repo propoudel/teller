@@ -139,7 +139,10 @@ Route::group(["before" => "auth"], function () {
         "as" => "transaction/export",
         "uses" => "TransactionController@export"
     ]);
-
+    Route::any("/transaction/latestTransaction", [
+        "as" => "/transaction/latestTransaction",
+        "uses" => "TransactionController@latestTransaction"
+    ]);
 });
 
 Route::any("/request", [
