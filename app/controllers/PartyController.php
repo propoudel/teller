@@ -107,10 +107,16 @@ class PartyController extends Controller {
 	 */
     public function edit($id)
     {
-        $curr = new Currency();
-        $data['currency'] = $curr->all();
+        $party = new Party();
+        $party_data = $party->all();
 
-        $data['party_data'] = Party::find($id);
+        $currency = new Currency();
+        $currency_data = $currency->all();
+
+        $data['party_data'] = $party_data;
+        $data['currency_data'] = $currency_data;
+
+        $data['party_data_edit'] = Party::find($id);
 
         return View::make('party/edit', compact('data'));
     }

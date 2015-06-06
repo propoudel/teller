@@ -121,7 +121,17 @@ class TransactionController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+        $party = new Party();
+        $party_data = $party->all();
+
+        $currency = new Currency();
+        $currency_data = $currency->all();
+
+        $data['party_data'] = $party_data;
+        $data['currency_data'] = $currency_data;
+        $data['transaction'] = Transaction::find($id);
+
+        return View::make('transaction/edit', compact('data'));
 	}
 
 
@@ -131,9 +141,17 @@ class TransactionController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update()
 	{
-		//
+        $id = Input::get('id');
+        $trans = Transaction::find($id);
+        $date = date('Y-m-d', strtotime(Input::get('created_at'))) . ' ' . date('H:i:s');
+        $trans->created_at = $date;
+
+        $trans->save();
+        // redirect
+        Session::flash('message', 'Successfully Updated Transaction Date!');
+        return Redirect::to('transaction');
 	}
 
 
@@ -369,8 +387,15 @@ class TransactionController extends Controller {
         $data['transaction_data'] =  $transaction_data;
         $data['party_join_curr'] = $party_join_curr;
 
-        $data = View::make('transaction/latestTransaction', compact('data'));
+//        $html = View::make('transaction/latestTransaction', compact('data'));
+//
+//        return $html;
 
-        return $data;
+        $html = View::make('transaction/latestTransaction', compact('data'))->render();
+        $new_html = str_replace("\r\n",'', $html);
+        //$new_html = trim(preg_replace('/\s+/', '', $html));
+        //echo $new_html; die;
+
+        return Response::json(array('html' => $new_html));
     }
 }
