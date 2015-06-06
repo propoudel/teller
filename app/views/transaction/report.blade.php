@@ -7,8 +7,8 @@
 
             <div class="col-sm-12">
                 <?php
-                    $received_from = isset($_GET['received_from']) ? $_GET['received_from'] : '';
-                    $sent_to = isset($_GET['sent_to']) ? $_GET['sent_to'] : '';
+                    $debtor_id = isset($_GET['debtor_id']) ? $_GET['debtor_id'] : '';
+                    $creditor_id = isset($_GET['creditor_id']) ? $_GET['creditor_id'] : '';
                     $currency = isset($_GET['currency']) ? $_GET['currency'] : '';
                     $from = isset($_GET['from']) ? $_GET['from'] : '';
                     $to = isset($_GET['to']) ? $_GET['to'] : '';
@@ -17,11 +17,11 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="debtor">Debtor</label>
-                                <select name="debtor" id="debtor" class="form-control">
+                                <label for="debtor_id">Debtor</label>
+                                <select name="debtor_id" id="debtor_id" class="form-control">
                                     <option value="">Select</option>
                                     @foreach($data['party_data'] as $list)
-                                        <option <?php if($received_from==$list->id) {echo 'selected';} ?> data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
+                                        <option <?php if($debtor_id==$list->id) {echo 'selected';} ?> data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -29,11 +29,11 @@
 
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="sent_to">Creditor</label>
-                                <select name="creditor" id="creditor" class="form-control" >
+                                <label for="creditor_id">Creditor</label>
+                                <select name="creditor_id" id="creditor_id" class="form-control" >
                                     <option value="">Select</option>
                                     @foreach($data['party_data'] as $list)
-                                        <option <?php if($sent_to==$list->id) {echo 'selected';} ?>  data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
+                                        <option <?php if($creditor_id==$list->id) {echo 'selected';} ?>  data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -170,7 +170,7 @@
                 </form>
                     <div class="row">
                         <div class="col-sm-12">
-                            <button url="<?php echo URL::to('/transaction/export') . '?received_from=' . $received_from . '&sent_to='  . $sent_to .  '&currency=' . $currency . '&from=' . $from . '&to=' . $to; ?>" id="export" class="btn btn-primary pull-right">Export</button>
+                            <button url="<?php echo URL::to('/transaction/export') . '?debtor_id=' . $debtor_id . '&creditor_id='  . $creditor_id .  '&currency=' . $currency . '&from=' . $from . '&to=' . $to; ?>" id="export" class="btn btn-primary pull-right">Export</button>
                         </div>
                     </div>
 

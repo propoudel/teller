@@ -197,22 +197,22 @@ class TransactionController extends Controller {
             $transaction .= ' WHERE ';
         }
 
-        if (Input::get('received_from')) {
-            $transaction .= ' received_from=' . Input::get('received_from');
+        if (Input::get('debtor_id')) {
+            $transaction .= ' debtor_id=' . Input::get('debtor_id');
         }
-        if (Input::get('sent_to')) {
-            if (Input::get('received_from')) {
-                $transaction .= ' AND sent_to=' . Input::get('sent_to');
+        if (Input::get('creditor_id')) {
+            if (Input::get('debtor_id')) {
+                $transaction .= ' AND creditor_id=' . Input::get('creditor_id');
             } else {
-                $transaction .= ' sent_to=' . Input::get('sent_to');
+                $transaction .= ' creditor_id=' . Input::get('creditor_id');
             }
 
         }
         if (Input::get('currency')) {
-            if (Input::get('received_from') || Input::get('sent_to')) {
-                $transaction .= ' AND (sent_currency=' . Input::get('currency') . ' OR received_currency=' . Input::get('currency') . ')';
+            if (Input::get('debtor_id') || Input::get('creditor_id')) {
+                $transaction .= ' AND (d_currency=' . Input::get('currency') . ' OR c_currency=' . Input::get('currency') . ')';
             } else {
-                $transaction .= ' (sent_currency=' . Input::get('currency') . ' OR received_currency=' . Input::get('currency') . ')';
+                $transaction .= ' (d_currency=' . Input::get('currency') . ' OR c_currency=' . Input::get('currency') . ')';
             }
         }
         /*
