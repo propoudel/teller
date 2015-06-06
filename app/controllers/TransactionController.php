@@ -380,7 +380,9 @@ class TransactionController extends Controller {
             $transaction .= ' WHERE debtor_id=' . $_POST['party_name'] .' OR ' . 'creditor_id=' . $_POST['party_name'] .' ORDER BY created_at DESC';
         }
 
-        //echo $transaction; die;
+        if ($_POST['type'] == 'currency') {
+            $transaction .= ' WHERE d_currency=' . $_POST['currency_code'] .' OR ' . 'd_currency=' . $_POST['currency_code'] .' ORDER BY created_at DESC';
+        }
 
         $transaction_data =  DB::select($transaction);
 
@@ -393,16 +395,7 @@ class TransactionController extends Controller {
         $data['transaction_data'] =  $transaction_data;
         $data['party_join_curr'] = $party_join_curr;
 
-//        $html = View::make('transaction/latestTransaction', compact('data'));
-//
-//        return $html;
-
         $html = View::make('transaction/latestTransaction', compact('data'))->render();
         echo $html;
-        //$new_html = str_replace("\r\n",'', $html);
-        //$new_html = trim(preg_replace('/\s+/', '', $html));
-        //echo $new_html; die;
-
-        //return Response::json(array('html' => $new_html));
     }
 }
