@@ -217,7 +217,7 @@
               type: "POST",
               dataType: "html",
               url: "<?php echo URL::to('/transaction/latestTransaction'); ?>",
-              data: {total_trans_no: total_trans_no},
+              data: {total_trans_no: total_trans_no, type: 'trans'},
               cache: false,
               success: function(html) {
                   alert(html);
