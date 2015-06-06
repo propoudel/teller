@@ -99,6 +99,11 @@
                                     </thead>
 
                                     <tbody>
+                                    <?php if (empty($data['transaction_data'])) { ?>
+                                    <tr>
+                                        <td colspan="6">There Is No Any Transaction For Selected One.</td>
+                                    </tr>
+                                    <?php } ?>
                                     @foreach($data['party_join_curr'] as $p)
                                         <tr style="background-color: #C0C0C0;">
                                             <td colspan="8"><b>{{ $p->party_name; }}({{ $p->currency_code; }})</b></td>
