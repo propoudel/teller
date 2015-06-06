@@ -50,21 +50,20 @@
                                 <?php //echo '<pre>'; print_r($data['party_data']); die; ?>
                                 <?php foreach($data['party_data'] as $list): ?>
                                 <label>
-                                  <input type="radio" class="party_name" name="party_name" value="<?php echo $list['id']; ?>" data-toggle="modal" data-target=".view-modal-sm"> <?php echo $list['party_name']; ?>
+                                  <input type="radio" class="party_name" name="party_name" value="<?php echo $list['id']; ?>" data-toggle="modal" data-target=".modal-limit-party-trans"> <?php echo $list['party_name']; ?>
                                 </label>
                                 <?php endforeach; ?>
 
                               </div>
 
-                              <div class="modal fade view-modal-sm" tabindex="-1" role="dialog" aria-labelledby="viewSmallModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-sm">
+                              <div class="modal fade view-modal-lg modal-limit-party-trans" tabindex="-1" role="dialog" aria-labelledby="viewSmallModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
                                   <div class="modal-content">
                                    <div class="modal-header">
                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                         <h4 class="modal-title" id="viewModalLabel">title</h4>
+                                         <h4 class="modal-title" id="viewModalLabel">Transaction</h4>
                                        </div>
-                                       <div class="modal-body">
-                                         ...
+                                       <div class="modal-body partyTransaction">
                                        </div>
                                   </div>
 
@@ -109,11 +108,11 @@
               data: {party_name: party_name, type: 'party'},
               cache: false,
               success: function(html) {
-                  alert(html);
+                  //alert(html);
 //                  var a = $.parseHTML(html);
 //                  alert(a);
-                  $(".limitTransaction").append('<h2>ramram</h2>');
-                  $(".limitTransaction").html(html);
+                  //$(".partyTransaction").append('<h2>ramram</h2>');
+                  $(".partyTransaction").html(html);
               },
               error: function(error){
                   console.log(error);

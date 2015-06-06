@@ -377,7 +377,7 @@ class TransactionController extends Controller {
         }
 
         if ($_POST['type'] == 'party') {
-            $transaction .= ' WHERE debtor=' . $_POST['party_name'] .'OR' . 'creditor_id=' . $_POST['party_name'] .'ORDER BY created_at DESC';
+            $transaction .= ' WHERE debtor_id=' . $_POST['party_name'] .' OR ' . 'creditor_id=' . $_POST['party_name'] .' ORDER BY created_at DESC';
         }
 
         //echo $transaction; die;
