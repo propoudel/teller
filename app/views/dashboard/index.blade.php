@@ -213,8 +213,9 @@
     <script type="text/javascript">
         $( "button.btnTransactionNo").click(function() {
             var total_trans_no = $("input[name='transaction_no']").val();
-            if (parseInt(total_trans_no) < 0) {
+            if (total_trans_no == '') {
                 alert('Please Enter Greater Than 0!');
+                return false;
             }
             $.ajax({
                 type: "POST",
