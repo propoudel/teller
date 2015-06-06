@@ -286,7 +286,7 @@
 
 
 
->>>>>>> 8877f253968c81412bcea433c7d4d31a14cb37a9
+
           } else if (partyType == "creditBtn") {
               $('#c_currency').prop('selectedIndex',0);
               $("#credit").val(party_name);
@@ -305,7 +305,7 @@
 
               $("#conversion_currency").find('option[value="'+DvalueSelected+'"]').show();
               $("#conversion_currency").find('option[value="'+CvalueSelected+'"]').show();
->>>>>>> 8877f253968c81412bcea433c7d4d31a14cb37a9
+
           }
 
           $("#partyType").val("");
