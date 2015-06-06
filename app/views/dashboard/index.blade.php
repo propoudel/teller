@@ -9,8 +9,8 @@
                       <div class="form-group">
                           <div class="input-group pull-right">
                               <input name="transaction_no" type="number" class="form-control" style="width: 138px;" placeholder="Transaction No">
-                              <button type="button" class="btn btn-success btnTransactionNo"><i class="fa fa-pie-chart"></i></button>
-                              {{--<button data-toggle="modal" data-target=".view-modal-sm" type="button" class="btn btn-success btnTransactionNo"><i class="fa fa-pie-chart"></i></button>--}}
+                              {{--<button type="button" class="btn btn-success btnTransactionNo"><i class="fa fa-pie-chart"></i></button>--}}
+                              <button data-toggle="modal" data-target=".modal-limit-transaction" type="button" class="btn btn-success btnTransactionNo"><i class="fa fa-pie-chart"></i></button>
                           </div>
                       </div>
                   </div>
@@ -160,7 +160,7 @@
       </div>
 
 
-  <!-- Start Party Pop Up -->
+<!-- Start Party Pop Up -->
   <div class="modal fade view-modal-party" tabindex="-1" role="dialog" aria-labelledby="viewSmallModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm">
           <div class="modal-content">
@@ -180,7 +180,7 @@
                       <tr>
                           <td><?php echo $list->party_name; ?></td>
                           <td><?php echo $list->currency_code; ?></td>
-                          <td><button currency_id="<?php echo $list->currency_id; ?>" currency_name="<?php echo $list->currency_code; ?>" party_id="<?php echo $list->id; ?>" party_name="<?php echo $list->party_name; ?>" type="button" class="btn-primary select_party">Choose</button></td>
+                          <td><button currency_id="<?php echo $list->currency_id; ?>" currency_name="<?php echo $list->currency_code; ?>" party_id="<?php echo $list->id; ?>" party_name="<?php echo $list->party_name; ?>" type="button" class="btn btn-info select_party">Choose</button></td>
                       </tr>
                       <?php endforeach; ?>
                       </tbody>
@@ -194,7 +194,7 @@
 
   <!-- Start Limit Transaction -->
   <div class="modal fade modal-limit-transaction" tabindex="-1" role="dialog" aria-labelledby="viewSmallModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-sm">
+      <div class="modal-dialog modal-lg">
           <div class="modal-content">
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -220,10 +220,10 @@
               data: {total_trans_no: total_trans_no, type: 'trans'},
               cache: false,
               success: function(html) {
-                  alert(html);
+                  //alert(html);
 //                  var a = $.parseHTML(html);
 //                  alert(a);
-                  $(".limitTransaction").append('<h2>ramram</h2>');
+                  //$(".limitTransaction").append('<h2>ramram</h2>');
                   $(".limitTransaction").html(html);
               },
               error: function(error){
@@ -260,19 +260,51 @@
           party_id = $(this).attr('party_id');
 
           if (partyType == "debitBtn") {
+              $('#d_currency').prop('selectedIndex',0);
               $("#debit").val(party_name);
               $("#debtor_id").val(party_id);
-              $("#d_currency option").each(function(){$(this).removeAttr("selected")});
+
+
+              $("#d_currency option").each(function(){
+
+                  $(this).removeAttr("selected")
+              });
               $("#d_currency option[value='"+ currency_id +"']").attr("selected", "selected");
               $("#conversion_currency").find('option[value="'+currency_id+'"]').show();
-              //$('.view-modal-party').modal('hide');
+              $('.view-modal-party').modal('hide');
+
+              $('#conversion_currency')
+                      .find('option').hide().end();
+              var DoptionSelected = $("#d_currency").find("option:selected");
+              var DvalueSelected  = DoptionSelected.val();
+
+              var CoptionSelected = $("#c_currency").find("option:selected");
+              var CvalueSelected  = CoptionSelected.val();
+
+              $("#conversion_currency").find('option[value="'+DvalueSelected+'"]').show();
+              $("#conversion_currency").find('option[value="'+CvalueSelected+'"]').show();
+
+
+
+
           } else if (partyType == "creditBtn") {
+              $('#c_currency').prop('selectedIndex',0);
               $("#credit").val(party_name);
               $("#creditor_id").val(party_id);
               $("#c_currency option").each(function(){$(this).removeAttr("selected")});
               $("#c_currency option[value='"+ currency_id +"']").attr("selected", "selected");
               $("#conversion_currency").find('option[value="'+currency_id+'"]').show();
-               //$('.view-modal-party').modal('hide');
+               $('.view-modal-party').modal('hide');
+              $('#conversion_currency')
+                      .find('option').hide().end();
+              var DoptionSelected = $("#d_currency").find("option:selected");
+              var DvalueSelected  = DoptionSelected.val();
+
+              var CoptionSelected = $("#c_currency").find("option:selected");
+              var CvalueSelected  = CoptionSelected.val();
+
+              $("#conversion_currency").find('option[value="'+DvalueSelected+'"]').show();
+              $("#conversion_currency").find('option[value="'+CvalueSelected+'"]').show();
           }
 
           $("#partyType").val("");

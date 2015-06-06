@@ -380,7 +380,7 @@ class TransactionController extends Controller {
             $transaction .= ' WHERE debtor=' . $_POST['party_name'] .'OR' . 'creditor_id=' . $_POST['party_name'] .'ORDER BY created_at DESC';
         }
 
-        echo $transaction; die;
+        //echo $transaction; die;
 
         $transaction_data =  DB::select($transaction);
 
@@ -398,10 +398,11 @@ class TransactionController extends Controller {
 //        return $html;
 
         $html = View::make('transaction/latestTransaction', compact('data'))->render();
-        $new_html = str_replace("\r\n",'', $html);
+        echo $html;
+        //$new_html = str_replace("\r\n",'', $html);
         //$new_html = trim(preg_replace('/\s+/', '', $html));
         //echo $new_html; die;
 
-        return Response::json(array('html' => $new_html));
+        //return Response::json(array('html' => $new_html));
     }
 }
