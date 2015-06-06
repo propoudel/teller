@@ -12,6 +12,12 @@
                     $currency = isset($_GET['currency']) ? $_GET['currency'] : '';
                     $from = isset($_GET['from']) ? $_GET['from'] : '';
                     $to = isset($_GET['to']) ? $_GET['to'] : '';
+
+                    $set_condition = 0;
+                    if (!empty($debtor_id) || !empty($creditor_id) || !empty($currency)) {
+                        $set_condition = 1;
+                    }
+
                 ?>
                 <form>
                     <div class="row">
@@ -147,19 +153,23 @@
                                             }
                                             ?>
                                         @endforeach
+                                        <?php if ($set_condition == 0) { ?>
                                         <tr  align="right">
                                             <td colspan="3"><b>Balance FC</b></td>
                                             <td colspan="2"><b><?php echo $credit_fc - $debit_fc; ?></b></td>
                                             <td colspan="2"><b>Balance Local</b></td>
                                             <td><b><?php echo $credit_per_party - $debit_per_party; ?></b></td>
                                         </tr>
+                                        <?php } ?>
                                     @endforeach
+                                    <?php if ($set_condition == 0) { ?>
                                     <tr align="right">
                                         <td align="right" colspan="5"><b>Total Balance</b></td>
                                         <td><?php echo $debit ; ?></td>
                                         <td><?php echo $credit ; ?></td>
                                         <td><?php echo $credit - $debit ; ?></td>
                                     </tr>
+                                    <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -171,7 +181,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <button url="<?php echo URL::to('/transaction/export') . '?debtor_id=' . $debtor_id . '&creditor_id='  . $creditor_id .  '&currency=' . $currency . '&from=' . $from . '&to=' . $to; ?>" id="export" class="btn btn-primary pull-right">Export</button>
-                        </div>
+                         </div>
                     </div>
 
             </div>

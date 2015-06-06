@@ -261,5 +261,82 @@ class TransactionController extends Controller {
         return View::make('transaction/report', compact('data'));
     }
 
+    public function export() {
+        Excel::create('ExcelReport' . date('Ymdhms'), function($excel) {
+
+            $excel->sheet('ExcelReport' . date('Ymdhms'), function($sheet) {
+                $users = User::orderBy('created_at','desc')->get();
+
+                $party = new Party();
+                $party_data = $party->all();
+
+                $currency = new Currency();
+                $currency_data = $currency->all();
+
+                $party_join_curr = DB::table('party')
+                    ->Join('currency', 'currency.id', '=', 'party.currency_id')
+                    ->select('party.*', 'currency.id as currency_id', 'currency.currency_code')
+                    ->get();
+
+                $transaction = 'SELECT *,
+                      (SELECT id FROM party WHERE transaction.`debtor_id` = party.`id`) AS party_id,
+                      (SELECT party_name FROM party WHERE transaction.`debtor_id` = party.`id`) AS debtor,
+                      (SELECT currency_code FROM currency WHERE transaction.`d_currency` = currency.`id`) AS d_currency,
+                      (SELECT currency_code FROM currency WHERE transaction.`c_currency` = currency.`id`) AS c_currency,
+                      (SELECT party_name FROM party WHERE transaction.`creditor_id` = party.`id`) AS creditor FROM transaction';
+
+                $get_data = array_filter($_GET);
+
+                if (!empty($get_data)) {
+                    $transaction .= ' WHERE ';
+                }
+
+                if (Input::get('debtor_id')) {
+                    $transaction .= ' debtor_id=' . Input::get('debtor_id');
+                }
+                if (Input::get('creditor_id')) {
+                    if (Input::get('debtor_id')) {
+                        $transaction .= ' AND creditor_id=' . Input::get('creditor_id');
+                    } else {
+                        $transaction .= ' creditor_id=' . Input::get('creditor_id');
+                    }
+
+                }
+                if (Input::get('currency')) {
+                    if (Input::get('debtor_id') || Input::get('creditor_id')) {
+                        $transaction .= ' AND (d_currency=' . Input::get('currency') . ' OR c_currency=' . Input::get('currency') . ')';
+                    } else {
+                        $transaction .= ' (d_currency=' . Input::get('currency') . ' OR c_currency=' . Input::get('currency') . ')';
+                    }
+                }
+
+                $transaction .= ' ORDER BY debtor';
+                $trans_data =  DB::select($transaction);
+
+                $transaction_data = array();
+
+
+                foreach ($trans_data as $ad) {
+                    $transaction_data[] = (array) $ad;
+                }
+
+                if (empty($transaction_data)) {
+                    echo 'No data to Be Export';
+                    die;
+                }
+
+                $data['party_data'] = $party_data;
+                $data['currency_data'] = $currency_data;
+                $data['transaction_data'] =  $transaction_data;
+                //$data['return_transaction'] =  $return_transaction;
+                $data['party_join_curr'] = $party_join_curr;
+
+                //return View::make('transaction/report', compact('data'));
+
+
+                $sheet->loadView('transaction/transactionexcel', $data);
+            });
+        })->download('xls');
+    }
 
 }
