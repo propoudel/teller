@@ -265,14 +265,14 @@
               $("#d_currency option").each(function(){$(this).removeAttr("selected")});
               $("#d_currency option[value='"+ currency_id +"']").attr("selected", "selected");
               $("#conversion_currency").find('option[value="'+currency_id+'"]').show();
-              //$('.view-modal-party').modal('hide');
+              $('.view-modal-party').modal('hide');
           } else if (partyType == "creditBtn") {
               $("#credit").val(party_name);
               $("#creditor_id").val(party_id);
               $("#c_currency option").each(function(){$(this).removeAttr("selected")});
               $("#c_currency option[value='"+ currency_id +"']").attr("selected", "selected");
               $("#conversion_currency").find('option[value="'+currency_id+'"]').show();
-               //$('.view-modal-party').modal('hide');
+               $('.view-modal-party').modal('hide');
           }
 
           $("#partyType").val("");
@@ -399,6 +399,20 @@
                               $("#conversion_currency").find('option[value="'+CvalueSelected+'"]').show();
                               $("#conversion_currency option[value="+CvalueSelected+"]").prop("selected", "selected");
 
+                              var v =  $("#conversion_currency").find("option:selected").text();
+
+                               var DS  = $("#d_currency").find("option:selected").text();
+                               var CS  = $("#c_currency").find("option:selected").text();
+
+
+                              if(v == DS){
+                                  $(".dc").html(v);
+                                  $(".cc").html($("#c_currency option:selected").text());
+                              }else{
+                                  $(".dc").html(CS);
+                                  $(".cc").html(DS);
+                              }
+
 
 
                   });
@@ -406,8 +420,18 @@
                    $('#conversion_currency').on('change', function() {
                       var v =  $(this).find("option:selected").text();
 
+                             var DS  = $("#d_currency").find("option:selected").text();
+                             var CS  = $("#c_currency").find("option:selected").text();
+
+
+                            if(v == DS){
                                 $(".dc").html(v);
                                 $(".cc").html($("#c_currency option:selected").text());
+                            }else{
+                                $(".dc").html(CS);
+                                $(".cc").html(DS);
+                            }
+
                      })
               });
     </script>
