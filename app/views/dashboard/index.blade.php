@@ -105,7 +105,7 @@
                                   <select required name="conversion_currency" class="form-control" id="conversion_currency" style="width: 235px;">
                                       <option value="">Currency</option>
                                       <?php foreach($data['currency_data'] as $list) { ?>
-                                        <option value="{{  $list->id }}">{{ $list->currency_code }}</option>
+                                        <option style="display: none;" value="{{  $list->id }}">{{ $list->currency_code }}</option>
                                       <?php } ?>
                                   </select>
                               </div>
@@ -113,7 +113,7 @@
                           <div id="foreign_val" class="col-sm-5">
                               <div class="form-group">
                                   <div class="form-group">
-                                      <label for="foreign_rate"><em>DC/CC To CC/DC</em></label>
+                                      <label for="foreign_rate"><em><span class="dc">DC</span>  To <span class="cc">CC</span> </em></label>
                                       <input required name="foreign_rate" type="number" step="0.01" min="0" value="" class="form-control" id="foreign_rate" placeholder="Foreign Conversion Rate">
                                   </div>
                               </div>
@@ -275,7 +275,7 @@
                 },
             error: function(error){
                     console.log(error);
-                  },
+                  }
          });
        }
 
@@ -355,6 +355,33 @@
                        }
 
                   });
+
+
+                  $('#d_currency, #c_currency').on('change', function() {
+
+                        $('#conversion_currency')
+                            .find('option').hide().end();
+
+                            $(".dc").html(' ');
+                            $(".cc").html(' ');
+
+                          var DoptionSelected = $("#d_currency").find("option:selected");
+                          var DvalueSelected  = DoptionSelected.val();
+
+                            var CoptionSelected = $("#c_currency").find("option:selected");
+                            var CvalueSelected  = CoptionSelected.val();
+
+                              $("#conversion_currency").find('option[value="'+DvalueSelected+'"]').show();
+                              $("#conversion_currency").find('option[value="'+CvalueSelected+'"]').show();
+
+
+                  });
+
+                   $('#conversion_currency').on('change', function() {
+                      var v =  $(this).find("option:selected").text();
+                                $(".dc").html(v);
+                                $(".cc").html($("#c_currency option:selected").text());
+                     })
               });
     </script>
 @stop
