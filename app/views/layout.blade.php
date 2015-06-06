@@ -50,7 +50,7 @@
                                 <?php //echo '<pre>'; print_r($data['party_data']); die; ?>
                                 <?php foreach($data['party_data'] as $list): ?>
                                 <label>
-                                  <input type="radio" name="currency" data-toggle="modal" data-target=".view-modal-sm"> <?php echo $list['party_name']; ?>
+                                  <input type="radio" class="party_name" name="party_name" value="<?php echo $list['id']; ?>" data-toggle="modal" data-target=".view-modal-sm"> <?php echo $list['party_name']; ?>
                                 </label>
                                 <?php endforeach; ?>
 
@@ -99,5 +99,29 @@
 </div>
    
 	@include('footer')
+  <script>
+      $( ".party_name").click(function() {
+          var party_name = $(this).val();
+          $.ajax({
+              type: "POST",
+              dataType: "html",
+              url: "<?php echo URL::to('/transaction/latestTransaction'); ?>",
+              data: {party_name: party_name, type: 'party'},
+              cache: false,
+              success: function(html) {
+                  alert(html);
+//                  var a = $.parseHTML(html);
+//                  alert(a);
+                  $(".limitTransaction").append('<h2>ramram</h2>');
+                  $(".limitTransaction").html(html);
+              },
+              error: function(error){
+                  console.log(error);
+              }
+          });
+      });
+  </script>
+
+
   </body>
 </html>

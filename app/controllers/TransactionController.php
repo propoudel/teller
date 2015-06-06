@@ -365,8 +365,6 @@ class TransactionController extends Controller {
      */
     public function latestTransaction()
     {
-        $total_trans_no = $_POST['total_trans_no'];
-
         $transaction = 'SELECT *,
                       (SELECT id FROM party WHERE transaction.`debtor_id` = party.`id`) AS party_id,
                       (SELECT party_name FROM party WHERE transaction.`debtor_id` = party.`id`) AS debtor,
@@ -374,7 +372,15 @@ class TransactionController extends Controller {
                       (SELECT currency_code FROM currency WHERE transaction.`c_currency` = currency.`id`) AS c_currency,
                       (SELECT party_name FROM party WHERE transaction.`creditor_id` = party.`id`) AS creditor FROM transaction';
 
-        $transaction .= ' ORDER BY created_at DESC LIMIT ' . $total_trans_no;
+        if ($_POST['type'] == 'trans') {
+           $transaction .= ' ORDER BY created_at DESC LIMIT ' . $_POST['total_trans_no'];
+        }
+
+        if ($_POST['type'] == 'party') {
+            $transaction .= ' WHERE debtor=' . $_POST['party_name'] .'OR' . 'creditor_id=' . $_POST['party_name'] .'ORDER BY created_at DESC';
+        }
+
+        //echo $transaction; die;
 
         $transaction_data =  DB::select($transaction);
 
@@ -392,10 +398,11 @@ class TransactionController extends Controller {
 //        return $html;
 
         $html = View::make('transaction/latestTransaction', compact('data'))->render();
-        $new_html = str_replace("\r\n",'', $html);
+        echo $html;
+        //$new_html = str_replace("\r\n",'', $html);
         //$new_html = trim(preg_replace('/\s+/', '', $html));
         //echo $new_html; die;
 
-        return Response::json(array('html' => $new_html));
+        //return Response::json(array('html' => $new_html));
     }
 }
