@@ -224,12 +224,17 @@
               $("#debtor_id").val(party_id);
               $("#d_currency option").each(function(){$(this).removeAttr("selected")});
               $("#d_currency option[value='"+ currency_id +"']").attr("selected", "selected");
+              $("#conversion_currency").find('option[value="'+currency_id+'"]').show();
           } else if (partyType == "creditBtn") {
               $("#credit").val(party_name);
               $("#creditor_id").val(party_id);
               $("#c_currency option").each(function(){$(this).removeAttr("selected")});
               $("#c_currency option[value='"+ currency_id +"']").attr("selected", "selected");
+              $("#conversion_currency").find('option[value="'+currency_id+'"]').show();
           }
+
+          //$("#conversion_currency").find('option[value="'+DvalueSelected+'"]').show();
+          //$("#conversion_currency").find('option[value="'+CvalueSelected+'"]').show();
 
           $("#partyType").val("");
           $(".modal").hide();
