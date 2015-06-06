@@ -233,32 +233,26 @@
               $("#conversion_currency").find('option[value="'+currency_id+'"]').show();
           }
 
-          //$("#conversion_currency").find('option[value="'+DvalueSelected+'"]').show();
-          //$("#conversion_currency").find('option[value="'+CvalueSelected+'"]').show();
-
           $("#partyType").val("");
           $(".modal").hide();
           //console.log($("#d_currency option[value='2']").attr("selected", "selected"));
       });
 
       $( "button.btnTransactionNo").click(function() {
-          alert('bass');
+          var total_trans_no = $("input[name='transaction_no']").val();
           $.ajax({
               type: "POST",
               dataType: "json",
-              url: "<?php echo URL::to('/party/find'); ?>",
-              data: {id:id},
+              url: "<?php echo URL::to('/transaction/latestTransaction'); ?>",
+              data: {total_trans_no: total_trans_no},
               cache: false,
-              success: function(server_response){
-                  //currency_from
-                  $('#currency_from').find('option').remove();
-                  // $('#currency_from').prop("disabled", false);
-                  $('#currency_from').append($('<option>').text(server_response.currency_code).attr('value', server_response.id));
-
+              success: function(msg){
+                  alert('thiss');
+                  alert(msg);
               },
               error: function(error){
                   console.log(error);
-              },
+              }
           });
       });
 
