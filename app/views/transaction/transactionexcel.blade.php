@@ -1,7 +1,7 @@
 <?php
 $set_condition = 0;
-if (!empty($debtor_id) || !empty($creditor_id) || !empty($currency)) {
-$set_condition = 1;
+if (!empty($_GET['debtor_id']) || !empty($_GET['creditor_id']) || !empty($_GET['currency'])) {
+    $set_condition = 1;
 }
 ?>
 <table class="table table-bordered">
