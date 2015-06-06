@@ -137,7 +137,6 @@
 
       $( ".currency_code").click(function() {
           var currency_code = $(this).val();
-          alert(currency_code);
           $.ajax({
               type: "POST",
               dataType: "html",

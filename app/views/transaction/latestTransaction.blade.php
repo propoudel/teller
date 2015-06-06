@@ -9,12 +9,18 @@
         <th>Credit_FC</th>
         <th>Debit Local</th>
         <th>Credit Local</th>
-        {{--<th>Balance</th>--}}
     </tr>
     </thead>
 
     <tbody>
+
+        <?php if (empty($data['transaction_data'])) { ?>
+            <tr>
+                <td colspan="6">There Is No Any Transaction For Selected One.</td>
+            </tr>
+        <?php } ?>
         @foreach($data['transaction_data'] as $a)
+            <tr>
                 <td>{{ date("d-m-Y",strtotime($a->created_at)) }}</td>
                 <td>{{ $a->debtor }}({{ $a->d_currency }})</td>
                 <td>{{ $a->creditor }}({{ $a->c_currency }})</td>
@@ -25,6 +31,7 @@
                 <td>{{ $a->credit_local }}</td>
                 {{--<td></td>--}}
             </tr>
+
         @endforeach
     </tbody>
 </table>
