@@ -177,6 +177,9 @@
                         </thead>
                         <tbody class="table">
                         <?php foreach($data['party_join_curr'] as $list): ?>
+                        <?php
+                                $rel_data[] = $list->party_name . $list->currency_id;
+                        ?>
                         <tr>
                             <td><?php echo $list->party_name; ?></td>
                             <td><?php echo $list->currency_code; ?></td>
@@ -211,6 +214,12 @@
 
 
     <script type="text/javascript">
+        $("#debit").blur(function() {
+            alert('this');
+            var rel_data = <?php echo json_encode($rel_data); ?>;
+            alert(rel_data);
+        });
+
         $( "button.btnTransactionNo").click(function() {
             var total_trans_no = $("input[name='transaction_no']").val();
             if (total_trans_no == '') {
