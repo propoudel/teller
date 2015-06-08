@@ -227,10 +227,9 @@
 
             var d_name = d_n + d_c;
             var c_name = c_n + c_c;
-            //alert(rel_data + "-Debit-" + d_name +  "-Credit-" + c_name );
 
             if(($.inArray(d_name, rel_data) == -1) || ($.inArray(c_name, rel_data) == -1)) {
-                //alert("No"); // Do task here
+            // Do task here
                 var status = confirm("Party Entered is not For selected Currency. Do you want to Create?");
                 if (status == true) {
                     $("#new_party").val("1");
@@ -242,15 +241,11 @@
                 } else {
                     //location.reload();
                     $("#transaction")[0].reset();
-                    //$("#new_party").val("0");
                 }
                 return false;
             } else {
                 $("#new_party").val("0");
             }
-
-
-
         });
 
         $( "button.btnTransactionNo").click(function() {
@@ -266,10 +261,6 @@
                 data: {total_trans_no: total_trans_no, type: 'trans'},
                 cache: false,
                 success: function(html) {
-                    //alert(html);
-//                  var a = $.parseHTML(html);
-//                  alert(a);
-                    //$(".limitTransaction").append('<h2>ramram</h2>');
                     $(".limitTransaction").html(html);
                 },
                 error: function(error){
@@ -311,10 +302,7 @@
                 $('#d_currency').prop('selectedIndex',0);
                 $("#debit").val(party_name);
                 $("#debtor_id").val(party_id);
-
-
                 $("#d_currency option").each(function(){
-
                     $(this).removeAttr("selected")
                 });
                 $("#d_currency option[value='"+ currency_id +"']").attr("selected", "selected");
@@ -330,11 +318,6 @@
 
                 $("#conversion_currency").find('option[value="'+DvalueSelected+'"]').show();
                 $("#conversion_currency").find('option[value="'+CvalueSelected+'"]').show();
-
-
-
-
-
             } else if (partyType == "creditBtn") {
                 $('#c_currency').prop('selectedIndex',0);
                 $("#credit").val(party_name);
@@ -355,16 +338,13 @@
                 $("#conversion_currency").find('option[value="'+CvalueSelected+'"]').show();
 
             }
-
             $("#partyType").val("");
             $(".modal").hide();
-            //console.log($("#d_currency option[value='2']").attr("selected", "selected"));
         });
 
 
         function getFromCurrency(){
             var id = $("#party_from").find(':selected').data('currency');
-
             $.ajax({
                 type: "POST",
                 dataType: "json",
@@ -386,7 +366,6 @@
 
         function getToCurrency(){
             var id = $("#party_to").find(':selected').data('currency');
-
             $.ajax({
                 type: "POST",
                 dataType: "json",
@@ -411,7 +390,6 @@
             $("input:radio[name=currency_type]").click(function() {
                 typevalue = $(this).val();
                 $("#rate").val(" ");
-
             });
 
             $("#amount, #rate").keydown(function (e) {
@@ -428,8 +406,6 @@
                 if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
                     e.preventDefault();
                 }
-
-
             });
 
             $('#rate').bind('keyup',function (){
@@ -448,7 +424,6 @@
                 }
             });
             $('#amount, #rate').bind('keyup',function (){
-
                 var amount = $("#amount").val();
                 var rate = $("#rate").val();
                 if(typevalue == "1"){
@@ -463,7 +438,6 @@
 
 
             $('#d_currency, #c_currency').on('change', function() {
-
                 $('#conversion_currency')
                         .find('option').hide().end();
 
@@ -493,18 +467,12 @@
                     $(".dc").html(CS);
                     $(".cc").html(DS);
                 }
-
-
-
             });
 
             $('#conversion_currency').on('change', function() {
                 var v =  $(this).find("option:selected").text();
-
                 var DS  = $("#d_currency").find("option:selected").text();
                 var CS  = $("#c_currency").find("option:selected").text();
-
-
                 if(v == DS){
                     $(".dc").html(v);
                     $(".cc").html($("#c_currency option:selected").text());
@@ -512,7 +480,6 @@
                     $(".dc").html(CS);
                     $(".cc").html(DS);
                 }
-
             })
         });
     </script>
