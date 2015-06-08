@@ -48,11 +48,34 @@ class TransactionController extends Controller {
 	public function store()
 	{
         $transaction = new Transaction();
+        //Hidden Ids
+        $new_party = Input::get('new_party');
+        $d_yes = Input::get('d_yes');
+        $c_yes = Input::get('c_yes');
+        if ($new_party) {
+            if($d_yes) {
+                $d_party = new Party();
+                $d_party->party_details = 'Added Directly From dashboard on Entry!You can Edit Here!';
+                $d_party->party_name = Input::get('debit');
+                $d_party->currency_id = Input::get('d_currency');
+                $d_party->save();
+                $n_debtor_id =  $d_party->id;
+            }
+            if($c_yes) {
+                $c_party = new Party();
+                $c_party->party_details = 'Added Directly From dashboard on Entry!You can Edit Here!';
+                $c_party->party_name = Input::get('credit');
+                $c_party->currency_id = Input::get('c_currency');
+                $c_party->save();
+                $n_creditor_id =  $c_party->id;
+            }
+        }
+        // End Hidden Ids
         $transaction->base_type = Input::get('base_type');
         $transaction->reference_id = Input::get('reference_id');
-        $transaction->debtor_id = Input::get('debtor_id');
+        $transaction->debtor_id = isset($n_debtor_id) ? $n_debtor_id : Input::get('debtor_id');
         $transaction->d_currency = Input::get('d_currency');
-        $transaction->creditor_id = Input::get('creditor_id');
+        $transaction->creditor_id = isset($n_creditor_id) ? $n_creditor_id : Input::get('creditor_id');
         $transaction->c_currency = Input::get('c_currency');
         $transaction->conversion_currency = Input::get('conversion_currency');
         $transaction->foreign_rate = Input::get('foreign_rate');

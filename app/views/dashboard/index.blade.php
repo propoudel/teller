@@ -15,6 +15,9 @@
                     </div>
                 </div>
                 <form action="<?php echo URL::to('/transaction/store'); ?>" method="POST" name="transaction" id="transaction">
+                    <input type="hidden" name="new_party" id="new_party" value="">
+                    <input type="hidden" name="d_yes" id="d_yes" value="">
+                    <input type="hidden" name="c_yes" id="c_yes" value="">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="col-sm-4" style="margin-top: -40px;">
@@ -214,10 +217,40 @@
 
 
     <script type="text/javascript">
-        $("#debit").blur(function() {
-            alert('this');
+        $("#debit, #credit, #d_currency, #c_currency").blur(function() {
             var rel_data = <?php echo json_encode($rel_data); ?>;
-            alert(rel_data);
+
+            var d_n = $("#debit").val();
+            var d_c = $("#d_currency option:selected").val();
+            var c_n = $("#credit").val();
+            var c_c = $("#c_currency option:selected").val();
+
+            var d_name = d_n + d_c;
+            var c_name = c_n + c_c;
+            //alert(rel_data + "-Debit-" + d_name +  "-Credit-" + c_name );
+
+            if(($.inArray(d_name, rel_data) == -1) || ($.inArray(c_name, rel_data) == -1)) {
+                //alert("No"); // Do task here
+                var status = confirm("Party Entered is not For selected Currency. Do you want to Create?");
+                if (status == true) {
+                    $("#new_party").val("1");
+                    if ($(this).attr("name")== "debit") {
+                        $("#d_yes").val("1"); // For Debit
+                    } else if ($(this).attr("name")== "credit") {
+                        $("#c_yes").val("1"); // For Credit
+                    }
+                } else {
+                    //location.reload();
+                    $("#transaction")[0].reset();
+                    //$("#new_party").val("0");
+                }
+                return false;
+            } else {
+                $("#new_party").val("0");
+            }
+
+
+
         });
 
         $( "button.btnTransactionNo").click(function() {
@@ -249,11 +282,11 @@
             var foreign_val = $(this).val();
             if (foreign_val == 1) {
                 $("#foreign_rate").val('');
-                $("#foreign_val").removeAttr('required');
+                $("#foreign_rate").removeAttr('required');
                 $("#foreign_val").hide();
             } else {
                 $("#foreign_val").show();
-                $("#foreign_val").addAttr('required');
+                $("#foreign_rate").attr('required', true);
             }
         });
 
@@ -266,6 +299,8 @@
         });
 
         $( ".select_party").click(function() {
+            $("#d_yes").val(""); // hidden id reset of debit
+            $("#c_yes").val(""); // hidden id reset of credit
             partyType = $("#partyType").val();
             currency_id = $(this).attr('currency_id');
             currency_name = $(this).attr('currency_name');
