@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="row">
-                        <!--                        <div class="col-sm-4">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="from_date">Date From</label>
                                 <input class="form-control datepicker" value="<?php echo $from; ?>" name="from" type="text" placeholder="From Date">
@@ -72,7 +72,6 @@
                                 <input type="text" class="form-control datepicker" value="<?php echo $to; ?>" name="to" id="to" placeholder="To Date">
                             </div>
                         </div>
--->
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label> &nbsp; </label>

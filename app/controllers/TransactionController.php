@@ -275,10 +275,47 @@ class TransactionController extends Controller {
             }
 
         }*/
+        $from = '';
+        $to = '';
+        if (Input::get('from')) {
+            $from = date('Y-m-d H:i:s', strtotime(Input::get('from')));
+        }
+        if (Input::get('to')) {
+            $to = date('Y-m-d H:i:s', strtotime(Input::get('to')));
+        }
+
+        if ($from || $to) {
+            if (Input::get('debtor_id') || Input::get('creditor_id') || Input::get('currency')) {
+                if ($to && $from) {
+                    $transaction .= ' AND (created_at BETWEEN "' .  $from . '" AND "' . $to . '")';
+                } else if ($from){
+                    $transaction .= ' created_at>"' . $from . '"';
+                } else if ($to){
+                    $transaction .= ' created_at<"' . $to . '"';
+                }
+            } else {
+                if ($to && $from) {
+                    $transaction .= ' (created_at BETWEEN "' .  $from . '" AND "' . $to . '")';
+                } else if ($from) {
+                    $transaction .= ' created_at>"' . $from . '"';
+                } else if ($to) {
+                    $transaction .= ' created_at<"' . $to . '"';
+                }
+
+            }
+        }
+
+//        if (Input::get('to')) {
+//            if (Input::get('debtor_id') || Input::get('creditor_id') || Input::get('currency') || Input::get('from')) {
+//                //$transaction .= ' AND created_at<date(' . Input::get('to') . ')';
+//                $transaction .= ' AND created_at<date(' . Input::get('to') . ')';
+//            } else {
+//                $transaction .= ' created_at<date(' . Input::get('to') . ')';
+//            }
+//        }
 
         $transaction .= ' ORDER BY debtor';
-
-        //echo $account; die;
+        //echo $transaction; die;
 
 
         $transaction_data =  DB::select($transaction);
