@@ -116,6 +116,8 @@ class TransactionController extends Controller {
         $transaction->credit_local = Input::get('total_amount') * Input::get('local_rate');
         $transaction->comment = Input::get('comment');
         //$transaction->c_currency = Input::get('c_currency');
+        $transaction->reference_id = date('YmdHi') . rand(10, 99);
+
         $transaction->save();
 
         // redirect

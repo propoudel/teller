@@ -87,7 +87,7 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr style="background-color: #229ab7;color:white;">
-                                            <th>Date</th>
+                                            <th>Ref. ID</th>
                                             <th>Party</th>
                                             <th>Detail</th>
                                             <th>Debit_FC</th>
@@ -128,7 +128,8 @@
                                                         <?php $credit_per_party += $a->credit_local; ?>
 
                                                         <tr>
-                                                            <td>{{ date("d-m-Y",strtotime($a->created_at)) }}</td>
+                                                            {{--<td>{{ date("d-m-Y",strtotime($a->created_at)) }}</td>--}}
+                                                            <td>{{ $a->reference_id  }}</td>
                                                             <td>{{ $a->debtor }}({{ $a->d_currency }})</td>
                                                             <td>{{ $a->comment }}</td>
                                                             <td></td>
@@ -145,7 +146,8 @@
                                                     <?php $debit_fc += $a->debit_fc; ?>
                                                     <?php $debit_per_party += $a->debit_local; ?>
                                             <tr>
-                                                <td>{{ date("d-m-Y",strtotime($a->created_at)) }}</td>
+                                                {{--<td>{{ date("d-m-Y",strtotime($a->created_at)) }}</td>--}}
+                                                <td>{{ $a->reference_id  }}</td>
                                                 <td>{{ $a->creditor }}({{ $a->c_currency }})</td>
                                                 <td>{{ $a->comment }}</td>
                                                 <td>{{ $a->debit_fc }}</td>
