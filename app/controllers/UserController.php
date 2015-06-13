@@ -127,6 +127,10 @@ class UserController
     {
         // store
         $user = User::find(1);
+//        if ($user->password != Hash::make(Input::get('old_password'))) {
+//            Session::flash('message', 'Old Password Is Not Matched!! Try Again?');
+//            return Redirect::to('profile');
+//        }
         $user->username = Input::get('username');
         $user->password = Hash::make(Input::get('new_password'));
         $user->save();

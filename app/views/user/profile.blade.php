@@ -23,6 +23,13 @@
                             </div>
                         </div>
 
+                        {{--<div class="col-sm-6">--}}
+                            {{--<div class="form-group">--}}
+                                {{--<label for="new_password">Old Password</label>--}}
+                                {{--<input required="required" name="old_password" type="text" value="" class="form-control" id="old_password">--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="new_password">New Password</label>
