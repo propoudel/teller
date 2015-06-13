@@ -289,9 +289,9 @@ class TransactionController extends Controller {
                 if ($to && $from) {
                     $transaction .= ' AND (created_at BETWEEN "' .  $from . '" AND "' . $to . '")';
                 } else if ($from){
-                    $transaction .= ' created_at>"' . $from . '"';
+                    $transaction .= ' AND created_at>"' . $from . '"';
                 } else if ($to){
-                    $transaction .= ' created_at<"' . $to . '"';
+                    $transaction .= ' AND created_at<"' . $to . '"';
                 }
             } else {
                 if ($to && $from) {
