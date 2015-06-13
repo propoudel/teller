@@ -235,16 +235,37 @@
         $("#debit, #credit, #d_currency, #c_currency").blur(function() {
             var rel_data = <?php echo json_encode($rel_data); ?>;
 
+            var d_n = '';
             var d_n = $("#debit").val().toLowerCase();
+            var d_c = '';
             var d_c = $("#d_currency option:selected").val();
+            var c_n = '';
             var c_n = $("#credit").val().toLowerCase();
+            var c_c = '';
             var c_c = $("#c_currency option:selected").val();
 
             var d_name = d_n + d_c;
             var c_name = c_n + c_c;
 
-            if(($.inArray(d_name, rel_data) == -1) || ($.inArray(c_name, rel_data) == -1)) {
-                var status = confirm($(this).attr("name") + " Party Entered is not For selected Currency. Do you want to Create?");
+            var status_d = 0;
+            var status_c = 0;
+            if (d_name && $.inArray(d_name, rel_data) == -1) {
+                status_d = 1;
+            }
+            if (c_name && $.inArray(c_name, rel_data) == -1) {
+                status_c = 1;
+            }
+
+            if(status_d ==  1 || status_c ==  1) {
+                if ((status_d ==  1 && $("#d_yes").val() == 1) || (status_c ==  1 && $("#c_yes").val() == 1)) {
+                    status = true;
+                } else {
+                    var status = confirm(" Party Entered is not For selected Currency. Do you want to Create?");
+                }
+
+//                if (status_c ==  1 && $("#c_yes").val() == 1) {
+//                    status = true;
+//                }
 
                 if (status == true) {
                     $("#new_party").val("1");

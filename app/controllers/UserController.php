@@ -52,7 +52,16 @@ class UserController
 
     public function profile()
     {
-        return View::make("user/profile");
+        $party = new Party();
+        $party_data = $party->all();
+
+        $currency = new Currency();
+        $currency_data = $currency->all();
+
+        $data['party_data'] = $party_data;
+        $data['currency_data'] = $currency_data;
+
+        return View::make("user/profile", compact('data'));
     }
 
     public function request()
@@ -112,6 +121,20 @@ class UserController
             $user->password = Hash::make($pass);
             $user->save();
         });
+    }
+
+    protected function update()
+    {
+        // store
+        $user = User::find(1);
+        $user->username = Input::get('username');
+        $user->password = Hash::make(Input::get('new_password'));
+        $user->save();
+
+        // redirect
+        Auth::logout();
+
+        return Redirect::route("user/login");
     }
 
     public function dashboard()
