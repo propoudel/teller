@@ -14,7 +14,7 @@
                         </div>
                     </div>
                 </div>
-                <form action="<?php echo URL::to('/transaction/store'); ?>" method="POST" name="transaction" id="transaction" novalidate>
+                <form action="<?php echo URL::to('/transaction/store'); ?>" method="POST" name="transaction" id="transaction">
                     <input type="hidden" name="new_party" id="new_party" value="">
                     <input type="hidden" name="d_yes" id="d_yes" value="">
                     <input type="hidden" name="c_yes" id="c_yes" value="">
@@ -108,9 +108,9 @@
                                 <label for="totalamount">Currency to Convert</label>
                                 <select required name="conversion_currency" class="form-control" id="conversion_currency" style="width: 235px;">
                                     <option>Currency</option>
-                                    {{--<?php foreach($data['currency_data'] as $list) { ?>--}}
-                                    {{--<option style="display: none;" value="{{  $list->id }}">{{ $list->currency_code }}</option>--}}
-                                    {{--<?php } ?>--}}
+                                    <?php foreach($data['currency_data'] as $list) { ?>
+                                    <option style="display: none;" value="{{  $list->id }}">{{ $list->currency_code }}</option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>
@@ -217,21 +217,6 @@
 
 
     <script type="text/javascript">
-
-        var forms = document.getElementsByTagName('form');
-        for (var i = 0; i < forms.length; i++) {
-            forms[i].noValidate = true;
-
-            forms[i].addEventListener('submit', function(event) {
-                //Prevent submission if checkValidity on the form returns false.
-                if (!event.target.checkValidity()) {
-                    event.preventDefault();
-                    alert('Please Input All The Field. All Fields Are Mandatory!!');
-                    //Implement you own means of displaying error messages to the user here.
-                }
-            }, false);
-        }
-
         $("#debit, #credit, #d_currency, #c_currency").blur(function() {
             var rel_data = <?php echo json_encode($rel_data); ?>;
 
@@ -244,51 +229,22 @@
             var c_name = c_n + c_c;
 
             if(($.inArray(d_name, rel_data) == -1) || ($.inArray(c_name, rel_data) == -1)) {
-                var status = confirm($(this).attr("name") + " Party Entered is not For selected Currency. Do you want to Create?");
-
+            // Do task here
+                var status = confirm("Party Entered is not For selected Currency. Do you want to Create?");
                 if (status == true) {
                     $("#new_party").val("1");
-                    if ($(this).attr("name")== "debit" || $(this).attr("name")== "d_currency") {
-                        var set_d_new = 1;
-                        var set_c_new = 0;
+                    if ($(this).attr("name")== "debit") {
                         $("#d_yes").val("1"); // For Debit
-                        $('#conversion_currency')
-                                .find('option')
-                                .remove()
-                                .end()
-                                .append('<option>Currency</option><option value=' + d_c + '>' + $("#d_currency").find("option:selected").html() + '</option>');
-
-                        if ($("#c_currency").find("option:selected").val()) {
-                            $('#conversion_currency')
-                                    .append('<option value=' + $("#c_currency").find("option:selected").val() + '>' + $("#c_currency").find("option:selected").html() + '</option>');
-                        }
-                    } else if ($(this).attr("name")== "credit" || $(this).attr("name")== "c_currency") {
-                        var set_c_new = 1;
-                        var set_d_new = 1;
+                    } else if ($(this).attr("name")== "credit") {
                         $("#c_yes").val("1"); // For Credit
-                        $('#conversion_currency')
-                                .find('option')
-                                .remove()
-                                .end()
-                                .append('<option>Currency</option><option value=' + currency_id + '>' + $("#d_currency").find("option:selected").html() + '</option>');
-
-                        if ($("#c_currency").find("option:selected").val()) {
-                            $('#conversion_currency')
-                                    .append('<option value=' + $("#c_currency").find("option:selected").val() + '>' + $("#c_currency").find("option:selected").html() + '</option>');
-                        }
                     }
-
-                    return true;
                 } else {
                     //location.reload();
                     $("#transaction")[0].reset();
-                    $("#new_party").val();
                 }
                 return false;
             } else {
-                $("#new_party").val("");
-                $("#d_yes").val("");
-                $("#c_yes").val("");
+                $("#new_party").val("0");
             }
         });
 
@@ -347,59 +303,184 @@
                 $("#debit").val(party_name);
                 $("#debtor_id").val(party_id);
                 $("#d_currency option").each(function(){
-                    $(this).removeAttr("selected");
+                    $(this).removeAttr("selected")
                 });
-
-                $("#d_currency option[value='"+ currency_id +"']").prop("selected", "selected");
+                $("#d_currency option[value='"+ currency_id +"']").attr("selected", "selected");
                 $("#conversion_currency").find('option[value="'+currency_id+'"]').show();
                 $('.view-modal-party').modal('hide');
-
                 $('#conversion_currency')
-                        .find('option')
-                        .remove()
-                        .end()
-                        .append('<option>Currency</option><option value=' + currency_id + '>' + $("#d_currency").find("option:selected").html() + '</option>');
+                        .find('option').hide().end();
+                var DoptionSelected = $("#d_currency").find("option:selected");
+                var DvalueSelected  = DoptionSelected.val();
 
-                if ($("#c_currency").find("option:selected").val()) {
-                    $('#conversion_currency')
-                            .append('<option value=' + $("#c_currency").find("option:selected").val() + '>' + $("#c_currency").find("option:selected").html() + '</option>');
-                }
+                var CoptionSelected = $("#c_currency").find("option:selected");
+                var CvalueSelected  = CoptionSelected.val();
 
+                $("#conversion_currency").find('option[value="'+DvalueSelected+'"]').show();
+                $("#conversion_currency").find('option[value="'+CvalueSelected+'"]').show();
             } else if (partyType == "creditBtn") {
                 $('#c_currency').prop('selectedIndex',0);
                 $("#credit").val(party_name);
                 $("#creditor_id").val(party_id);
                 $("#c_currency option").each(function(){$(this).removeAttr("selected")});
-                $("#c_currency option[value='"+ currency_id +"']").prop("selected", "selected");
+                $("#c_currency option[value='"+ currency_id +"']").attr("selected", "selected");
                 $("#conversion_currency").find('option[value="'+currency_id+'"]').show();
                 $('.view-modal-party').modal('hide');
-
                 $('#conversion_currency')
-                        .find('option')
-                        .remove()
-                        .end()
-                        .append('<option>Currency</option><option value=' + currency_id + '>' + $("#c_currency").find("option:selected").html() + '</option>');
+                        .find('option').hide().end();
+                var DoptionSelected = $("#d_currency").find("option:selected");
+                var DvalueSelected  = DoptionSelected.val();
 
-                if ($("#d_currency").find("option:selected").val()) {
-                    $('#conversion_currency')
-                            .append('<option value=' + $("#d_currency").find("option:selected").val() + '>' + $("#d_currency").find("option:selected").html() + '</option>');
-                }
+                var CoptionSelected = $("#c_currency").find("option:selected");
+                var CvalueSelected  = CoptionSelected.val();
+
+                $("#conversion_currency").find('option[value="'+DvalueSelected+'"]').show();
+                $("#conversion_currency").find('option[value="'+CvalueSelected+'"]').show();
+
             }
             $("#partyType").val("");
             $(".modal").hide();
         });
 
-        $('#conversion_currency').on('change', function() {
-            var v =  $(this).find("option:selected").text();
-            var DS  = $("#d_currency").find("option:selected").text();
-            var CS  = $("#c_currency").find("option:selected").text();
-            if(v == DS){
-                $(".dc").html(v);
-                $(".cc").html($("#c_currency option:selected").text());
-            }else{
-                $(".dc").html(CS);
-                $(".cc").html(DS);
-            }
-        })
+
+        function getFromCurrency(){
+            var id = $("#party_from").find(':selected').data('currency');
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "<?php echo URL::to('/currency/find'); ?>",
+                data: {id:id},
+                cache: false,
+                success: function(server_response){
+                    //currency_from
+                    $('#currency_from').find('option').remove();
+                    // $('#currency_from').prop("disabled", false);
+                    $('#currency_from').append($('<option>').text(server_response.currency_code).attr('value', server_response.id));
+
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
+        }
+
+        function getToCurrency(){
+            var id = $("#party_to").find(':selected').data('currency');
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "<?php echo URL::to('/currency/find'); ?>",
+                data: {id:id},
+                cache: false,
+                success: function(server_response){
+                    //currency_from
+                    $('#send_currency').find('option').remove();
+                    //$('#send_currency').prop("disabled", false);
+                    $('#send_currency').append($('<option>').text(server_response.currency_code).attr('value', server_response.id));
+
+                },
+                error: function(error){
+                    console.log(error);
+                },
+            });
+        }
+
+        $(document).ready(function() {
+            var typevalue = "";
+            $("input:radio[name=currency_type]").click(function() {
+                typevalue = $(this).val();
+                $("#rate").val(" ");
+            });
+
+            $("#amount, #rate").keydown(function (e) {
+                // Allow: backspace, delete, tab, escape, enter and .
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                            // Allow: Ctrl+A, Command+A
+                        (e.keyCode == 65 && ( e.ctrlKey === true || e.metaKey === true ) ) ||
+                            // Allow: home, end, left, right, down, up
+                        (e.keyCode >= 35 && e.keyCode <= 40)) {
+                    // let it happen, don't do anything
+                    return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+
+            $('#rate').bind('keyup',function (){
+                if(typevalue == ""){
+                    alert("Please select the type!");
+                    $("#rate").val(" ");
+                }
+
+                if(typevalue == "1"){
+                    $('#rate').attr('max', 1);
+                }else{
+                    $("#rate").removeAttr("max");
+                }
+                if(typevalue > 1){
+
+                }
+            });
+            $('#amount, #rate').bind('keyup',function (){
+                var amount = $("#amount").val();
+                var rate = $("#rate").val();
+                if(typevalue == "1"){
+                    $('#totalamount').val(amount*rate);
+                }else if(typevalue == "2"){
+                    $('#totalamount').val(amount*rate);
+                }else{
+                    $('#totalamount').val(amount/rate);
+                }
+
+            });
+
+
+            $('#d_currency, #c_currency').on('change', function() {
+                $('#conversion_currency')
+                        .find('option').hide().end();
+
+                $(".dc").html(' ');
+                $(".cc").html(' ');
+
+                var DoptionSelected = $("#d_currency").find("option:selected");
+                var DvalueSelected  = DoptionSelected.val();
+
+                var CoptionSelected = $("#c_currency").find("option:selected");
+                var CvalueSelected  = CoptionSelected.val();
+
+                $("#conversion_currency").find('option[value="'+DvalueSelected+'"]').show();
+                $("#conversion_currency").find('option[value="'+CvalueSelected+'"]').show();
+                $("#conversion_currency option[value="+CvalueSelected+"]").prop("selected", "selected");
+
+                var v =  $("#conversion_currency").find("option:selected").text();
+
+                var DS  = $("#d_currency").find("option:selected").text();
+                var CS  = $("#c_currency").find("option:selected").text();
+
+
+                if(v == DS){
+                    $(".dc").html(v);
+                    $(".cc").html($("#c_currency option:selected").text());
+                }else{
+                    $(".dc").html(CS);
+                    $(".cc").html(DS);
+                }
+            });
+
+            $('#conversion_currency').on('change', function() {
+                var v =  $(this).find("option:selected").text();
+                var DS  = $("#d_currency").find("option:selected").text();
+                var CS  = $("#c_currency").find("option:selected").text();
+                if(v == DS){
+                    $(".dc").html(v);
+                    $(".cc").html($("#c_currency option:selected").text());
+                }else{
+                    $(".dc").html(CS);
+                    $(".cc").html(DS);
+                }
+            })
+        });
     </script>
 @stop
