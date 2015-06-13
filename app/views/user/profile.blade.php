@@ -1,7 +1,7 @@
 @extends("layout")
 @section("content")
     <div class="panel panel-default">
-        <div class="panel-heading">Party</div>
+        <div class="panel-heading">Profile</div>
         <div class="panel-body">
             <div class="col-sm-12">
                 <form action="<?php echo URL::to('/profile/update'); ?>" method="POST" name="userUpdate" id="userUpdate" noValidate>
