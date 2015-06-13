@@ -181,7 +181,7 @@
                         <tbody class="table">
                         <?php foreach($data['party_join_curr'] as $list): ?>
                         <?php
-                                $rel_data[] = $list->party_name . $list->currency_id;
+                                $rel_data[] = strtolower($list->party_name) . $list->currency_id;
                         ?>
                         <tr>
                             <td><?php echo $list->party_name; ?></td>
@@ -235,9 +235,9 @@
         $("#debit, #credit, #d_currency, #c_currency").blur(function() {
             var rel_data = <?php echo json_encode($rel_data); ?>;
 
-            var d_n = $("#debit").val();
+            var d_n = $("#debit").val().toLowerCase();
             var d_c = $("#d_currency option:selected").val();
-            var c_n = $("#credit").val();
+            var c_n = $("#credit").val().toLowerCase();
             var c_c = $("#c_currency option:selected").val();
 
             var d_name = d_n + d_c;
@@ -283,6 +283,7 @@
                     //location.reload();
                     $("#transaction")[0].reset();
                     $("#new_party").val();
+                    return false;
                 }
                 return false;
             } else {
