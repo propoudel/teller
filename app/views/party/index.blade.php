@@ -28,7 +28,7 @@
                 					<tr>
                 						<td>{{ $i }}</td>
                 						<td>{{ $list['party_name'] }}</td>
-                						<td>{{ $list['currency_id'] }}</td>
+                						<td><?php foreach($data['currency_data'] as $c_list) { if ($c_list['id'] == $list['currency_id']) {?>{{ $c_list['currency_code'] }}<?php }} ?></td>
                 						<td>{{ $list['party_details'] }}</td>
                 						<td>
                                             <a class="btn btn-small btn-info" href="{{ URL::to('party/' . $list->id . '/edit') }}">Edit</a>
