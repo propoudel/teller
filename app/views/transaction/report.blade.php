@@ -12,6 +12,7 @@
                     $currency = isset($_GET['currency']) ? $_GET['currency'] : '';
                     $from = isset($_GET['from']) ? $_GET['from'] : '';
                     $to = isset($_GET['to']) ? $_GET['to'] : '';
+					$reference_id = isset($_GET['reference_id']) ? $_GET['reference_id'] : '';
 
                     $set_condition = 0;
                     if (!empty($debtor_id) || !empty($creditor_id) || !empty($currency)) {
@@ -72,9 +73,16 @@
                                 <input type="text" class="form-control datepicker" value="<?php echo $to; ?>" name="to" id="to" placeholder="To Date">
                             </div>
                         </div>
-                        <div class="col-sm-4">
+						<div class="col-sm-4">
                             <div class="form-group">
-                                <label> &nbsp; </label>
+                                <label for="reference_id">Reference Id</label>
+                                <input type="text" class="form-control reference_id" value="<?php echo $reference_id; ?>" name="reference_id" id="reference_id" placeholder="Reference Id">
+                            </div>
+                        </div>
+                    </div>
+					<div class="row">
+                        <div class="col-sm-4 pull-right">
+							<div class="form-group">
                                 <button class=" form-control btn btn-primary">Search</button>
                             </div>
                         </div>

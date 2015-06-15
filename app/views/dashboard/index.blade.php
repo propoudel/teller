@@ -181,7 +181,7 @@
                         <tbody class="table">
                         <?php foreach($data['party_join_curr'] as $list): ?>
                         <?php
-                                $rel_data[] = strtolower($list->party_name) . $list->currency_id;
+                        $rel_data[] = strtolower($list->party_name) . $list->currency_id;
                         ?>
                         <tr>
                             <td><?php echo $list->party_name; ?></td>
@@ -217,6 +217,21 @@
 
 
     <script type="text/javascript">
+        $("#foreign_rate, #total_amount, #local_rate").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                        // Allow: Ctrl+A, Command+A
+                    (e.keyCode == 65 && ( e.ctrlKey === true || e.metaKey === true ) ) ||
+                        // Allow: home, end, left, right, down, up
+                    (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
 
         var forms = document.getElementsByTagName('form');
         for (var i = 0; i < forms.length; i++) {
@@ -249,11 +264,17 @@
 
             var status_d = 0;
             var status_c = 0;
-            if (d_name && $.inArray(d_name, rel_data) == -1) {
-                status_d = 1;
+
+            if ($(this).attr("id") == "debit" || $(this).attr("id") == "d_currency") {
+                if (d_name && $.inArray(d_name, rel_data) == -1) {
+                    status_d = 1;
+                }
             }
-            if (c_name && $.inArray(c_name, rel_data) == -1) {
-                status_c = 1;
+
+            if ($(this).attr("id") == "credit" || $(this).attr("id") == "c_currency") {
+                if (c_name && $.inArray(c_name, rel_data) == -1) {
+                    status_c = 1;
+                }
             }
 
             if(status_d ==  1 || status_c ==  1) {
@@ -262,10 +283,6 @@
                 } else {
                     var status = confirm(" Party Entered is not For selected Currency. Do you want to Create?");
                 }
-
-//                if (status_c ==  1 && $("#c_yes").val() == 1) {
-//                    status = true;
-//                }
 
                 if (status == true) {
                     $("#new_party").val("1");
@@ -284,18 +301,18 @@
                                     .append('<option value=' + $("#c_currency").find("option:selected").val() + '>' + $("#c_currency").find("option:selected").html() + '</option>');
                         }
                     } else if ($(this).attr("name")== "credit" || $(this).attr("name")== "c_currency") {
+                        var set_d_new = 0;
                         var set_c_new = 1;
-                        var set_d_new = 1;
-                        $("#c_yes").val("1"); // For Credit
+                        $("#c_yes").val("1"); // For Debit
                         $('#conversion_currency')
                                 .find('option')
                                 .remove()
                                 .end()
-                                .append('<option>Currency</option><option value=' + currency_id + '>' + $("#d_currency").find("option:selected").html() + '</option>');
+                                .append('<option>Currency</option><option value=' + c_c + '>' + $("#c_currency").find("option:selected").html() + '</option>');
 
-                        if ($("#c_currency").find("option:selected").val()) {
+                        if ($("#d_currency").find("option:selected").val()) {
                             $('#conversion_currency')
-                                    .append('<option value=' + $("#c_currency").find("option:selected").val() + '>' + $("#c_currency").find("option:selected").html() + '</option>');
+                                    .append('<option value=' + $("#d_currency").find("option:selected").val() + '>' + $("#d_currency").find("option:selected").html() + '</option>');
                         }
                     }
 

@@ -7,6 +7,7 @@ if (!empty($_GET['debtor_id']) || !empty($_GET['creditor_id']) || !empty($_GET['
 <table class="table table-bordered">
     <thead>
     <tr style="background-color: #229ab7;">
+		<th>Reference Id</th>
         <th>Date</th>
         <th>Party</th>
         <th>Detail</th>
@@ -43,6 +44,7 @@ if (!empty($_GET['debtor_id']) || !empty($_GET['creditor_id']) || !empty($_GET['
             <?php $credit_per_party += $a['credit_local']; ?>
 
             <tr>
+				<td>{{ $a['reference_id'] }}</td>
                 <td>{{ date("d-m-Y",strtotime($a['created_at'])) }}</td>
                 <td>{{ $a['debtor'] }}({{ $a['d_currency'] }})</td>
                 <td>{{ $a['comment'] }}</td>
@@ -60,6 +62,7 @@ if (!empty($_GET['debtor_id']) || !empty($_GET['creditor_id']) || !empty($_GET['
             <?php $debit_fc += $a['debit_fc']; ?>
             <?php $debit_per_party += $a['debit_local']; ?>
             <tr>
+				<td>{{ $a['reference_id'] }}</td>
                 <td>{{ date("d-m-Y",strtotime($a['created_at'])) }}</td>
                 <td>{{ $a['creditor'] }}({{ $a['c_currency'] }})</td>
                 <td>{{ $a['comment'] }}</td>

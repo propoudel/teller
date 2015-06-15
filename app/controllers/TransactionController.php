@@ -72,7 +72,7 @@ class TransactionController extends Controller {
         }
         // End Hidden Ids
         $transaction->base_type = Input::get('base_type');
-        $transaction->reference_id = Input::get('reference_id');
+        //$transaction->reference_id = Input::get('reference_id');
         $transaction->debtor_id = isset($n_debtor_id) ? $n_debtor_id : Input::get('debtor_id');
         $transaction->d_currency = Input::get('d_currency');
         $transaction->creditor_id = isset($n_creditor_id) ? $n_creditor_id : Input::get('creditor_id');
@@ -239,12 +239,20 @@ class TransactionController extends Controller {
         if (!empty($get_data)) {
             $transaction .= ' WHERE ';
         }
+		
+		if (Input::get('reference_id')) {
+            $transaction .= ' reference_id="' . Input::get('reference_id').'"';
+        }
 
         if (Input::get('debtor_id')) {
-            $transaction .= ' debtor_id=' . Input::get('debtor_id');
+			if (Input::get('reference_id')) {
+				$transaction .= ' AND debtor_id=' . Input::get('debtor_id');
+			} else {
+				$transaction .= ' debtor_id=' . Input::get('debtor_id');
+			}
         }
         if (Input::get('creditor_id')) {
-            if (Input::get('debtor_id')) {
+            if (Input::get('debtor_id') || Input::get('reference_id')) {
                 $transaction .= ' AND creditor_id=' . Input::get('creditor_id');
             } else {
                 $transaction .= ' creditor_id=' . Input::get('creditor_id');
@@ -252,7 +260,7 @@ class TransactionController extends Controller {
 
         }
         if (Input::get('currency')) {
-            if (Input::get('debtor_id') || Input::get('creditor_id')) {
+            if (Input::get('debtor_id') || Input::get('creditor_id') || Input::get('reference_id')) {
                 $transaction .= ' AND (d_currency=' . Input::get('currency') . ' OR c_currency=' . Input::get('currency') . ')';
             } else {
                 $transaction .= ' (d_currency=' . Input::get('currency') . ' OR c_currency=' . Input::get('currency') . ')';
@@ -285,7 +293,7 @@ class TransactionController extends Controller {
         }
 
         if ($from || $to) {
-            if (Input::get('debtor_id') || Input::get('creditor_id') || Input::get('currency')) {
+            if (Input::get('debtor_id') || Input::get('creditor_id') || Input::get('currency') || Input::get('reference_id')) {
                 if ($to && $from) {
                     $transaction .= ' AND (created_at BETWEEN "' .  $from . '" AND "' . $to . '")';
                 } else if ($from){
@@ -443,7 +451,7 @@ class TransactionController extends Controller {
         }
 
         if ($_POST['type'] == 'currency') {
-            $transaction .= ' WHERE d_currency=' . $_POST['currency_code'] .' OR ' . 'd_currency=' . $_POST['currency_code'] .' ORDER BY created_at DESC';
+            $transaction .= ' WHERE d_currency=' . $_POST['currency_code'] .' OR ' . 'c_currency=' . $_POST['currency_code'] .' ORDER BY created_at DESC';
         }
 
         $transaction_data =  DB::select($transaction);
