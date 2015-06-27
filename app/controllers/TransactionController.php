@@ -441,7 +441,8 @@ class TransactionController extends Controller {
      */
     public function latestTransaction()
     {
-        $transaction = 'SELECT *,
+        $data = array();
+        $transaction = 'SELECT *,d_currency as dc,c_currency as cc,
                       (SELECT id FROM party WHERE transaction.`debtor_id` = party.`id`) AS party_id,
                       (SELECT party_name FROM party WHERE transaction.`debtor_id` = party.`id`) AS debtor,
                       (SELECT currency_code FROM currency WHERE transaction.`d_currency` = currency.`id`) AS d_currency,
@@ -452,11 +453,15 @@ class TransactionController extends Controller {
            $transaction .= ' ORDER BY created_at DESC LIMIT ' . $_POST['total_trans_no'];
         }
 
+        $data['party_id'] = 0;
         if ($_POST['type'] == 'party') {
+            $data['party_id'] = $_POST['party_name'];
             $transaction .= ' WHERE debtor_id=' . $_POST['party_name'] .' OR ' . 'creditor_id=' . $_POST['party_name'] .' ORDER BY created_at DESC';
         }
 
+        $data['currency_code'] = 0;
         if ($_POST['type'] == 'currency') {
+            $data['currency_code'] = $_POST['currency_code'];
             $transaction .= ' WHERE d_currency=' . $_POST['currency_code'] .' OR ' . 'c_currency=' . $_POST['currency_code'] .' ORDER BY created_at DESC';
         }
 
@@ -467,10 +472,9 @@ class TransactionController extends Controller {
             ->select('party.*', 'currency.id as currency_id', 'currency.currency_code')
             ->get();
 
-        $data = array();
+
         $data['transaction_data'] =  $transaction_data;
         $data['party_join_curr'] = $party_join_curr;
-        $data['party_id'] = $_POST['party_name'];
 
         $html = View::make('transaction/latestTransaction', compact('data'))->render();
         echo $html;

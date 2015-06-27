@@ -1,3 +1,7 @@
+<?php
+$pid = $data['party_id'];
+$cid = $data['currency_code'];
+?>
 <table class="table table-bordered">
     <thead>
     <tr style="background-color: #229ab7;color:white;">
@@ -10,7 +14,7 @@
         {{--<th>Debit Local</th>--}}
         {{--<th>Credit Local</th>--}}
         <th>Remaining Balance FC</th>
-        <th>Remaining Balance Local</th>
+        <?php if (!$cid){ ?><th>Remaining Balance Local; </th><?php } ?>
     </tr>
     </thead>
 
@@ -25,15 +29,25 @@
         <?php } ?>
         @foreach($data['transaction_data'] as $a)
             <?php
-                if ($a->debtor_id == $data['party_id'] ) {
+                    //print_r($a); die;
+
+                if ($pid && $a->debtor_id == $pid) {
                     $total_dfc += $a->debit_fc ;
                     $total_dl += $a->debit_local;
                 }
-                if ($a->creditor_id == $data['party_id'] ) {
+                if ($pid && $a->creditor_id == $pid) {
                     $total_cfc += $a->credit_fc;
                     $total_cl += $a->credit_local;
                 }
-            ?>
+                if ($cid && $a->dc == $cid) {
+                    $total_dfc += $a->debit_fc ;
+                    $total_dl += $a->debit_local;
+                }
+                if ($cid && $a->cc == $cid) {
+                    $total_cfc += $a->credit_fc;
+                    $total_cl += $a->credit_local;
+                }
+                ?>
             <tr>
                 {{--<td>{{ date("d-m-Y",strtotime($a->created_at)) }}</td>--}}
                 {{--<td>{{ $a->debtor }}({{ $a->d_currency }})</td>--}}
@@ -49,7 +63,7 @@
         @endforeach
         <tr>
             <td><?php echo $total_cfc - $total_dfc; ?></td>
-            <td><?php echo $total_cl - $total_dl; ?></td>
+            <?php if (!$cid) { ?><td> <?php echo $total_cl - $total_dl; ?></td><?php } ?>
         </tr>
     </tbody>
 </table>
