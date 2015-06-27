@@ -25,7 +25,14 @@
         <?php } ?>
         @foreach($data['transaction_data'] as $a)
             <?php
-                $total_dfc += $total_dfc; $total_cfc += $total_cfc; $total_dl += $total_dl; $total_cl += $total_cl;
+                if ($a->debtor_id == $data['party_id'] ) {
+                    $total_dfc += $a->debit_fc ;
+                    $total_dl += $a->debit_local;
+                }
+                if ($a->creditor_id == $data['party_id'] ) {
+                    $total_cfc += $a->credit_fc;
+                    $total_cl += $a->credit_local;
+                }
             ?>
             <tr>
                 {{--<td>{{ date("d-m-Y",strtotime($a->created_at)) }}</td>--}}

@@ -470,6 +470,7 @@ class TransactionController extends Controller {
         $data = array();
         $data['transaction_data'] =  $transaction_data;
         $data['party_join_curr'] = $party_join_curr;
+        $data['party_id'] = $_POST['party_name'];
 
         $html = View::make('transaction/latestTransaction', compact('data'))->render();
         echo $html;
