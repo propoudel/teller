@@ -50,7 +50,7 @@
                             <div class="form-group">
                                 <label for="currency">Currency</label>
                                 <select name="currency" id="currency" class="form-control">
-                                    <option value="">Select</option>
+                                    <option value="">All</option>
                                     @foreach($data['currency_data'] as $list)
                                         <option <?php if($currency==$list->id) {echo 'selected';} ?>  data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->currency_code; }}</option>
                                     @endforeach
