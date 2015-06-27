@@ -151,6 +151,10 @@ Route::group(["before" => "auth"], function () {
         "as" => "/transaction/edit",
         "uses" => "TransactionController@edit"
     ]);
+    Route::any("/transaction/{id}/delete", [
+        "as" => "transaction/delete",
+        "uses" => "TransactionController@destroy"
+    ]);
     Route::any("/transaction/update", [
         "as" => "/transaction/update",
         "uses" => "TransactionController@update"

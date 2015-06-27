@@ -26,7 +26,7 @@
                             <td>{{ $list->created_at }}</td>
                             <td>
                                 <a class="btn btn-small btn-info" href="{{ URL::to('transaction/' . $list->id . '/edit') }}">Edit</a>
-                            <!--<a class="btn btn-small btn-success" href="{{ URL::to('account/' . $list->id. '/delete') }}" onclick="if(!confirm('Are you sure?')){ return false;}">Delete</a>-->
+                                <a class="btn btn-small btn-success" href="{{ URL::to('transaction/' . $list->id. '/delete') }}" onclick="if(!confirm('Are you sure?')){ return false;}">Delete</a>
                             </td>
                         </tr>
                         <?php $i++ ?>

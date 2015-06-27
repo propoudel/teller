@@ -19,9 +19,9 @@
             $total_dfc = 0; $total_cfc = 0; $total_dl = 0; $total_cl = 0;
         ?>
         <?php if (empty($data['transaction_data'])) { ?>
-            <tr>
-                <td colspan="6">There Is No Any Transaction For Selected One.</td>
-            </tr>
+            {{--<tr>--}}
+                {{--<td colspan="6">There Is No Any Transaction For Selected One.</td>--}}
+            {{--</tr>--}}
         <?php } ?>
         @foreach($data['transaction_data'] as $a)
             <?php

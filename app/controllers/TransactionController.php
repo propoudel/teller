@@ -188,7 +188,13 @@ class TransactionController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+        // delete
+        $item = Transaction::find($id);
+        $item->delete();
+
+        // redirect
+        Session::flash('message', 'Successfully deleted!');
+        return Redirect::to('transaction');
 	}
 
     /**
