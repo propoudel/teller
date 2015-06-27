@@ -61,7 +61,7 @@ class CurrencyController extends Controller
     {
         $rules = array(
             'currency_code' => 'required',
-            'currency_rate' => 'required',
+            //'currency_rate' => 'required',
         );
         $validator = Validator::make(Input::all(), $rules);
 
@@ -74,7 +74,7 @@ class CurrencyController extends Controller
             // store
             $currency = new Currency();
             $currency->currency_code = Input::get('currency_code');
-            $currency->currency_rate = Input::get('currency_rate');
+            //$currency->currency_rate = Input::get('currency_rate');
             $currency->save();
 
             // redirect
@@ -123,7 +123,7 @@ class CurrencyController extends Controller
     {
         $rules = array(
             'currency_code' => 'required',
-            'currency_rate' => 'required',
+            //'currency_rate' => 'required',
         );
         $validator = Validator::make(Input::all(), $rules);
 
@@ -138,7 +138,7 @@ class CurrencyController extends Controller
             $currency = Currency::find($id);
             //$currency = new Currency();
             $currency->currency_code = Input::get('currency_code');
-            $currency->currency_rate = Input::get('currency_rate');
+            //$currency->currency_rate = Input::get('currency_rate');
             $currency->save();
 
             // redirect

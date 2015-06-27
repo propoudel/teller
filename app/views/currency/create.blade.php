@@ -32,13 +32,13 @@
                               </div>
                           </div>
 
-                          <div class="col-sm-6">
-                              <div class="form-group">
-                                  <label for="currency_rate">Currency Rate</label>
-                                  <input required="required" type="text" name="currency_rate" class="form-control" id="currency_rate"
-                                         placeholder="Rate">
-                              </div>
-                          </div>
+                          {{--<div class="col-sm-6">--}}
+                              {{--<div class="form-group">--}}
+                                  {{--<label for="currency_rate">Currency Rate</label>--}}
+                                  {{--<input required="required" type="text" name="currency_rate" class="form-control" id="currency_rate"--}}
+                                         {{--placeholder="Rate">--}}
+                              {{--</div>--}}
+                          {{--</div>--}}
 
 
 

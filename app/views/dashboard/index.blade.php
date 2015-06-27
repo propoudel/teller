@@ -24,7 +24,7 @@
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="form-group" style="text-align: center">
-                                            <label>Base</label>
+                                            <label>Cash</label>
                                             <input required type="radio" name="base_type" class="base_type" value="1">
                                         </div>
                                     </div>
@@ -114,6 +114,15 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label for="total_amount">Total Amount To Send</label>
+                                <input required name="total_amount" type="number" value="" class="form-control" id="total_amount" placeholder="Total Amount" style="width: 235px;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div id="foreign_val" class="col-sm-5">
                             <div class="form-group">
                                 <div class="form-group">
@@ -122,17 +131,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                <label for="total_amount">Total Amount To Send</label>
-                                <input required name="total_amount" type="number" value="" class="form-control" id="total_amount" placeholder="Total Amount" style="width: 235px;">
-                            </div>
-                        </div>
-
-                        <div class="col-sm-5">
+                        <div class="col-sm-5" id="local_val">
                             <div class="form-group">
                                 <label for="local_rate"><em>Local Rate</label>
                                 <input required name="local_rate" type="number" step="0.01" min="0" value="" class="form-control" id="local_rate"
@@ -358,9 +358,14 @@
                 $("#foreign_rate").val('');
                 $("#foreign_rate").removeAttr('required');
                 $("#foreign_val").hide();
+                $("#local_rate").val('');
+                $("#local_rate").removeAttr('required');
+                $("#local_val").hide();
             } else {
                 $("#foreign_val").show();
                 $("#foreign_rate").attr('required', true);
+                $("#local_val").show();
+                $("#local_rate").attr('required', true);
             }
         });
 

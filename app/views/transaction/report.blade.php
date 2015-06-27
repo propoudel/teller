@@ -73,12 +73,12 @@
                                 <input type="text" class="form-control datepicker" value="<?php echo $to; ?>" name="to" id="to" placeholder="To Date">
                             </div>
                         </div>
-						<div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="reference_id">Reference Id</label>
-                                <input type="text" class="form-control reference_id" value="<?php echo $reference_id; ?>" name="reference_id" id="reference_id" placeholder="Reference Id">
-                            </div>
-                        </div>
+						{{--<div class="col-sm-4">--}}
+                            {{--<div class="form-group">--}}
+                                {{--<label for="reference_id">Reference Id</label>--}}
+                                {{--<input type="text" class="form-control reference_id" value="<?php echo $reference_id; ?>" name="reference_id" id="reference_id" placeholder="Reference Id">--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                     </div>
 					<div class="row">
                         <div class="col-sm-4 pull-right">
