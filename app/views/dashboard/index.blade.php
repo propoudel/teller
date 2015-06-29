@@ -3,6 +3,7 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">Transaction Entry</div>
+        <div class="panel-heading" align="right"><label>Total Remaining Balance:</label><label>[<?php echo '   ' . $data['total_balance'][0]->balance . ' AED' . '   '; ?>]</label></div>
         <div class="panel-body">
             <div class="col-sm-12">
                 <div class="col-sm-4 pull-right">

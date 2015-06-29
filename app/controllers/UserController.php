@@ -160,6 +160,10 @@ class UserController
         $data['currency_data'] = $currency_data;
         $data['party_join_curr'] = $party_join_curr;
 
+        $sql = "SELECT  SUM(credit_local) - SUM(debit_local) AS balance FROM transaction";
+        $data['total_balance'] =  DB::select($sql);
+        //print_r($data['total_balance']);die;
+
         return View::make("dashboard/index", compact('data'));
     }
 

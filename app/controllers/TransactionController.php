@@ -433,6 +433,159 @@ class TransactionController extends Controller {
         })->download('xls');
     }
 
+    public function reportsearch()
+    {
+        $data = array();
+
+        $party = new Party();
+        $party_data = $party->all();
+
+        $currency = new Currency();
+        $currency_data = $currency->all();
+
+        $party_join_curr = DB::table('party')
+            ->Join('currency', 'currency.id', '=', 'party.currency_id')
+            ->select('party.*', 'currency.id as currency_id', 'currency.currency_code')
+            ->get();
+
+        $transaction = 'SELECT *,
+                      (SELECT id FROM party WHERE transaction.`debtor_id` = party.`id`) AS party_id,
+                      (SELECT party_name FROM party WHERE transaction.`debtor_id` = party.`id`) AS debtor,
+                      (SELECT currency_code FROM currency WHERE transaction.`d_currency` = currency.`id`) AS d_currency,
+                      (SELECT currency_code FROM currency WHERE transaction.`c_currency` = currency.`id`) AS c_currency,
+                      (SELECT party_name FROM party WHERE transaction.`creditor_id` = party.`id`) AS creditor FROM transaction';
+
+        //        if (isset($_GET)) {
+//            $where = 'WHERE ';
+//        }
+//        $getdata = array_filter($_GET);
+//
+//        foreach ($getdata as $key => $val) {
+//            //echo end($_GET); die;
+//            if (end($getdata) == $val && !empty($val)) {
+//                $where .= $key . "=" . $val;
+//             } else if (!empty($val)) {
+//                $where .= $key . "=" . $val . " AND ";
+//            }
+//        }
+//
+//        echo $where; die;
+
+        $get_data = array_filter($_GET);
+
+        if (!empty($get_data)) {
+            $transaction .= ' WHERE ';
+        }
+
+        if (Input::get('reference_id')) {
+            $transaction .= ' reference_id="' . Input::get('reference_id').'"';
+        }
+
+        if (Input::get('debtor_id')) {
+            if (Input::get('reference_id')) {
+                $transaction .= ' AND debtor_id=' . Input::get('debtor_id');
+            } else {
+                $transaction .= ' debtor_id=' . Input::get('debtor_id');
+            }
+        }
+        if (Input::get('creditor_id')) {
+            if (Input::get('debtor_id') || Input::get('reference_id')) {
+                $transaction .= ' AND creditor_id=' . Input::get('creditor_id');
+            } else {
+                $transaction .= ' creditor_id=' . Input::get('creditor_id');
+            }
+
+        }
+        if (Input::get('currency')) {
+            if (Input::get('debtor_id') || Input::get('creditor_id') || Input::get('reference_id')) {
+                $transaction .= ' AND (d_currency=' . Input::get('currency') . ' OR c_currency=' . Input::get('currency') . ')';
+            } else {
+                $transaction .= ' (d_currency=' . Input::get('currency') . ' OR c_currency=' . Input::get('currency') . ')';
+            }
+        }
+        /*
+        if (Input::get('from')) {
+            if (Input::get('received_from') || Input::get('sent_to') || Input::get('currency')) {
+                $account .= ' AND created_at>date(' . Input::get('from') . ')';
+            } else {
+                $account .= ' created_at>date(' . Input::get('from') . ')';
+            }
+
+        }
+        if (Input::get('to')) {
+            if (Input::get('received_from') || Input::get('sent_to') || Input::get('currency') || Input::get('from')) {
+                $account .= ' AND created_at<date(' . Input::get('to') . ')';
+            } else {
+                $account .= ' created_at<date(' . Input::get('to') . ')';
+            }
+
+        }*/
+        $from = '';
+        $to = '';
+        if (Input::get('from')) {
+            $from = date('Y-m-d H:i:s', strtotime(Input::get('from')));
+        }
+        if (Input::get('to')) {
+            $to = date('Y-m-d H:i:s', strtotime(Input::get('to')));
+        }
+
+        if ($from || $to) {
+            if (Input::get('debtor_id') || Input::get('creditor_id') || Input::get('currency') || Input::get('reference_id')) {
+                if ($to && $from) {
+                    $transaction .= ' AND (created_at BETWEEN "' .  $from . '" AND "' . $to . '")';
+                } else if ($from){
+                    $transaction .= ' AND created_at>"' . $from . '"';
+                } else if ($to){
+                    $transaction .= ' AND created_at<"' . $to . '"';
+                }
+            } else {
+                if ($to && $from) {
+                    $transaction .= ' (created_at BETWEEN "' .  $from . '" AND "' . $to . '")';
+                } else if ($from) {
+                    $transaction .= ' created_at>"' . $from . '"';
+                } else if ($to) {
+                    $transaction .= ' created_at<"' . $to . '"';
+                }
+
+            }
+        }
+
+//        if (Input::get('to')) {
+//            if (Input::get('debtor_id') || Input::get('creditor_id') || Input::get('currency') || Input::get('from')) {
+//                //$transaction .= ' AND created_at<date(' . Input::get('to') . ')';
+//                $transaction .= ' AND created_at<date(' . Input::get('to') . ')';
+//            } else {
+//                $transaction .= ' created_at<date(' . Input::get('to') . ')';
+//            }
+//        }
+
+        $transaction .= ' ORDER BY debtor';
+        //echo $transaction; die;
+
+
+        $transaction_data =  DB::select($transaction);
+
+        $new = array();
+        foreach($transaction_data as $ad) {
+            $new[] = (array) $ad;
+
+        }
+
+        $return_transaction = array();
+
+        foreach ($new as $key=>$val) {
+            $return_transaction[$val['party_id']][] = $val;
+        }
+
+        $data['party_data'] = $party_data;
+        $data['currency_data'] = $currency_data;
+        $data['transaction_data'] =  $transaction_data;
+        $data['return_transaction'] =  $return_transaction;
+        $data['party_join_curr'] = $party_join_curr;
+
+        return View::make('transaction/reportsearch', compact('data'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *

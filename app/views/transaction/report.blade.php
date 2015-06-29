@@ -2,7 +2,7 @@
 @section("content")
 
     <div class="panel panel-default">
-        <div class="panel-heading">Report</div>
+        <div class="panel-heading">Trial Balance</div>
         <div class="panel-body">
 
             <div class="col-sm-12">
@@ -20,73 +20,74 @@
                     }
 
                 ?>
-                <form>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="debtor_id">Debtor</label>
-                                <select name="debtor_id" id="debtor_id" class="form-control">
-                                    <option value="">Select</option>
-                                    @foreach($data['party_data'] as $list)
-                                        <option <?php if($debtor_id==$list->id) {echo 'selected';} ?> data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                {{--<form>--}}
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-4">--}}
+                            {{--<div class="form-group">--}}
+                                {{--<label for="debtor_id">Debtor</label>--}}
+                                {{--<select name="debtor_id" id="debtor_id" class="form-control">--}}
+                                    {{--<option value="">Select</option>--}}
+                                    {{--@foreach($data['party_data'] as $list)--}}
+                                        {{--<option <?php if($debtor_id==$list->id) {echo 'selected';} ?> data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>--}}
+                                    {{--@endforeach--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="creditor_id">Creditor</label>
-                                <select name="creditor_id" id="creditor_id" class="form-control" >
-                                    <option value="">Select</option>
-                                    @foreach($data['party_data'] as $list)
-                                        <option <?php if($creditor_id==$list->id) {echo 'selected';} ?>  data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                        {{--<div class="col-sm-4">--}}
+                            {{--<div class="form-group">--}}
+                                {{--<label for="creditor_id">Creditor</label>--}}
+                                {{--<select name="creditor_id" id="creditor_id" class="form-control" >--}}
+                                    {{--<option value="">Select</option>--}}
+                                    {{--@foreach($data['party_data'] as $list)--}}
+                                        {{--<option <?php if($creditor_id==$list->id) {echo 'selected';} ?>  data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->party_name; }}</option>--}}
+                                    {{--@endforeach--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="currency">Currency</label>
-                                <select name="currency" id="currency" class="form-control">
-                                    <option value="">All</option>
-                                    @foreach($data['currency_data'] as $list)
-                                        <option <?php if($currency==$list->id) {echo 'selected';} ?>  data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->currency_code; }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                        {{--<div class="col-sm-4">--}}
+                            {{--<div class="form-group">--}}
+                                {{--<label for="currency">Currency</label>--}}
+                                {{--<select name="currency" id="currency" class="form-control">--}}
+                                    {{--<option value="">All</option>--}}
+                                    {{--@foreach($data['currency_data'] as $list)--}}
+                                        {{--<option <?php if($currency==$list->id) {echo 'selected';} ?>  data-currency="{{ $list->currency_id }}" value="{{ $list->id }}">{{ $list->currency_code; }}</option>--}}
+                                    {{--@endforeach--}}
+                                {{--</select>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
 
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="from_date">Date From</label>
-                                <input class="form-control datepicker" value="<?php echo $from; ?>" name="from" type="text" placeholder="From Date">
-                            </div>
-                        </div>
+                    {{--<div class="row">--}}
+                        {{--<div class="col-sm-4">--}}
+                            {{--<div class="form-group">--}}
+                                {{--<label for="from_date">Date From</label>--}}
+                                {{--<input class="form-control datepicker" value="<?php echo $from; ?>" name="from" type="text" placeholder="From Date">--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="to_date">To Date</label>
-                                <input type="text" class="form-control datepicker" value="<?php echo $to; ?>" name="to" id="to" placeholder="To Date">
-                            </div>
-                        </div>
+                        {{--<div class="col-sm-4">--}}
+                            {{--<div class="form-group">--}}
+                                {{--<label for="to_date">To Date</label>--}}
+                                {{--<input type="text" class="form-control datepicker" value="<?php echo $to; ?>" name="to" id="to" placeholder="To Date">--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 						{{--<div class="col-sm-4">--}}
                             {{--<div class="form-group">--}}
                                 {{--<label for="reference_id">Reference Id</label>--}}
                                 {{--<input type="text" class="form-control reference_id" value="<?php echo $reference_id; ?>" name="reference_id" id="reference_id" placeholder="Reference Id">--}}
                             {{--</div>--}}
                         {{--</div>--}}
-                    </div>
-					<div class="row">
-                        <div class="col-sm-4 pull-right">
-							<div class="form-group">
-                                <button class=" form-control btn btn-primary">Search</button>
-                            </div>
-                        </div>
-                    </div>
+                    {{--</div>--}}
+					{{--<div class="row">--}}
+                        {{--<div class="col-sm-4 pull-right">--}}
+							{{--<div class="form-group">--}}
+                                {{--<button class=" form-control btn btn-primary">Search</button>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--</form>--}}
 
                     <div class="row">
                         <div class="col-sm-12">
@@ -190,8 +191,6 @@
                             <nav class="pull-right">
                         </div>
                     </div>
-
-                </form>
                     <div class="row">
                         <div class="col-sm-12">
                             <button url="<?php echo URL::to('/transaction/export') . '?debtor_id=' . $debtor_id . '&creditor_id='  . $creditor_id .  '&currency=' . $currency . '&from=' . $from . '&to=' . $to; ?>" id="export" class="btn btn-primary pull-right">Export</button>

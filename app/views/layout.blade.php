@@ -37,6 +37,7 @@
                                 <li><a href="/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a></li>
                                 <li><a href="/transaction"><i class="fa fa-university"></i> Ammendments</a></li>
                                 <li><a href="/party"><i class="fa fa-users"></i> Party</a></li>
+                                <li><a href="/transaction/reportsearch"><i class="glyphicon glyphicon-list-alt"></i> Search Report</a></li>
                                 <li><a href="/transaction/report"><i class="glyphicon glyphicon-list-alt"></i> Trial Balance</a></li>
                                 <li><a href="/currency"><i class="fa fa-money"></i> Currency Setting</a></li>
                             </ul>
