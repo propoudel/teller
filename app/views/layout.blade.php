@@ -39,6 +39,7 @@
                                 <li><a href="/party"><i class="fa fa-users"></i> Party</a></li>
                                 <li><a href="/transaction/reportsearch"><i class="glyphicon glyphicon-list-alt"></i> Search Report</a></li>
                                 <li><a href="/transaction/report"><i class="glyphicon glyphicon-list-alt"></i> Trial Balance</a></li>
+                                <li><a href="/expense"><i class="fa fa-exchange"></i> Expenses</a></li>
                                 <li><a href="/currency"><i class="fa fa-money"></i> Currency Setting</a></li>
                             </ul>
                         </div>

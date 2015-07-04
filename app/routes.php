@@ -163,6 +163,31 @@ Route::group(["before" => "auth"], function () {
         "as" => "/transaction/update",
         "uses" => "TransactionController@update"
     ]);
+    //Routes for Expense
+    Route::any("/expense", [
+        "as" => "expense",
+        "uses" => "ExpenseController@index"
+    ]);
+    Route::any("/expense/create", [
+        "as" => "expense/create",
+        "uses" => "ExpenseController@create"
+    ]);
+    Route::any("/expense/store", [
+        "as" => "expense/store",
+        "uses" => "ExpenseController@store"
+    ]);
+    Route::any("/expense/{id}/edit", [
+        "as" => "expense/edit",
+        "uses" => "ExpenseController@edit"
+    ]);
+    Route::any("/expense/update", [
+        "as" => "expense/update",
+        "uses" => "ExpenseController@update"
+    ]);
+    Route::any("/expense/{id}/delete", [
+        "as" => "party/delete",
+        "uses" => "ExpenseController@destroy"
+    ]);
 });
 
 Route::any("/request", [
