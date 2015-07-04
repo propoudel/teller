@@ -68,7 +68,7 @@ class ExpenseController extends Controller {
             // store
             $expense = new Expense();
             $expense->name = Input::get('expense_name');
-            $expense->amount = Input::get('expense_amount');
+            $expense->amount = round(Input::get('expense_amount'), 3);
             $expense->details = Input::get('expense_details');
 
             if ($expense->save()) {
@@ -144,7 +144,7 @@ class ExpenseController extends Controller {
             // store
             $expense = Expense::find($id);
             $expense->name = Input::get('expense_name');
-            $expense->amount = Input::get('expense_amount');
+            $expense->amount = round(Input::get('expense_amount'), 3);
             $expense->details = Input::get('expense_details');
 
             if ($expense->save()) {
